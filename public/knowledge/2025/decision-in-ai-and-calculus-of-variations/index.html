@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>AI中的决策论（变分法的使用） - My New Hugo Site</title><meta name="Description" content="This is my cool site"><meta property="og:url" content="http://localhost:1313/knowledge/2025/decision-in-ai-and-calculus-of-variations/">
+  <meta property="og:site_name" content="My New Hugo Site">
+  <meta property="og:title" content="AI中的决策论（变分法的使用）">
+  <meta property="og:description" content="线性回归前瞻 在机器学习中，我们认为模型在做回归时实际上学到了一种分布。例如我们给定一些样本，他们来自函数 $y=sin(x)&#43;\epsilon$，其中误差项遵循正态分布 $N(\mu,\sigma)$ ，当模型根据这些数据进行回归时，他会自然的计算出对于每个输入 $x$ 其对应的预测输出 $y=p(t|x)$。也就是说模型首先给出的并不是一个确定的值，而是围绕真实值在内的一个概率分布，然后才能确定哪个值最接近真实值。
+决策论 根据上述我们就发现模型的行为被分为了两部分，学习概率分布，根据分布决定输出值。
+学习概率分布可以由极大似然完成，但是如何决定最终的输出值呢？或者说当我们得到了输出的概率分布$P(t|x)$后，如何确定一个 $f$ 令其从概率分布中选择要输出的值呢？
+毫无疑问我们要选择最接近真实值 $t$ 的输出，因此我们可以构建一个损失函数 $L(t,f(x))$ 来衡量预测值和真实值之间的差距。但我们在进行预测时并不知道真实值到底是什么，我们只知道其概率分布 $P(t|x)$，因此我们不能直接最小化损失函数本身，而是要最小化期望损失，公式如下： $$ E[L]=\int\int L(t,f(x))p(x,t)dxdt $$ 我们需要指定一个损失函数，假如我们使用平方差作为损失函数，则公式变化如下： $$ E[L]=\int\int {f(x)-t}^2p(x,t)dxdt $$ 我们需要找到一个令期望损失最小的函数 $f$ 来决定输出，而上式是一个泛函数，因此我们采用变分法，对 $f$ 求导得如下公式： $$ \frac{\partial E[L]}{\partial f}=2\int {f(x)-t}p(x,t)dt=0 $$ 令求导后的公式等于零，则可以找到令期望损失最小的 $f$ 。使用概率论的加法和乘法定理化简后得到： $$ f(x)=\int tp(t|x)dt=E[t|x] $$ 对于服从正态分布的 $t$ 而言，其均值就可以直接从学习到的概率分布中得到。
+变分法 什么是变分法？
+变分法是一种求极值的方法，但是其应用于泛函数。
+所谓泛函数就是函数的函数，当一个公式，例如上面的第一个公式，将一个未知的函数映射到另一个实数，则这个公式就是一个泛函数。如果我们的目的是找出这个泛函数的极值，则可以对其中的未知函数求偏导，并令偏导结果等于零，类似于初等函数求极值的过程，从而找到我们需要的未知函数所满足的条件。">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="knowledge">
+    <meta property="article:published_time" content="2025-02-13T10:52:44+08:00">
+    <meta property="article:modified_time" content="2025-02-13T10:52:44+08:00">
+    <meta property="article:tag" content="Machine Learning">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="AI中的决策论（变分法的使用）">
+  <meta name="twitter:description" content="线性回归前瞻 在机器学习中，我们认为模型在做回归时实际上学到了一种分布。例如我们给定一些样本，他们来自函数 $y=sin(x)&#43;\epsilon$，其中误差项遵循正态分布 $N(\mu,\sigma)$ ，当模型根据这些数据进行回归时，他会自然的计算出对于每个输入 $x$ 其对应的预测输出 $y=p(t|x)$。也就是说模型首先给出的并不是一个确定的值，而是围绕真实值在内的一个概率分布，然后才能确定哪个值最接近真实值。
+决策论 根据上述我们就发现模型的行为被分为了两部分，学习概率分布，根据分布决定输出值。
+学习概率分布可以由极大似然完成，但是如何决定最终的输出值呢？或者说当我们得到了输出的概率分布$P(t|x)$后，如何确定一个 $f$ 令其从概率分布中选择要输出的值呢？
+毫无疑问我们要选择最接近真实值 $t$ 的输出，因此我们可以构建一个损失函数 $L(t,f(x))$ 来衡量预测值和真实值之间的差距。但我们在进行预测时并不知道真实值到底是什么，我们只知道其概率分布 $P(t|x)$，因此我们不能直接最小化损失函数本身，而是要最小化期望损失，公式如下： $$ E[L]=\int\int L(t,f(x))p(x,t)dxdt $$ 我们需要指定一个损失函数，假如我们使用平方差作为损失函数，则公式变化如下： $$ E[L]=\int\int {f(x)-t}^2p(x,t)dxdt $$ 我们需要找到一个令期望损失最小的函数 $f$ 来决定输出，而上式是一个泛函数，因此我们采用变分法，对 $f$ 求导得如下公式： $$ \frac{\partial E[L]}{\partial f}=2\int {f(x)-t}p(x,t)dt=0 $$ 令求导后的公式等于零，则可以找到令期望损失最小的 $f$ 。使用概率论的加法和乘法定理化简后得到： $$ f(x)=\int tp(t|x)dt=E[t|x] $$ 对于服从正态分布的 $t$ 而言，其均值就可以直接从学习到的概率分布中得到。
+变分法 什么是变分法？
+变分法是一种求极值的方法，但是其应用于泛函数。
+所谓泛函数就是函数的函数，当一个公式，例如上面的第一个公式，将一个未知的函数映射到另一个实数，则这个公式就是一个泛函数。如果我们的目的是找出这个泛函数的极值，则可以对其中的未知函数求偏导，并令偏导结果等于零，类似于初等函数求极值的过程，从而找到我们需要的未知函数所满足的条件。">
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/knowledge/2025/decision-in-ai-and-calculus-of-variations/" /><link rel="prev" href="http://localhost:1313/knowledge/2025/prior-and-posterior-probabilities/" /><link rel="next" href="http://localhost:1313/knowledge/2025/classification-problem-in-deeplearning/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "AI中的决策论（变分法的使用）",
+        "inLanguage": "en-us",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/knowledge\/2025\/decision-in-ai-and-calculus-of-variations\/"
+        },"genre": "knowledge","keywords": "machine learning","wordcount":  53 ,
+        "url": "http:\/\/localhost:1313\/knowledge\/2025\/decision-in-ai-and-calculus-of-variations\/","datePublished": "2025-02-13T10:52:44+08:00","dateModified": "2025-02-13T10:52:44+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "xxxx"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="My New Hugo Site">My cool site</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="My New Hugo Site">My cool site</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="page single special"><h1 class="single-title animate__animated animate__pulse animate__faster">AI中的决策论（变分法的使用）</h1><div class="content" id="content"><h2 id="线性回归前瞻">线性回归前瞻</h2>
+<p>在机器学习中，我们认为模型在做回归时实际上学到了一种分布。例如我们给定一些样本，他们来自函数 $y=sin(x)+\epsilon$，其中误差项遵循正态分布 $N(\mu,\sigma)$ ，当模型根据这些数据进行回归时，他会自然的计算出对于每个输入 $x$ 其对应的预测输出 $y=p(t|x)$。也就是说模型首先给出的并不是一个确定的值，而是围绕真实值在内的一个概率分布，然后才能确定哪个值最接近真实值。</p>
+<h2 id="决策论">决策论</h2>
+<p>根据上述我们就发现模型的行为被分为了两部分，学习概率分布，根据分布决定输出值。</p>
+<p>学习概率分布可以由极大似然完成，但是如何决定最终的输出值呢？或者说当我们得到了输出的概率分布$P(t|x)$后，如何确定一个 $f$ 令其从概率分布中选择要输出的值呢？</p>
+<p>毫无疑问我们要选择最接近真实值 $t$ 的输出，因此我们可以构建一个损失函数 $L(t,f(x))$ 来衡量预测值和真实值之间的差距。但我们在进行预测时并不知道真实值到底是什么，我们只知道其概率分布 $P(t|x)$，因此我们不能直接最小化损失函数本身，而是要最小化期望损失，公式如下：
+$$
+E[L]=\int\int L(t,f(x))p(x,t)dxdt
+$$
+我们需要指定一个损失函数，假如我们使用平方差作为损失函数，则公式变化如下：
+$$
+E[L]=\int\int {f(x)-t}^2p(x,t)dxdt
+$$
+我们需要找到一个令期望损失最小的函数 $f$ 来决定输出，而上式是一个泛函数，因此我们采用变分法，对 $f$ 求导得如下公式：
+$$
+\frac{\partial E[L]}{\partial f}=2\int {f(x)-t}p(x,t)dt=0
+$$
+令求导后的公式等于零，则可以找到令期望损失最小的 $f$ 。使用概率论的加法和乘法定理化简后得到：
+$$
+f(x)=\int tp(t|x)dt=E[t|x]
+$$
+对于服从正态分布的 $t$ 而言，其均值就可以直接从学习到的概率分布中得到。</p>
+<h2 id="变分法">变分法</h2>
+<p>什么是变分法？</p>
+<p>变分法是一种求极值的方法，但是其应用于泛函数。</p>
+<p>所谓泛函数就是函数的函数，当一个公式，例如上面的第一个公式，将一个未知的函数映射到另一个实数，则这个公式就是一个泛函数。如果我们的目的是找出这个泛函数的极值，则可以对其中的未知函数求偏导，并令偏导结果等于零，类似于初等函数求极值的过程，从而找到我们需要的未知函数所满足的条件。</p>
+</div></div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.134.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">xxxx</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{}};</script><script src="/js/theme.min.js"></script></body>
+</html>

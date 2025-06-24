@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>在 Hugo 中使用 Fancybox 实现图片点击放大 - My New Hugo Site</title><meta name="Description" content="This is my cool site"><meta property="og:url" content="http://localhost:1313/constructions/2025/use-fancybox-in-hugo/">
+  <meta property="og:site_name" content="My New Hugo Site">
+  <meta property="og:title" content="在 Hugo 中使用 Fancybox 实现图片点击放大">
+  <meta property="og:description" content="由于原生 Hugo 的页面不支持点击图片放大，而有时候我在博客中会使用一些内容比较多的图片，这就导致图片上的内容很小看不清。
+有一种方法可以通过修改 Mark Render Hooks 实现 fancybox 方法图片，具体实现方法来自 nan0in’s blog，在此转载以备日后查阅。
+1. 修改 hugo.yaml 总之就是 Hugo 的配置文件，也可能你的站点采用其他格式。
+params: fancybox: true添加一个 fancybox: true 字段即可。
+2. 修改 render-image.html 该文件通常在站点目录下的 /layouts/\_default/\_markup/render-image.html ，修改文件内容为以下内容：
+{{if .Page.Site.Params.fancybox }} &lt;div class=&#34;post-img-view&#34;&gt; &lt;a data-fancybox=&#34;gallery&#34; href=&#34;{{ .Destination | safeURL }}&#34;&gt; &lt;img src=&#34;{{ .Destination | safeURL }}&#34; alt=&#34;{{ .Text }}&#34; {{ with .Title}} title=&#34;{{ . }}&#34;{{ end }} /&gt; &lt;/a&gt; &lt;/div&gt; {{ end }}3. 在 footer.html 或者 header.html 中导入 {{if .Page.Site.Params.fancybox }} &lt;script src=&#34;https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js&#34;&gt;&lt;/script&gt; &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css&#34; /&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js&#34;&gt;&lt;/script&gt; {{ end }}以上。">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="constructions">
+    <meta property="article:published_time" content="2025-05-23T20:09:41+08:00">
+    <meta property="article:modified_time" content="2025-05-23T20:09:41+08:00">
+    <meta property="article:tag" content="Hugo">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="在 Hugo 中使用 Fancybox 实现图片点击放大">
+  <meta name="twitter:description" content="由于原生 Hugo 的页面不支持点击图片放大，而有时候我在博客中会使用一些内容比较多的图片，这就导致图片上的内容很小看不清。
+有一种方法可以通过修改 Mark Render Hooks 实现 fancybox 方法图片，具体实现方法来自 nan0in’s blog，在此转载以备日后查阅。
+1. 修改 hugo.yaml 总之就是 Hugo 的配置文件，也可能你的站点采用其他格式。
+params: fancybox: true添加一个 fancybox: true 字段即可。
+2. 修改 render-image.html 该文件通常在站点目录下的 /layouts/\_default/\_markup/render-image.html ，修改文件内容为以下内容：
+{{if .Page.Site.Params.fancybox }} &lt;div class=&#34;post-img-view&#34;&gt; &lt;a data-fancybox=&#34;gallery&#34; href=&#34;{{ .Destination | safeURL }}&#34;&gt; &lt;img src=&#34;{{ .Destination | safeURL }}&#34; alt=&#34;{{ .Text }}&#34; {{ with .Title}} title=&#34;{{ . }}&#34;{{ end }} /&gt; &lt;/a&gt; &lt;/div&gt; {{ end }}3. 在 footer.html 或者 header.html 中导入 {{if .Page.Site.Params.fancybox }} &lt;script src=&#34;https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js&#34;&gt;&lt;/script&gt; &lt;link rel=&#34;stylesheet&#34; href=&#34;https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css&#34; /&gt; &lt;script src=&#34;https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js&#34;&gt;&lt;/script&gt; {{ end }}以上。">
+<meta name="application-name" content="My cool site">
+<meta name="apple-mobile-web-app-title" content="My cool site">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/constructions/2025/use-fancybox-in-hugo/" /><link rel="prev" href="http://localhost:1313/constructions/2024/make-latex-compatible/" /><link rel="next" href="http://localhost:1313/constructions/2025/use-latex-in-hugo/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "在 Hugo 中使用 Fancybox 实现图片点击放大",
+        "inLanguage": "en-us",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/constructions\/2025\/use-fancybox-in-hugo\/"
+        },"genre": "constructions","keywords": "hugo","wordcount":  90 ,
+        "url": "http:\/\/localhost:1313\/constructions\/2025\/use-fancybox-in-hugo\/","datePublished": "2025-05-23T20:09:41+08:00","dateModified": "2025-05-23T20:09:41+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "xxxx"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="My New Hugo Site">My cool site</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="My New Hugo Site">My cool site</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="page single special"><h1 class="single-title animate__animated animate__pulse animate__faster">在 Hugo 中使用 Fancybox 实现图片点击放大</h1><div class="content" id="content"><p>由于原生 Hugo 的页面不支持点击图片放大，而有时候我在博客中会使用一些内容比较多的图片，这就导致图片上的内容很小看不清。</p>
+<p>有一种方法可以通过修改 Mark Render Hooks 实现 fancybox 方法图片，具体实现方法来自 <a href="https://www.nan0in27.cn/p/hugo%E5%9B%BE%E7%89%87%E7%82%B9%E5%87%BB%E6%94%BE%E5%A4%A7/" target="_blank" rel="noopener noreffer ">nan0in&rsquo;s blog</a>，在此转载以备日后查阅。</p>
+<h3 id="1-修改-hugoyaml">1. 修改 hugo.yaml</h3>
+<p>总之就是 Hugo 的配置文件，也可能你的站点采用其他格式。</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-yaml">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">params</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">	</span><span class="nt">fancybox</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span></span></span></code></pre></div></div>
+<p>添加一个 <code>fancybox: true</code> 字段即可。</p>
+<h3 id="2-修改-render-imagehtml">2. 修改 render-image.html</h3>
+<p>该文件通常在站点目录下的 <code>/layouts/\_default/\_markup/render-image.html</code> ，修改文件内容为以下内容：</p>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-html">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">{{if .Page.Site.Params.fancybox }}
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&#34;post-img-view&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">a</span> <span class="na">data-fancybox</span><span class="o">=</span><span class="s">&#34;gallery&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;{{ .Destination | safeURL }}&#34;</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;{{ .Destination | safeURL }}&#34;</span> <span class="na">alt</span><span class="o">=</span><span class="s">&#34;{{ .Text }}&#34;</span> <span class="err">{{</span> <span class="na">with</span> <span class="err">.</span><span class="na">Title</span><span class="err">}}</span> <span class="na">title</span><span class="o">=</span><span class="s">&#34;{{ . }}&#34;</span><span class="err">{{</span> <span class="na">end</span> <span class="err">}}</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">{{ end }}</span></span></code></pre></div></div>
+<h3 id="3-在-footerhtml-或者-headerhtml-中导入">3. 在 footer.html 或者 header.html 中导入</h3>
+<div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
+    <div class="code-header language-html">
+        <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
+        <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
+        <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-html" data-lang="html"><span class="line"><span class="cl">{{if .Page.Site.Params.fancybox }}
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&#34;stylesheet&#34;</span> <span class="na">href</span><span class="o">=</span><span class="s">&#34;https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css&#34;</span> <span class="p">/&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&#34;https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js&#34;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></span><span class="line"><span class="cl">{{ end }}</span></span></code></pre></div></div>
+<p>以上。</p>
+<blockquote>
+<p>注意修改的都是 Hugo 站点的文件，主题文件夹中也有类似的内容，但是修改主题的文件是不起作用的。</p>
+</blockquote>
+</div></div></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.134.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">xxxx</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{}};</script><script src="/js/theme.min.js"></script></body>
+</html>
