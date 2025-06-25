@@ -1,39 +1,27 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="zh-CN">
     <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>深度学习之分类问题 - My New Hugo Site</title><meta name="Description" content="This is my cool site"><meta property="og:url" content="http://localhost:1313/knowledge/2025/classification-problem-in-deeplearning/">
-  <meta property="og:site_name" content="My New Hugo Site">
+        <title>深度学习之分类问题 - Junpo Yu&#39;s Blog</title><meta name="Description" content="你所经历的每一个日常，也许正是连续不断的奇迹"><meta property="og:url" content="http://localhost:1313/knowledge/2025/classification-problem-in-deeplearning/">
+  <meta property="og:site_name" content="Junpo Yu&#39;s Blog">
   <meta property="og:title" content="深度学习之分类问题">
-  <meta property="og:description" content="一、构建一个分类模型的三种方法 判别函数：直接建模一个函数将输入映射到分类，例如支持向量机。 判别式概率模型：建模一个条件概率模型 $p(C_k|x)$ ，根据输出的概率选择其分类结果，通常概率最高的类别就是分类类别。 生成式概率模型：首先建模条件概率 $p(x|C_k)$，然后根据先验概率 $p(C_k)$ 通过贝叶斯公式 $p(C_k|x)=\frac{p(x|C_k)p(C_k)}{p(x)}$ 得出后验概率分布，使用后验概率分布进行分类。 $x$ 表示输入向量，$C_k$ 表示 k 个分类类别。
-在生成式概率模型中，由于建模了 $p(x|C_k)$ ，所以可以使用模型生成新的样本 $x$ ，因此称之为生成式模型。
-二、判别函数 1. 二分类问题 对于一个二分类问题构建决策函数： $$ y(x)=\textbf w^Tx&#43;\textbf w_0 $$ 则决策面就是 $y(x)=0$ 所代表的超平面，通过该决策面作为边界进行分类。
-在这个决策函数中，其参数的含义如下：
-$\textbf w$ 决定了决策面的方向，因为 $\textbf w$ 一定与决策面正交。 $\textbf w_0$ 决定了决策面的偏移量。 $y(x)$ 的值与其代表的点与决策面的距离成正比，正负则代表了在决策面的哪一侧。 2. 多分类问题 在多分类问题中，如果照搬二分类中超平面的方法，会导致决策空间中存在模棱两可的区域。无论是 one-vs-the-rest 还是 one-vs-one 方法都不能避免。
-one-vs-the-rest 表示使用一个决策面，将当前类别和其他所有类别区分，通过 k 个决策面实现 k 分类。
-one-vs-one 表示使用一个决策面，将当前类别和另一个类别区分，通过 k(k-1) 个决策面实现 k 分类。
-但是我们仍然可以使用判别函数，考虑由 k 个线性判别函数组成的 k 分类器。 $$ y_k(x)=\textbf w_k^T(x) &#43; \textbf w_{k0} $$ k 表示 k 个判别函数。此时将 x 的类别定义为使 $y_k(x)$ 最大的类别，即当 $y_k(x)&gt;y_j(x),j\neq k$ 时，认为 x 输入类别 k。">
-  <meta property="og:locale" content="en_us">
+  <meta property="og:description" content="一、构建一个分类模型的三种方法 判别函数：直接建模一个函数将输入映射到分类，例如支持向量机。 判别式概率模型：建模一个条件概率模型 $p(C_k|x)$ ，根据输出的概率选择其分类结果，通常概率最高的类别就是分类类别。 生成式概率模型：首先建模条件概率 $p(x|C_k)$，然后根据先验概率 $p(C_k)$ 通过贝叶斯公式 $p(C_k|x)=\frac{p(x|C_k)p(C_k)}{p(x)}$ 得出后验概率分布，使用后验概率分布进行分类。 $x$ 表示输入向量，$C_k$ 表示 k 个分类类别。">
+  <meta property="og:locale" content="zh_CN">
   <meta property="og:type" content="article">
     <meta property="article:section" content="knowledge">
     <meta property="article:published_time" content="2025-02-15T09:54:01+08:00">
     <meta property="article:modified_time" content="2025-02-15T09:54:01+08:00">
     <meta property="article:tag" content="Machine Learning">
+    <meta property="og:image" content="http://localhost:1313/logo.png">
 
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/logo.png">
   <meta name="twitter:title" content="深度学习之分类问题">
-  <meta name="twitter:description" content="一、构建一个分类模型的三种方法 判别函数：直接建模一个函数将输入映射到分类，例如支持向量机。 判别式概率模型：建模一个条件概率模型 $p(C_k|x)$ ，根据输出的概率选择其分类结果，通常概率最高的类别就是分类类别。 生成式概率模型：首先建模条件概率 $p(x|C_k)$，然后根据先验概率 $p(C_k)$ 通过贝叶斯公式 $p(C_k|x)=\frac{p(x|C_k)p(C_k)}{p(x)}$ 得出后验概率分布，使用后验概率分布进行分类。 $x$ 表示输入向量，$C_k$ 表示 k 个分类类别。
-在生成式概率模型中，由于建模了 $p(x|C_k)$ ，所以可以使用模型生成新的样本 $x$ ，因此称之为生成式模型。
-二、判别函数 1. 二分类问题 对于一个二分类问题构建决策函数： $$ y(x)=\textbf w^Tx&#43;\textbf w_0 $$ 则决策面就是 $y(x)=0$ 所代表的超平面，通过该决策面作为边界进行分类。
-在这个决策函数中，其参数的含义如下：
-$\textbf w$ 决定了决策面的方向，因为 $\textbf w$ 一定与决策面正交。 $\textbf w_0$ 决定了决策面的偏移量。 $y(x)$ 的值与其代表的点与决策面的距离成正比，正负则代表了在决策面的哪一侧。 2. 多分类问题 在多分类问题中，如果照搬二分类中超平面的方法，会导致决策空间中存在模棱两可的区域。无论是 one-vs-the-rest 还是 one-vs-one 方法都不能避免。
-one-vs-the-rest 表示使用一个决策面，将当前类别和其他所有类别区分，通过 k 个决策面实现 k 分类。
-one-vs-one 表示使用一个决策面，将当前类别和另一个类别区分，通过 k(k-1) 个决策面实现 k 分类。
-但是我们仍然可以使用判别函数，考虑由 k 个线性判别函数组成的 k 分类器。 $$ y_k(x)=\textbf w_k^T(x) &#43; \textbf w_{k0} $$ k 表示 k 个判别函数。此时将 x 的类别定义为使 $y_k(x)$ 最大的类别，即当 $y_k(x)&gt;y_j(x),j\neq k$ 时，认为 x 输入类别 k。">
-<meta name="application-name" content="My cool site">
-<meta name="apple-mobile-web-app-title" content="My cool site">
+  <meta name="twitter:description" content="一、构建一个分类模型的三种方法 判别函数：直接建模一个函数将输入映射到分类，例如支持向量机。 判别式概率模型：建模一个条件概率模型 $p(C_k|x)$ ，根据输出的概率选择其分类结果，通常概率最高的类别就是分类类别。 生成式概率模型：首先建模条件概率 $p(x|C_k)$，然后根据先验概率 $p(C_k)$ 通过贝叶斯公式 $p(C_k|x)=\frac{p(x|C_k)p(C_k)}{p(x)}$ 得出后验概率分布，使用后验概率分布进行分类。 $x$ 表示输入向量，$C_k$ 表示 k 个分类类别。">
+<meta name="application-name" content="Junpo Yu&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Junpo Yu&#39;s Blog">
 <meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/knowledge/2025/classification-problem-in-deeplearning/" /><link rel="prev" href="http://localhost:1313/knowledge/2025/decision-in-ai-and-calculus-of-variations/" /><link rel="next" href="http://localhost:1313/knowledge/2025/least-squares/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -43,16 +31,16 @@ one-vs-one 表示使用一个决策面，将当前类别和另一个类别区分
         "@context": "http://schema.org",
         "@type": "BlogPosting",
         "headline": "深度学习之分类问题",
-        "inLanguage": "en-us",
+        "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/localhost:1313\/knowledge\/2025\/classification-problem-in-deeplearning\/"
-        },"genre": "knowledge","keywords": "machine learning","wordcount":  405 ,
+        },"genre": "knowledge","keywords": "machine learning","wordcount":  3586 ,
         "url": "http:\/\/localhost:1313\/knowledge\/2025\/classification-problem-in-deeplearning\/","datePublished": "2025-02-15T09:54:01+08:00","dateModified": "2025-02-15T09:54:01+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
-                "name": "xxxx"
+                "name": "Junpo Yu"
             },"description": ""
     }
     </script></head>
@@ -61,10 +49,28 @@ one-vs-one 表示使用一个决策面，将当前类别和另一个类别区分
         <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/" title="My New Hugo Site">My cool site</a>
+            <a href="/" title="Junpo Yu&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/rubysiu.jpg"
+        data-srcset="/rubysiu.jpg, /rubysiu.jpg 1.5x, /rubysiu.jpg 2x"
+        data-sizes="auto"
+        alt="/rubysiu.jpg"
+        title="/rubysiu.jpg" />Junpo Yu&#39;s Blog</a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+            <div class="menu-inner"><a class="menu-item" href="/posts/tech/"> 技术性文章 </a><a class="menu-item" href="/posts/builds/"> 构建 </a><a class="menu-item" href="/posts/knowledge/"> 理论知识 </a><a class="menu-item" href="/posts/research/"> 科研相关 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
                     <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
                 </a></div>
         </div>
@@ -73,17 +79,45 @@ one-vs-one 表示使用一个决策面，将当前类别和另一个类别区分
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/" title="My New Hugo Site">My cool site</a>
+                <a href="/" title="Junpo Yu&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/rubysiu.jpg"
+        data-srcset="/rubysiu.jpg, /rubysiu.jpg 1.5x, /rubysiu.jpg 2x"
+        data-sizes="auto"
+        alt="/rubysiu.jpg"
+        title="/rubysiu.jpg" />Junpo Yu&#39;s Blog</a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="menu" id="menu-mobile"><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/tech/" title="">技术性文章</a><a class="menu-item" href="/posts/builds/" title="">构建</a><a class="menu-item" href="/posts/knowledge/" title="">理论知识</a><a class="menu-item" href="/posts/research/" title="">科研相关</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
                 <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
             </a></div>
     </div>
-</header><main class="main">
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
                 <div class="container"><div class="page single special"><h1 class="single-title animate__animated animate__pulse animate__faster">深度学习之分类问题</h1><div class="content" id="content"><h2 id="一构建一个分类模型的三种方法">一、构建一个分类模型的三种方法</h2>
 <ol>
 <li>判别函数：直接建模一个函数将输入映射到分类，例如支持向量机。</li>
@@ -247,7 +281,7 @@ $$
 </div></div></div>
             </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.134.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">xxxx</a></span></div>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://junpoyu.github.io/" target="_blank">Junpo Yu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
 
@@ -259,5 +293,5 @@ $$
         <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
             </a>
-        </div><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{}};</script><script src="/js/theme.min.js"></script></body>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/contrib/auto-render.min.js"></script><script src="/lib/katex/contrib/copy-tex.min.js"></script><script src="/lib/katex/contrib/mhchem.min.js"></script><script src="/lib/cookieconsent/cookieconsent.min.js"></script><script>window.config={"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
 </html>

@@ -1,24 +1,26 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="zh-CN">
     <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>Tensor Programs v Tuning Large Neural Networks via Zero Shot Hyperparameter Transfer - My New Hugo Site</title><meta name="Description" content="本文讨论了如何正确地将小模型调优的超参数迁移到大模型"><meta property="og:url" content="http://localhost:1313/research/2025/tensor-programs-v-tuning-large-neural-networks-via-zero-shot-hyperparameter-transfer/">
-  <meta property="og:site_name" content="My New Hugo Site">
+        <title>Tensor Programs v Tuning Large Neural Networks via Zero Shot Hyperparameter Transfer - Junpo Yu&#39;s Blog</title><meta name="Description" content="本文讨论了如何正确地将小模型调优的超参数迁移到大模型"><meta property="og:url" content="http://localhost:1313/research/2025/tensor-programs-v-tuning-large-neural-networks-via-zero-shot-hyperparameter-transfer/">
+  <meta property="og:site_name" content="Junpo Yu&#39;s Blog">
   <meta property="og:title" content="Tensor Programs v Tuning Large Neural Networks via Zero Shot Hyperparameter Transfer">
   <meta property="og:description" content="本文讨论了如何正确地将小模型调优的超参数迁移到大模型">
-  <meta property="og:locale" content="en_us">
+  <meta property="og:locale" content="zh_CN">
   <meta property="og:type" content="article">
     <meta property="article:section" content="research">
     <meta property="article:published_time" content="2025-06-10T15:19:58+08:00">
     <meta property="article:modified_time" content="2025-06-10T15:19:58+08:00">
+    <meta property="og:image" content="http://localhost:1313/logo.png">
 
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/logo.png">
   <meta name="twitter:title" content="Tensor Programs v Tuning Large Neural Networks via Zero Shot Hyperparameter Transfer">
   <meta name="twitter:description" content="本文讨论了如何正确地将小模型调优的超参数迁移到大模型">
-<meta name="application-name" content="My cool site">
-<meta name="apple-mobile-web-app-title" content="My cool site">
+<meta name="application-name" content="Junpo Yu&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Junpo Yu&#39;s Blog">
 <meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/research/2025/tensor-programs-v-tuning-large-neural-networks-via-zero-shot-hyperparameter-transfer/" /><link rel="next" href="http://localhost:1313/research/2025/general-reading-inception-tricksofcnntraning/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
@@ -28,16 +30,16 @@
         "@context": "http://schema.org",
         "@type": "BlogPosting",
         "headline": "Tensor Programs v Tuning Large Neural Networks via Zero Shot Hyperparameter Transfer",
-        "inLanguage": "en-us",
+        "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "http:\/\/localhost:1313\/research\/2025\/tensor-programs-v-tuning-large-neural-networks-via-zero-shot-hyperparameter-transfer\/"
-        },"genre": "research","wordcount":  1019 ,
+        },"genre": "research","wordcount":  8296 ,
         "url": "http:\/\/localhost:1313\/research\/2025\/tensor-programs-v-tuning-large-neural-networks-via-zero-shot-hyperparameter-transfer\/","datePublished": "2025-06-10T15:19:58+08:00","dateModified": "2025-06-10T15:19:58+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
-                "name": "xxxx"
+                "name": "Junpo Yu"
             },"description": "本文讨论了如何正确地将小模型调优的超参数迁移到大模型"
     }
     </script></head>
@@ -46,10 +48,28 @@
         <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
     <div class="header-wrapper">
         <div class="header-title">
-            <a href="/" title="My New Hugo Site">My cool site</a>
+            <a href="/" title="Junpo Yu&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/rubysiu.jpg"
+        data-srcset="/rubysiu.jpg, /rubysiu.jpg 1.5x, /rubysiu.jpg 2x"
+        data-sizes="auto"
+        alt="/rubysiu.jpg"
+        title="/rubysiu.jpg" />Junpo Yu&#39;s Blog</a>
         </div>
         <div class="menu">
-            <div class="menu-inner"><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+            <div class="menu-inner"><a class="menu-item" href="/posts/tech/"> 技术性文章 </a><a class="menu-item" href="/posts/builds/"> 构建 </a><a class="menu-item" href="/posts/knowledge/"> 理论知识 </a><a class="menu-item" href="/posts/research/"> 科研相关 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
                     <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
                 </a></div>
         </div>
@@ -58,17 +78,45 @@
     <div class="header-container">
         <div class="header-wrapper">
             <div class="header-title">
-                <a href="/" title="My New Hugo Site">My cool site</a>
+                <a href="/" title="Junpo Yu&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/rubysiu.jpg"
+        data-srcset="/rubysiu.jpg, /rubysiu.jpg 1.5x, /rubysiu.jpg 2x"
+        data-sizes="auto"
+        alt="/rubysiu.jpg"
+        title="/rubysiu.jpg" />Junpo Yu&#39;s Blog</a>
             </div>
             <div class="menu-toggle" id="menu-toggle-mobile">
                 <span></span><span></span><span></span>
             </div>
         </div>
-        <div class="menu" id="menu-mobile"><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/tech/" title="">技术性文章</a><a class="menu-item" href="/posts/builds/" title="">构建</a><a class="menu-item" href="/posts/knowledge/" title="">理论知识</a><a class="menu-item" href="/posts/research/" title="">科研相关</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
                 <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
             </a></div>
     </div>
-</header><main class="main">
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
                 <div class="container"><div class="page single special"><h1 class="single-title animate__animated animate__pulse animate__faster">Tensor Programs v Tuning Large Neural Networks via Zero Shot Hyperparameter Transfer</h1><div class="content" id="content"><p>本文内容来自 <a href="http://arxiv.org/abs/2203.03466" target="_blank" rel="noopener noreffer ">Tensor Programs V: Tuning Large Neural Networks via Zero-Shot Hyperparameter Transfer</a>。</p>
 <p><strong>需要注意的是，本研究的目的是让某些最佳超参数在不同的大小的模型之间进行迁移，而不是找到最佳的模型大小或者最佳的超参数组合。</strong></p>
 <h2 id="0abstract">0、Abstract</h2>
@@ -90,15 +138,15 @@
         title="Figure1.png" width="557" height="536" /></p>
 <p>左图使用标准参数化 SP，右图使用本文的方法。可以看出，在标准参数化下，不同规模的模型，其最佳 Learning Rate 不同，也就是发生了 optimum shifts。但是应用了本文的方法之后不同的规模的模型的最佳参数基本一致，且随着模型的规模增大，其性能也变得更好。</p>
 <p>不仅仅是对于宽度有用，实验表明，在一定的约束下，对于 Depth、Batch Size、Input Length、和 Training Time，该方法同样有效。</p>
-<p>这个方法被称之为 $\mu Transfer$，基于 Maximal Update Parametrization (<!-- raw HTML omitted -->$\mu P$<!-- raw HTML omitted -->) <a href="#1" rel="">[1]</a>。该方法的基本描述如下：</p>
+<p>这个方法被称之为 $\mu Transfer$，基于 Maximal Update Parametrization (<span>$\mu P$</span>) <a href="#1" rel="">[1]</a>。该方法的基本描述如下：</p>
 <div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
     <div class="code-header language-">
         <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
         <span class="ellipses"><i class="fas fa-ellipsis-h fa-fw" aria-hidden="true"></i></span>
         <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
-    </div><pre tabindex="0"><code>1. 对目标模型进行最大更新参数化（Maximal Update Parametrization）
-2. 对一个小版本的目标模型进行调优
-3. 将最优参数直接应用到目标模型</code></pre></div>
+    </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">1. 对目标模型进行最大更新参数化（Maximal Update Parametrization）
+</span></span><span class="line"><span class="cl">2. 对一个小版本的目标模型进行调优
+</span></span><span class="line"><span class="cl">3. 将最优参数直接应用到目标模型</span></span></code></pre></div></div>
 <p>该方法有如下几个优点：</p>
 <ol>
 <li><strong>Better Performance</strong>：同样的较大规模的模型，在该方法下得到的性能往往优于标准参数化。</li>
@@ -115,9 +163,9 @@
 <table>
   <thead>
       <tr>
-          <th style="text-align: center"><!-- raw HTML omitted -->$\mu$ <!-- raw HTML omitted -->Transferable</th>
-          <th style="text-align: center">Not <!-- raw HTML omitted -->$ <!-- raw HTML omitted -->\mu$Transferable</th>
-          <th style="text-align: center"><!-- raw HTML omitted -->$\mu$ <!-- raw HTML omitted -->Transferred Across</th>
+          <th style="text-align: center"><span>$\mu$ </span>Transferable</th>
+          <th style="text-align: center">Not <span>$ </span>\mu$Transferable</th>
+          <th style="text-align: center"><span>$\mu$ </span>Transferred Across</th>
       </tr>
   </thead>
   <tbody>
@@ -128,54 +176,55 @@
       </tr>
   </tbody>
 </table>
-<p>最左列表示可以直接通过 <!-- raw HTML omitted -->$\mu P$ <!-- raw HTML omitted --> 规则进行迁移，中间表示不可迁移，最右列迁移是根据这些参数进行的。</p>
+<p>最左列表示可以直接通过 <span>$\mu P$ </span> 规则进行迁移，中间表示不可迁移，最右列迁移是根据这些参数进行的。</p>
 <p>其中可直接迁移部分的更详细描述为：</p>
 <ol>
 <li>optimization related：与优化过程相关的，例如学习率，动量，Adam beta，LR schedule。</li>
 <li>init：与初始化相关的，例如各种参数初始化方法和相关配置。</li>
 <li>parameter multiplier：对于模型参数的缩放，例如残差连接中的缩放系数，BN和LN系数，以及其他自定义的缩放结构。</li>
 </ol>
-<p>而最右列所谓的 <!-- raw HTML omitted -->$\mu$ <!-- raw HTML omitted -->Transferred Across，是指可迁移的超参数，是在根据一类超参数决定如何迁移的，因为这一类超参数决定了模型的规模。</p>
+<p>而最右列所谓的 <span>$\mu$ </span>Transferred Across，是指可迁移的超参数，是在根据一类超参数决定如何迁移的，因为这一类超参数决定了模型的规模。</p>
 <blockquote>
 <p>* 表示该参数只在 transformer 上进行了测试，其他则都有理论验证。</p>
 </blockquote>
 <p>本文的贡献：</p>
 <ol>
-<li>证明了通过 <!-- raw HTML omitted -->$\mu P$<!-- raw HTML omitted --> 进行超参数零样本迁移的可能性。</li>
+<li>证明了通过 <span>$\mu P$</span> 进行超参数零样本迁移的可能性。</li>
 <li>证明了该方法对于 Adam 同样适用。</li>
-<li>提出了 <!-- raw HTML omitted -->$\mu Transfer$<!-- raw HTML omitted -->，适用于 SGD 和 Adam。</li>
+<li>提出了 <span>$\mu Transfer$</span>，适用于 SGD 和 Adam。</li>
 <li>验证了该方法对于机器翻译、LLM的效果和图像识别一样好。</li>
 <li>发布了相关 PyTorch 包。</li>
 </ol>
 <blockquote>
-<p>后文可能引起混淆的一些术语：目标模型（Target Model）表示要调优的大模型（Large Model），代理模型（Proxy Model）表示实际代理了调优过程的小模型（Small Model），简化 Transformer 的参数 <!-- raw HTML omitted -->$d_{model},d_{head}=d_k,d_v,n_{head},d_{ffn}$<!-- raw HTML omitted --></p>
+<p>后文可能引起混淆的一些术语：目标模型（Target Model）表示要调优的大模型（Large Model），代理模型（Proxy Model）表示实际代理了调优过程的小模型（Small Model），简化 Transformer 的参数 <span>$d_{model},d_{head}=d_k,d_v,n_{head},d_{ffn}$</span></p>
 </blockquote>
 <h2 id="2parametrization-matters-a-primer">2、Parametrization Matters: A Primer</h2>
 <p>本章将简单解释一下为什么正确的参数化可以允许超参数在不同宽度的模型中迁移，详细的数学解释在 Appendix J.1to J.3 中。</p>
-<p>根据中心极限定理（CLT，Central Limit Theorem），如果我们有 <!-- raw HTML omitted -->$x_1,\dots,x_n$<!-- raw HTML omitted --> 是独立同分布的从一个均值为零、方差为一的分布中采样得到。那么对于 <!-- raw HTML omitted -->$(x_1+\dots+x_n)$<!-- raw HTML omitted -->，其均值为零 ，方差为 <!-- raw HTML omitted -->$n$<!-- raw HTML omitted -->。这个结果由以下公式得到：</p>
-<!-- raw HTML omitted -->
+<p>根据中心极限定理（CLT，Central Limit Theorem），如果我们有 <span>$x_1,\dots,x_n$</span> 是独立同分布的从一个均值为零、方差为一的分布中采样得到。那么对于 <span>$(x_1+\dots+x_n)$</span>，其均值为零 ，方差为 <span>$n$</span>。这个结果由以下公式得到：</p>
+<div>
 <p>$$
 if\quad x_{1},x_{2},\dots,x_{n}\quad are ; \text{iid}; sampled; from; \mathcal N(\mu,\sigma^{2})\\
 S_{n}=(x_{1}+\dots+x_{n})\\
 E(S_{n})=E(\sum{x_{i}})=\sum{E(x_i)=n}\mu\\
 Var(S_{n})=Var(\sum{x_{i}})=\sum(Var(x_{i}))=n\sigma^{2}
 $$</p>
-<!-- raw HTML omitted -->
-<p>如果我们对<!-- raw HTML omitted --> $S_{n}$<!-- raw HTML omitted --> 进行缩放，例如对于 <!-- raw HTML omitted -->$\frac{1}{n}S_{n}$<!-- raw HTML omitted --> 而言，其均值 <!-- raw HTML omitted -->$E(\frac{1}{n}S_{n})=\frac{1}{n}S_{n}=\frac{\mu}{n}$<!-- raw HTML omitted -->，而方差 <!-- raw HTML omitted -->$Var(\frac{1}{n}S_{n})=\frac{1}{n^{2}}Var(S_{n})=\frac{\sigma^{2}}{n}$<!-- raw HTML omitted -->。</p>
+</div>
+<p>如果我们对<span> $S_{n}$</span> 进行缩放，例如对于 <span>$\frac{1}{n}S_{n}$</span> 而言，其均值 <span>$E(\frac{1}{n}S_{n})=\frac{1}{n}S_{n}=\frac{\mu}{n}$</span>，而方差 <span>$Var(\frac{1}{n}S_{n})=\frac{1}{n^{2}}Var(S_{n})=\frac{\sigma^{2}}{n}$</span>。</p>
 <blockquote>
 <p>注意均值和方差的计算过程</p>
 </blockquote>
-<p>很显然，如果我们不进行缩放，当 <!-- raw HTML omitted -->$n\to \infty$ <!-- raw HTML omitted --> 时，那么 <!-- raw HTML omitted -->$S_n$ <!-- raw HTML omitted --> 的分布将会发散。或者进行 <!-- raw HTML omitted -->$\frac{1}{n}$ <!-- raw HTML omitted --> 缩放，那么 <!-- raw HTML omitted -->$S_n$ <!-- raw HTML omitted --> 的方差也会趋向于零，一个均值为零，方差为零的分布是完全没有意义的（或者说）。</p>
-<p>当然实际上存在一个缩放，可以保证<!-- raw HTML omitted --> $S_n$<!-- raw HTML omitted --> 的分布仍然是标准高斯分布，这个缩放因子就是<!-- raw HTML omitted --> $\frac{1}{\sqrt(n)}$<!-- raw HTML omitted -->。</p>
+<p>很显然，如果我们不进行缩放，当 <span>$n\to \infty$ </span> 时，那么 <span>$S_n$ </span> 的分布将会发散。或者进行 <span>$\frac{1}{n}$ </span> 缩放，那么 <span>$S_n$ </span> 的方差也会趋向于零，一个均值为零，方差为零的分布是完全没有意义的（或者说）。</p>
+<p>当然实际上存在一个缩放，可以保证<span> $S_n$</span> 的分布仍然是标准高斯分布，这个缩放因子就是<span> $\frac{1}{\sqrt(n)}$</span>。</p>
 <p>现在我们定义这样一个公式</p>
-<!-- raw HTML omitted -->
+<div>
 <p>$$
 F_n(c) \overset{def}{=} \mathbb E_{x_1,\ldots,x_n} f\big(c(x_1 + \cdots + x_n)\big)
 $$</p>
-<!-- raw HTML omitted -->
+</div>
+其中 <span>$f$</span> 表示一个有界连续函数。我们定义 <span>$c=\frac{\alpha}{\sqrt{n}}$ </span>。根据中心极限定理，<span>$G_n(\alpha)=F_n(c)\to \mathbb E f(\mathcal{N}(0, \alpha^2))$ </span> 在 <span> $n\to \infty$ </span> 是一个关于 <span> $\alpha$ </span> 的函数。假设我们要最小化 <span> $G_n(\alpha)$ </span>，那么我们会得到 <span> $ \alpha_n^* \overset{def}=arg\min_\alpha G_n(\alpha)$ </span>，其中 <span> $\alpha_n^{*}$ </span> 就是令 <span> $G_n(\alpha)$ </span> 最小化的最优参数。当 n 足够大时，对于任意 <span> $N>n$ </span>，甚至 <span> $N\to \infty$ </span>，<span>$a_N^*$ </span> 应当非常接近 <span>$a_n^*$ </span>。这就意味着，对于一个较小规模的问题，它的缩放参数 <span> $\alpha_n^*$ </span> 和一个较大规模的问题的缩放参数<span> $\alpha_N^*$ </span> 是近似的。此时我们就可以直接将 <span> $\alpha$ </span> 这个超参数从小模型直接应用到大模型。我们将这样的一个 <span> $c=\frac{\alpha}{\sqrt n}$ </span> 叫做正确的参数化（即我们采用一种方式参数化了 <span> $c$ </span>，从而描述了 <span> $c$ </span> 应该如何随着问题规模 <span> $n$</span> 变化）。
 <blockquote>
-<p>这里我们可以将<!-- raw HTML omitted --> $x_1,\dots,x_n$ <!-- raw HTML omitted --> 视为神经网络中的一层神经元。对于小规模网络 n，如果我们为了降低训练损失而对某一层的神经元进行了某种缩放，例如添加了BN 层，此时 <!-- raw HTML omitted --> $c$ <!-- raw HTML omitted --> 就是一个超参数，而我们可以通过调节 $c$ 来改变模型的性能。现在我们希望在一个小模型上找到一个最优的缩放因子，使得损失函数最小，然后将其应用到一个更大的模型上，那么通过将这个缩放因子 $c$ 设置为<!-- raw HTML omitted --> $c=\frac{\alpha}{\sqrt{n}}$ <!-- raw HTML omitted --> 的形式，从而使 $c$ 对于规模 n 的变化不敏感。从而实现这个最优 $c$ 可以从小模型直接迁移到大模型的效果。</p>
-<p>为什么分母是 <!-- raw HTML omitted --> $\sqrt n$？<!-- raw HTML omitted -->这里因为我们假定是标准高斯分布，通过前面的推导可以发现，分母设置为 $\sqrt n$ 时，缩放之后的分布只和分子相关，而不和问题规模 n 相关。</p>
+<p>这里我们可以将<span> $x_1,\dots,x_n$ </span> 视为神经网络中的一层神经元。对于小规模网络 n，如果我们为了降低训练损失而对某一层的神经元进行了某种缩放，例如添加了BN 层，此时 <span> $c$ </span> 就是一个超参数，而我们可以通过调节 $c$ 来改变模型的性能。现在我们希望在一个小模型上找到一个最优的缩放因子，使得损失函数最小，然后将其应用到一个更大的模型上，那么通过将这个缩放因子 $c$ 设置为<span> $c=\frac{\alpha}{\sqrt{n}}$ </span> 的形式，从而使 $c$ 对于规模 n 的变化不敏感。从而实现这个最优 $c$ 可以从小模型直接迁移到大模型的效果。</p>
+<p>为什么分母是 <span> $\sqrt n$？</span>这里因为我们假定是标准高斯分布，通过前面的推导可以发现，分母设置为 $\sqrt n$ 时，缩放之后的分布只和分子相关，而不和问题规模 n 相关。</p>
 <p>如果你实在感到困惑，请先放一放，继续看下去。</p>
 </blockquote>
 <p>需要强调的是，如果要让任意超参数都是可迁移的（Transferable），那么就不能只对某个超参数进行参数化，而是要对所有 $\mu$Transferable 类别下超参数进行参数化。更具体地解释将在 Section 5 给出。</p>
@@ -204,21 +253,23 @@ $$</p>
 <p>Figure.18 展示了在 Transformer 中对不同超参数应用 $\mu Transfer$ 的结果。说明该方法适用于不同的超参数。</p>
 <h2 id="4unlocking-zero-shot-hyperparameter-transfer-with-μp">4、Unlocking Zero-Shot Hyperparameter Transfer with μP</h2>
 <p>以一个具有两层隐藏层的 MLP 为例，我们定义其数学描述并使用 LeCun 进行初始化：</p>
-<!-- raw HTML omitted -->
+<div>
 <p>$$
 f(\xi)=W^{3T}\phi(W^{2T}\phi(W^{1T}\xi +b^1)+b^2)\
 with; init.\quad W^1\sim\mathcal N\left(0,\frac{1}{d_{in}}\right),W^{2,3}\sim \mathcal N \left(0,\frac{1}{n}\right),b^{1,2}=0,
 $$</p>
-<!-- raw HTML omitted -->
+</div>
+其中激活函数 $\phi=ReLU$ 。
 <p>如果我们希望实现 $\mu Transfer$，我们只需要修改初始化部分，基本形式如下：</p>
-<!-- raw HTML omitted -->
+<div>
 <p>$$
 \text{initialize}\quad W^1\sim \mathcal N\left(0,\frac{1}{d_{in}}\right),W^2\sim\mathcal N\left(0,\frac{1}{n}\right),W^3\sim N\left(0,\frac{1}{n^2}\right),b^{1,2}=0\\
 \text{with SGD learning rates}\quad \eta_{W^1}=\eta_{b^1}=\eta_{b^2}=\eta n,\eta_{W^2}=\eta,\eta_{W^3}=\eta n^{-1}
 $$</p>
-<!-- raw HTML omitted -->
-<p>在实际使用中，我们通常会加入一个常数因子，来保证上述参数化方法在某些设置下可以同标准参数化方法保持一致。例如引入 <!-- raw HTML omitted -->$\tilde n \overset{def}=\frac{n}{n_0}$ <!-- raw HTML omitted -->，其中 <!-- raw HTML omitted --> $n_0$ <!-- raw HTML omitted -->表示模型的基本宽度。此时</p>
-<!-- raw HTML omitted -->
+</div>
+这里 $\eta$ 表示了一个全局主学习率，模型各部分的学习率与主学习率相关。这里的定义展现了参数化与模型规模 $n$ 的缩放关系。
+<p>在实际使用中，我们通常会加入一个常数因子，来保证上述参数化方法在某些设置下可以同标准参数化方法保持一致。例如引入 <span>$\tilde n \overset{def}=\frac{n}{n_0}$ </span>，其中 <span> $n_0$ </span>表示模型的基本宽度。此时</p>
+<div>
 <p>$$
 \text{Initialize:}
 \quad W_1 \sim \mathcal{N} \left( 0, \frac{1}{d_{\text{in}}} \right),
@@ -231,7 +282,8 @@ $$</p>
 \quad \eta_{W_2} = \eta,
 \quad \eta_{W_3} = \eta \tilde{n}^{-1}
 $$</p>
-<!-- raw HTML omitted -->
+</div>
+在这种定义下，当<span> $n=n_0$ </span>时，$\mu Transfer$ 将和标准参数化保持一致，方便进行对比测试。并且在<span> $n_0$</span> 上找到的最优超参数，都可以通过上述定义的缩放方法，直接迁移到大模型上使用。
 <p>Table.3 给出了通用神经网络下 $\mu P$ 和 SP 的初始化区别。</p>
 <table>
   <thead>
@@ -245,27 +297,27 @@ $$</p>
   <tbody>
       <tr>
           <td style="text-align: center">Init. Var</td>
-          <td style="text-align: center"><!-- raw HTML omitted -->$\frac{1}{fan_in}$<!-- raw HTML omitted --></td>
-          <td style="text-align: center"><!-- raw HTML omitted -->$\frac{1}{fan_in^2}\quad (\frac{1}{fan_in})$<!-- raw HTML omitted --></td>
-          <td style="text-align: center"><!-- raw HTML omitted --> $\frac{1}{fran_in}$<!-- raw HTML omitted --></td>
+          <td style="text-align: center"><span>$\frac{1}{fan_in}$</span></td>
+          <td style="text-align: center"><span>$\frac{1}{fan_in^2}\quad (\frac{1}{fan_in})$</span></td>
+          <td style="text-align: center"><span> $\frac{1}{fran_in}$</span></td>
       </tr>
       <tr>
           <td style="text-align: center">SGD LR</td>
-          <td style="text-align: center"><!-- raw HTML omitted -->$fan_out\quad (1) $<!-- raw HTML omitted --></td>
-          <td style="text-align: center"><!-- raw HTML omitted -->$\frac{1}{fan_in}\quad (1)$<!-- raw HTML omitted --></td>
+          <td style="text-align: center"><span>$fan_out\quad (1) $</span></td>
+          <td style="text-align: center"><span>$\frac{1}{fan_in}\quad (1)$</span></td>
           <td style="text-align: center">$1$</td>
       </tr>
       <tr>
           <td style="text-align: center">Adam LR</td>
           <td style="text-align: center">$1$</td>
-          <td style="text-align: center"><!-- raw HTML omitted --> $\frac{1}{fan_in}\quad (1)$ <!-- raw HTML omitted --></td>
-          <td style="text-align: center"><!-- raw HTML omitted -->$\frac{1}{fan_in}\quad (1)$ <!-- raw HTML omitted --></td>
+          <td style="text-align: center"><span> $\frac{1}{fan_in}\quad (1)$ </span></td>
+          <td style="text-align: center"><span>$\frac{1}{fan_in}\quad (1)$ </span></td>
       </tr>
   </tbody>
 </table>
-<p>其中<!-- raw HTML omitted --> $fan_in$ <!-- raw HTML omitted --> 表示当前神经元的输入连接数，即上一层的神经元数量。<!-- raw HTML omitted --> $fan_out$ <!-- raw HTML omitted --> 表示当前神经元的输出连接数，即下一层神经元的数量。每一个单元格中，左侧表示 $\mu P$ 的配置，右侧使用括号包括的部分表示对应的 SP 配置。对于 bias 而言其 <!-- raw HTML omitted --> $fan_in$ <!-- raw HTML omitted --> 总是 1。</p>
-<p>通常在使用中我们也会引入常数因子来参数化<!-- raw HTML omitted -->  $fan_in; &amp;; fan_out$ <!-- raw HTML omitted --> 。</p>
-<p>Transformer 的配置需要做一点修改：使用 $\frac{1}{d}$ attention 而不是 $\frac{1}{\sqrt d}$。Attention logit 通过 $q^Tk/d$ 计算而不是 <!-- raw HTML omitted -->$q^Tk\sqrt d$<!-- raw HTML omitted -->。</p>
+<p>其中<span> $fan_in$ </span> 表示当前神经元的输入连接数，即上一层的神经元数量。<span> $fan_out$ </span> 表示当前神经元的输出连接数，即下一层神经元的数量。每一个单元格中，左侧表示 $\mu P$ 的配置，右侧使用括号包括的部分表示对应的 SP 配置。对于 bias 而言其 <span> $fan_in$ </span> 总是 1。</p>
+<p>通常在使用中我们也会引入常数因子来参数化<span>  $fan_in; &amp;; fan_out$ </span> 。</p>
+<p>Transformer 的配置需要做一点修改：使用 $\frac{1}{d}$ attention 而不是 $\frac{1}{\sqrt d}$。Attention logit 通过 $q^Tk/d$ 计算而不是 <span>$q^Tk\sqrt d$</span>。</p>
 <p>Table 3 没有包含 parameter multipliers，如果需要则可以查看 Table 9。同时 Table 8 给出了更加容易实现的版本，也适用于权重共享的网络。</p>
 <p>Table 3 适用于 Adam、SGD 或者 Adagrad，更多优化器的配置在 Appendix B.3 给出，更多关于该表的信息也可以在 Appendix B. 找到，其推导则在 Appendix J.</p>
 <table>
@@ -280,27 +332,27 @@ $$</p>
   <tbody>
       <tr>
           <td style="text-align: center">Init. Var</td>
-          <td style="text-align: center"><!-- raw HTML omitted -->$\frac{1}{fan_in}$<!-- raw HTML omitted --></td>
-          <td style="text-align: center"><!-- raw HTML omitted -->$1\quad (\frac{1}{fan_in})$<!-- raw HTML omitted --></td>
-          <td style="text-align: center"><!-- raw HTML omitted -->$\frac{1}{fran_in}$<!-- raw HTML omitted --></td>
+          <td style="text-align: center"><span>$\frac{1}{fan_in}$</span></td>
+          <td style="text-align: center"><span>$1\quad (\frac{1}{fan_in})$</span></td>
+          <td style="text-align: center"><span>$\frac{1}{fran_in}$</span></td>
       </tr>
       <tr>
           <td style="text-align: center">Multiplier</td>
           <td style="text-align: center">$1$</td>
-          <td style="text-align: center"><!-- raw HTML omitted -->$\frac{1}{fan_in}\quad (1)$<!-- raw HTML omitted --></td>
+          <td style="text-align: center"><span>$\frac{1}{fan_in}\quad (1)$</span></td>
           <td style="text-align: center">$1$</td>
       </tr>
       <tr>
           <td style="text-align: center">SGD LR</td>
-          <td style="text-align: center"><!-- raw HTML omitted -->$fan_out\quad (1) $ <!-- raw HTML omitted --></td>
-          <td style="text-align: center"><!-- raw HTML omitted -->$fan_in\quad (1)$<!-- raw HTML omitted --></td>
+          <td style="text-align: center"><span>$fan_out\quad (1) $ </span></td>
+          <td style="text-align: center"><span>$fan_in\quad (1)$</span></td>
           <td style="text-align: center">$1$</td>
       </tr>
       <tr>
           <td style="text-align: center">Adam LR</td>
           <td style="text-align: center">$1$</td>
           <td style="text-align: center">$1$</td>
-          <td style="text-align: center"><!-- raw HTML omitted -->$\frac{1}{fan_in}\quad (1)$<!-- raw HTML omitted --></td>
+          <td style="text-align: center"><span>$\frac{1}{fan_in}\quad (1)$</span></td>
       </tr>
   </tbody>
 </table>
@@ -316,61 +368,66 @@ $$</p>
   <tbody>
       <tr>
           <td style="text-align: center">Init. Var</td>
-          <td style="text-align: center"><!-- raw HTML omitted -->$\frac{1}{fan_out}\quad\frac{1}{fan_in}$<!-- raw HTML omitted --></td>
-          <td style="text-align: center"><!-- raw HTML omitted -->$1\quad (\frac{1}{fan_in})$<!-- raw HTML omitted --></td>
-          <td style="text-align: center"><!-- raw HTML omitted --> $\frac{1}{fran_in}$<!-- raw HTML omitted --></td>
+          <td style="text-align: center"><span>$\frac{1}{fan_out}\quad\frac{1}{fan_in}$</span></td>
+          <td style="text-align: center"><span>$1\quad (\frac{1}{fan_in})$</span></td>
+          <td style="text-align: center"><span> $\frac{1}{fran_in}$</span></td>
       </tr>
       <tr>
           <td style="text-align: center">Multiplier</td>
-          <td style="text-align: center"><!-- raw HTML omitted -->$\sqrt {fan_out}\quad1$ <!-- raw HTML omitted --></td>
-          <td style="text-align: center"><!-- raw HTML omitted -->$\frac{1}{\sqrt{fan_in}}\quad (1)$ <!-- raw HTML omitted --></td>
+          <td style="text-align: center"><span>$\sqrt {fan_out}\quad1$ </span></td>
+          <td style="text-align: center"><span>$\frac{1}{\sqrt{fan_in}}\quad (1)$ </span></td>
           <td style="text-align: center">$1$</td>
       </tr>
       <tr>
           <td style="text-align: center">SGD LR</td>
-          <td style="text-align: center"><!-- raw HTML omitted --> $fan_out\quad (1) $ <!-- raw HTML omitted --></td>
-          <td style="text-align: center"><!-- raw HTML omitted --> $fan_in\quad (1)$ <!-- raw HTML omitted --></td>
+          <td style="text-align: center"><span> $fan_out\quad (1) $ </span></td>
+          <td style="text-align: center"><span> $fan_in\quad (1)$ </span></td>
           <td style="text-align: center">$1$</td>
       </tr>
       <tr>
           <td style="text-align: center">Adam LR</td>
-          <td style="text-align: center"><!-- raw HTML omitted --> $\frac{1}{\sqrt{fan_out}}\quad(1)$ <!-- raw HTML omitted --></td>
-          <td style="text-align: center"><!-- raw HTML omitted -->$\frac{1}{\sqrt{fan_in}}\quad(1)$ <!-- raw HTML omitted --></td>
-          <td style="text-align: center"><!-- raw HTML omitted --> $\frac{1}{fan_in}\quad (1)$ <!-- raw HTML omitted --></td>
+          <td style="text-align: center"><span> $\frac{1}{\sqrt{fan_out}}\quad(1)$ </span></td>
+          <td style="text-align: center"><span>$\frac{1}{\sqrt{fan_in}}\quad(1)$ </span></td>
+          <td style="text-align: center"><span> $\frac{1}{fan_in}\quad (1)$ </span></td>
       </tr>
   </tbody>
 </table>
 <h2 id="5the-defects-of-sp-and-how-μp-fixes-them">5、The Defects of SP and How μP Fixes Them</h2>
 <p>以一个只有一层隐藏层的线性感知机为例，定义为：</p>
-<!-- raw HTML omitted -->
+<div>
 <p>$$
 f(x)=V^TUx\quad V,U\in\mathbb R^{n\times1}\\
 \text{SP init. }	V_{\alpha}\sim\mathcal N(0,\frac{1}{n}),U_{\alpha}\sim\mathcal N(0,1) \text{ for each }\alpha \in [n]
 $$</p>
-<!-- raw HTML omitted -->
-<p>我们设置学习率为 1，执行了一步 SGD 之后，新的参数更新为<!-- raw HTML omitted --> $V&rsquo;\gets V+\theta U,U&rsquo;\gets U+\theta V$<!-- raw HTML omitted -->。</p>
+</div>
+这保证了在初始化时<span> $f(x)=\Theta(\mid X\mid)$ </span>，即输出和输入同阶。
+<p>我们设置学习率为 1，执行了一步 SGD 之后，新的参数更新为<span> $V&rsquo;\gets V+\theta U,U&rsquo;\gets U+\theta V$</span>。</p>
 <blockquote>
 <p>你可能对这里的参数更新感到疑惑，实际上对于 V 的更新需要对 V 进行求导，那么 V 自然而然就被消去，从而保留 U。对于 U 而言同理。</p>
 </blockquote>
 <p>一步更新之后我们得到</p>
-<!-- raw HTML omitted -->
+<div>
 <p>$$
 f(x) = V&rsquo;^\top U&rsquo; x = (V^\top U + θU^\top U + θV^\top V + θ^2 U^\top V) x
 $$</p>
-<!-- raw HTML omitted -->
-<p>再考虑使用 $\mu P$ 初始化，即 <!-- raw HTML omitted -->$V_{\alpha}\sim \mathcal N(0,1/n^2), U\sim\mathcal N(0,1)$<!-- raw HTML omitted -->，设置学习率<!-- raw HTML omitted --> $\eta_V=1/n,\eta_U=n$<!-- raw HTML omitted -->。此时参数更新为</p>
-<!-- raw HTML omitted -->
+</div>
+此时注意 $U^TU$ 这一项，由于<span> $U_{\alpha}\sim \mathcal N(0,1)$</span>，根据大数定理，当<span> $n\to\infty$</span> 时，<span>$U^TU=\Theta(n)$</span>，表示这一项是输入 $x$ 的 n 倍高阶，同理加上其他项之后，此时模型的输出将会随着规模的增大发生爆炸。
+<p>再考虑使用 $\mu P$ 初始化，即 <span>$V_{\alpha}\sim \mathcal N(0,1/n^2), U\sim\mathcal N(0,1)$</span>，设置学习率<span> $\eta_V=1/n,\eta_U=n$</span>。此时参数更新为</p>
+<div>
 <p>$$
 \begin{aligned}
 V&rsquo; &amp;= V + \eta_V \theta U \\
 U&rsquo; &amp;= U + \eta_U \theta V
 \end{aligned}
 $$</p>
-<!-- raw HTML omitted -->
+</div>
+则经过一步 SGD 之后
+<div>
 <p>$$
 f(x) = \Big( V^\top U + \theta n^{-1} U^\top U + \theta n V^\top V + \theta^2 U^\top V \Big)x
 $$</p>
-<!-- raw HTML omitted -->
+</div>
+此时我们就可以发现<span> $f(x)=\Theta(1)$</span> 仍然成立。
 <p>这个方法在 Transformer 以及 Adam 中得到了验证</p>
 <p><img
         class="lazyload"
@@ -485,13 +542,13 @@ $$</p>
 <p>本文还有很长的 Appendix，介绍了本方法的理论推导，以及更多的实验结果和更多的解释。这里不多赘述。</p>
 </blockquote>
 <h2 id="reference">Reference</h2>
-<p><!-- raw HTML omitted -->[1]<!-- raw HTML omitted --> Yang, G., &amp; Hu, E. J. (2020). Feature learning in infinite-width neural networks. <em>arXiv preprint arXiv:2011.14522</em></p>
-<p><!-- raw HTML omitted -->[2]<!-- raw HTML omitted -->Snoek, J., Larochelle, H., &amp; Adams, R. P. (2012). Practical bayesian optimization of machine learning algorithms. <em>Advances in neural information processing systems</em>, <em>25</em>.</p>
-<p><!-- raw HTML omitted -->[3]<!-- raw HTML omitted -->Snoek, J., Rippel, O., Swersky, K., Kiros, R., Satish, N., Sundaram, N., &hellip; &amp; Adams, R. (2015, June). Scalable bayesian optimization using deep neural networks. In <em>International conference on machine learning</em> (pp. 2171-2180). PMLR.</p>
+<p><a id="1">[1]</a> Yang, G., &amp; Hu, E. J. (2020). Feature learning in infinite-width neural networks. <em>arXiv preprint arXiv:2011.14522</em></p>
+<p><a id="2">[2]</a>Snoek, J., Larochelle, H., &amp; Adams, R. P. (2012). Practical bayesian optimization of machine learning algorithms. <em>Advances in neural information processing systems</em>, <em>25</em>.</p>
+<p><a id="3">[3]</a>Snoek, J., Rippel, O., Swersky, K., Kiros, R., Satish, N., Sundaram, N., &hellip; &amp; Adams, R. (2015, June). Scalable bayesian optimization using deep neural networks. In <em>International conference on machine learning</em> (pp. 2171-2180). PMLR.</p>
 </div></div></div>
             </main><footer class="footer">
         <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.134.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
-                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2022 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">xxxx</a></span></div>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://junpoyu.github.io/" target="_blank">Junpo Yu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>
 
@@ -503,5 +560,5 @@ $$</p>
         <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
                 <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
             </a>
-        </div><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script>window.config={"comment":{}};</script><script src="/js/theme.min.js"></script></body>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/contrib/auto-render.min.js"></script><script src="/lib/katex/contrib/copy-tex.min.js"></script><script src="/lib/katex/contrib/mhchem.min.js"></script><script src="/lib/cookieconsent/cookieconsent.min.js"></script><script>window.config={"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
 </html>

@@ -1,22 +1,39 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>All Posts - 我的全新 Hugo 网站</title>
+        <title>All Posts - Junpo Yu&#39;s Blog</title>
         <link>http://localhost:1313/posts/</link>
-        <description>All Posts | 我的全新 Hugo 网站</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><lastBuildDate>Tue, 24 Jun 2025 19:56:52 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/posts/" rel="self" type="application/rss+xml" /><item>
-    <title>Second</title>
-    <link>http://localhost:1313/second/</link>
-    <pubDate>Tue, 24 Jun 2025 19:56:52 &#43;0800</pubDate>
-    <author>xxxx</author>
-    <guid>http://localhost:1313/second/</guid>
+        <description>All Posts | Junpo Yu&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>junpo_yu@163.com (Junpo Yu)</managingEditor>
+            <webMaster>junpo_yu@163.com (Junpo Yu)</webMaster><lastBuildDate>Sun, 22 Jun 2025 12:23:38 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>🛠️总想搭建点什么</title>
+    <link>http://localhost:1313/posts/builds/</link>
+    <pubDate>Sun, 22 Jun 2025 12:23:38 &#43;0800</pubDate>
+    <author>Junpo Yu</author>
+    <guid>http://localhost:1313/posts/builds/</guid>
     <description><![CDATA[]]></description>
 </item>
 <item>
-    <title>First</title>
-    <link>http://localhost:1313/first/</link>
-    <pubDate>Tue, 24 Jun 2025 19:48:59 &#43;0800</pubDate>
-    <author>xxxx</author>
-    <guid>http://localhost:1313/first/</guid>
+    <title>📊一些科研中的内容</title>
+    <link>http://localhost:1313/posts/research/</link>
+    <pubDate>Thu, 19 Jun 2025 12:23:04 &#43;0800</pubDate>
+    <author>Junpo Yu</author>
+    <guid>http://localhost:1313/posts/research/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>📖学到老，活到老</title>
+    <link>http://localhost:1313/posts/knowledge/</link>
+    <pubDate>Wed, 04 Jun 2025 01:15:26 &#43;0800</pubDate>
+    <author>Junpo Yu</author>
+    <guid>http://localhost:1313/posts/knowledge/</guid>
+    <description><![CDATA[]]></description>
+</item>
+<item>
+    <title>💡技术性文章</title>
+    <link>http://localhost:1313/posts/tech/</link>
+    <pubDate>Sun, 25 May 2025 21:01:30 &#43;0800</pubDate>
+    <author>Junpo Yu</author>
+    <guid>http://localhost:1313/posts/tech/</guid>
     <description><![CDATA[]]></description>
 </item>
 </channel>

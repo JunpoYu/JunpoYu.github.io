@@ -1,0 +1,17 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Typora - Tag - Junpo Yu&#39;s Blog</title>
+        <link>http://localhost:1313/tags/typora/</link>
+        <description>Typora - Tag - Junpo Yu&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>junpo_yu@163.com (Junpo Yu)</managingEditor>
+            <webMaster>junpo_yu@163.com (Junpo Yu)</webMaster><lastBuildDate>Sun, 04 May 2025 11:14:40 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/tags/typora/" rel="self" type="application/rss+xml" /><item>
+    <title>Config Img Path in Typora</title>
+    <link>http://localhost:1313/config-img-path-in-typora/</link>
+    <pubDate>Sun, 04 May 2025 11:14:40 &#43;0800</pubDate>
+    <author>Junpo Yu</author>
+    <guid>http://localhost:1313/config-img-path-in-typora/</guid>
+    <description><![CDATA[<h2 id="在-typora-中配置图片的相对路径">在 Typora 中配置图片的相对路径</h2>
+<p>在自建博客中插入图片通常使用<strong>图床</strong>和<strong>本地相对路径</strong>两种方式。图床毫无疑问是最简单且方便的，目前也有很多免费的图床服务可以使用，但是总有人会担心将自己的数据交给别人是比较危险的（比如我）。但是通过 Markdown 编辑器（例如 Typora）插入图片时就不得不考虑图片本地路径和博客构建路径之间的不兼容，好在 Typora 目前已经支持在 md 文件中使用 font-matter 自定义图片预览的相对路径，又不影响图片构建。</p>]]></description>
+</item>
+</channel>
+</rss>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>深入浅出决定系数R2 - Junpo Yu&#39;s Blog</title><meta name="Description" content="你所经历的每一个日常，也许正是连续不断的奇迹"><meta property="og:url" content="http://localhost:1313/what-is-r-square/">
+  <meta property="og:site_name" content="Junpo Yu&#39;s Blog">
+  <meta property="og:title" content="深入浅出决定系数R2">
+  <meta property="og:description" content="决定系数$R^2$是一个在数学或者说统计学常见的评价标准，尤其是对于回归问题，模型的好坏完全可以用只通过$R^2$来衡量。
+但是在使用这个指标之前我们有必要了解其背后的原理，尤其是和另一个非常容易混淆的相关系数$R$的关系。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-11-06T15:48:37+08:00">
+    <meta property="article:modified_time" content="2024-11-06T15:48:37+08:00">
+    <meta property="article:tag" content="Math">
+    <meta property="og:image" content="http://localhost:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/logo.png">
+  <meta name="twitter:title" content="深入浅出决定系数R2">
+  <meta name="twitter:description" content="决定系数$R^2$是一个在数学或者说统计学常见的评价标准，尤其是对于回归问题，模型的好坏完全可以用只通过$R^2$来衡量。
+但是在使用这个指标之前我们有必要了解其背后的原理，尤其是和另一个非常容易混淆的相关系数$R$的关系。">
+<meta name="application-name" content="Junpo Yu&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Junpo Yu&#39;s Blog">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/what-is-r-square/" /><link rel="prev" href="http://localhost:1313/how-to-write-a-paper/" /><link rel="next" href="http://localhost:1313/prior-and-posterior-probabilities/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "深入浅出决定系数R2",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/what-is-r-square\/"
+        },"genre": "posts","keywords": "math","wordcount":  1843 ,
+        "url": "http:\/\/localhost:1313\/what-is-r-square\/","datePublished": "2024-11-06T15:48:37+08:00","dateModified": "2024-11-06T15:48:37+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Junpo Yu"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Junpo Yu&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/rubysiu.jpg"
+        data-srcset="/rubysiu.jpg, /rubysiu.jpg 1.5x, /rubysiu.jpg 2x"
+        data-sizes="auto"
+        alt="/rubysiu.jpg"
+        title="/rubysiu.jpg" />Junpo Yu&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/tech/"> 技术性文章 </a><a class="menu-item" href="/posts/builds/"> 构建 </a><a class="menu-item" href="/posts/knowledge/"> 理论知识 </a><a class="menu-item" href="/posts/research/"> 科研相关 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Junpo Yu&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/rubysiu.jpg"
+        data-srcset="/rubysiu.jpg, /rubysiu.jpg 1.5x, /rubysiu.jpg 2x"
+        data-sizes="auto"
+        alt="/rubysiu.jpg"
+        title="/rubysiu.jpg" />Junpo Yu&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/tech/" title="">技术性文章</a><a class="menu-item" href="/posts/builds/" title="">构建</a><a class="menu-item" href="/posts/knowledge/" title="">理论知识</a><a class="menu-item" href="/posts/research/" title="">科研相关</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">深入浅出决定系数R2</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2024-11-06">2024-11-06</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1843 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#一回归问题">一、回归问题</a></li>
+    <li><a href="#二相关系数">二、相关系数</a></li>
+    <li><a href="#三决定系数">三、决定系数</a></li>
+    <li><a href="#四决定系数的深层含义">四、决定系数的深层含义</a></li>
+    <li><a href="#五决定系数的缺陷">五、决定系数的缺陷</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>决定系数$R^2$是一个在数学或者说统计学常见的评价标准，尤其是对于回归问题，模型的好坏完全可以用只通过$R^2$来衡量。</p>
+<p>但是在使用这个指标之前我们有必要了解其背后的原理，尤其是和另一个非常容易混淆的相关系数$R$的关系。</p>
+<h2 id="一回归问题">一、回归问题</h2>
+<p>相关系数和决定系数都是评价回归模型的指标，因此我们先了解什么是回归问题。</p>
+<p>所谓回归就是研究一组随机变量 <span> $Y_1,Y_2&hellip;Y_n$ </span> 和另一组随机变量 <span> $X_1,X_2&hellip;X_n$ </span> 之间的关系的统计分析方法。通常我们可以将两组变量的关系简单的划分为线性和非线性，对应的就是线性回归和非线性回归。简单地说线性回归下两组随机变量之间的关系基本可以使用一条直线来表示，而不能使用直线表示的就是非线性回归。</p>
+<h2 id="二相关系数">二、相关系数</h2>
+<p>相关系数有很多不同的定义，例如最常用的 Pearson 相关系数用于衡量两个变量之间的线性关系，Spearman 相关系数用于衡量两个变量之间的单调关系。</p>
+<p>此处只讨论最常用的 Pearson 相关系数，其计算公式如下：</p>
+<div>
+$$
+r=\frac{\sum(x_i-\bar x)(y_i-\bar y)}{\sqrt{\sum(x_i-\bar x)^2\sum(y_i-\bar y)^2}}
+$$
+</div>
+其中$\bar x, \bar y$分别表示样本的平均值。实际上该公式可以简化为两个变量的协方差与两个变量方差乘积的比值。但我们不想在此处深入讨论该公式的含义，我们只需要知道相关系数的取值范围在 -1 到 1 范围内，越接近 1 表示正相关，越接近 -1 表示负相关，接近 0 表示两者没有**线性相关性**。
+<h2 id="三决定系数">三、决定系数</h2>
+<p>决定系数是衡量模型的拟合值或预测值与真实值之间的相似程度。</p>
+<blockquote>
+<p>需要注意的是，相关系数衡量两个随机变量之间的线性相关性，实际上可以理解为衡量因变量和自变量之间的线性相关性。</p>
+<p>但是决定系数是衡量真实样本的因变量和模型模拟的因变量之间的相似程度，两者在含义上完全不同</p>
+</blockquote>
+<p>决定系数的公式如下：
+$$
+\begin{align*}
+r^2 &amp;= \frac{SSR}{SST} = 1 - \frac{SSE}{SST} \newline
+SST &amp;= SSR + SSE = \sum (y - \bar{y})^2 \newline
+SSR &amp;= \sum (\hat{y} - \bar{y})^2 \newline
+SSE &amp;= \sum (y - \hat{y})^2
+\end{align*}
+$$
+在线性回归问题中，可以代入$\hat y=ax+b$，推导后发现决定系数等于相关系数的平方。</p>
+<p>但是在非线性回归问题中，不可以将两者划为平方关系，因为其计算方法和含义完全不同。</p>
+<h2 id="四决定系数的深层含义">四、决定系数的深层含义</h2>
+<p>本文我们主要讨论决定系数，因此我们要了解一下决定系数到底评价了什么。</p>
+<p>对于以下形式的决定系数计算公式：</p>
+<div>
+$$
+r^2=1-\frac{\sum(y-\hat y)^2}{\sum(y-\bar y)^2}
+$$
+</div>
+我们对比另一个评价指标MSE：
+<div>
+$$
+MSE=\frac{\sum(y-\hat y)^2}{n}
+$$
+</div>
+假如我们将 $\bar y$也视为一个模型的预测，只是这个模型固定输出均值作为预测值。那么决定系数的分式项就可以理解为我们的模型和均值模型的预测值对真实值的方差之比，这个分式就衡量了我们的模型相比于均值模型的好坏程度。
+<p>这种说法可能比较别扭，我们换另一个思路来理解。</p>
+<p>假设我们已经建立一个模型，现在我们想要评价一下他的性能，于是我们计算了MSE。我们知道均方误差的最小值为 0，因此 MSE=0 的时候模型是最好的，这代表模型的预测没有任何误差。但是 MSE 的上限在哪里呢？</p>
+<p>很显然没有上限，我的模型完全可以天马行空的给出预测值。所以我们需要一个标准，能够限定 MSE 上限的标准。自然的，我们想到了均值模型，我们暂且称其为非熟练（unskilled）模型。我们规定 MSE 的上限应该是非熟练模型的 MSE，超过此值的模型应该是错误的或者完全不起作用的。</p>
+<p>通过进行最大最小值归一化，我们将 MSE 缩放到了 0-1 之间，为了符合习惯，我们用 1 减去这个值，将最好模型指标设置为 1，最差的模型指标设置为 0。而均方根误差的除以样本数量的操作在分式中被抵消了，由此我们得到了相同的决定系数公式。此时决定系数就代表了熟练模型的拟合效果，其最高可以完全拟合，最低则相当于非熟练模型（此处为均值模型）。</p>
+<p>但是很显然我们建立的模型可能效果还不如均值模型，所以决定系数实际上可以为负值，表示我们建立的模型不如直接使用均值。</p>
+<h2 id="五决定系数的缺陷">五、决定系数的缺陷</h2>
+<p>前面我们说决定系数实际上和均值模型有关，而均值模型的均值是一个样本内指标，这是传统统计学的方法。但是机器学习要求我们在样本外进行评估。也许有人说，我们明明已经划分了训练集和测试集，所有的评估都是在测试集上进行的。但这其中仍然隐藏着数据泄露的问题，数据不是泄露给了机器学习模型，而是泄露给了均值模型。</p>
+<p>当我们在测试集上计算决定系数的时候，我们使用测试集的样本均值作为了非熟练模型的结果，此时就发生了数据泄露问题。对于均值模型来说，他已经知道了测试集的均值，而我们的机器学习模型对测试集则是一无所知，这里就发生了数据泄露。因此决定系数使用均值模型来衡量机器学习模型的好坏是不公平的。</p>
+<p>所以一个更好的指标是样本外决定系数（out of sample R square），我们不再使用测试集均值，而是使用<strong>训练集均值</strong>作为测试集均值模型的输出。此时均值模型对测试集也是一无所知的状态。这种方法可以更公平准确的判断模型的效果。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2024-11-06</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/what-is-r-square/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on X" data-sharer="x" data-url="http://localhost:1313/what-is-r-square/" data-title="深入浅出决定系数R2" data-hashtags="math"><i class="fab fa-x-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Threads" data-sharer="threads" data-url="http://localhost:1313/what-is-r-square/" data-title="深入浅出决定系数R2"><i class="fab fa-threads fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:1313/what-is-r-square/" data-hashtag="math"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/what-is-r-square/" data-title="深入浅出决定系数R2"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:1313/what-is-r-square/" data-title="深入浅出决定系数R2"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:1313/what-is-r-square/" data-title="深入浅出决定系数R2"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Diaspora" data-sharer="diaspora" data-url="http://localhost:1313/what-is-r-square/" data-title="深入浅出决定系数R2" data-description=""><i class="fab fa-diaspora fa-fw" aria-hidden="true"></i></a><a href="https://t.me/share/url?url=http%3a%2f%2flocalhost%3a1313%2fwhat-is-r-square%2f&amp;text=%e6%b7%b1%e5%85%a5%e6%b5%85%e5%87%ba%e5%86%b3%e5%ae%9a%e7%b3%bb%e6%95%b0R2" target="_blank" title="Share on Telegram"><i class="fab fa-telegram fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/math/">Math</a></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/how-to-write-a-paper/" class="prev" rel="prev" title="如何写一篇论文"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>如何写一篇论文</a>
+            <a href="/prior-and-posterior-probabilities/" class="next" rel="next" title="先验概率与后验概率">先验概率与后验概率<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.134.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://junpoyu.github.io/" target="_blank">Junpo Yu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/contrib/auto-render.min.js"></script><script src="/lib/katex/contrib/copy-tex.min.js"></script><script src="/lib/katex/contrib/mhchem.min.js"></script><script src="/lib/cookieconsent/cookieconsent.min.js"></script><script>window.config={"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

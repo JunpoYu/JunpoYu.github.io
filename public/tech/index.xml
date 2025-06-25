@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>💡技术性文章 on Junpo Yu&#39;s Blog</title>
+    <link>http://localhost:1313/tech/</link>
+    <description>Recent content in 💡技术性文章 on Junpo Yu&#39;s Blog</description>
+    <generator>Hugo</generator>
+    <language>zh-CN</language>
+    <managingEditor>junpo_yu@163.com (Junpo Yu)</managingEditor>
+    <webMaster>junpo_yu@163.com (Junpo Yu)</webMaster>
+    <lastBuildDate>Sun, 25 May 2025 21:01:30 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tech/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用 shp 文件裁切（掩膜）栅格数据</title>
+      <link>http://localhost:1313/tech/2025/use-shp-to-cut-raster/</link>
+      <pubDate>Sun, 25 May 2025 21:01:30 +0800</pubDate><author>junpo_yu@163.com (Junpo Yu)</author>
+      <guid>http://localhost:1313/tech/2025/use-shp-to-cut-raster/</guid>
+      <description>&lt;p&gt;在地学科研绘图中，我们经常会使用 shp 文件来确定某些边界，同时又使用栅格文件（tiff, nc）来保存数据。为什么要分为两种文件呢？因为 shp 文件作为矢量数据，可以非常精确的划分边界。而栅格数据存在分辨率的问题，过粗的分辨率无法精确表示边界，过细的分辨率则会让文件变得庞大。但是各种地学数据则适合用栅格数据表达，因为其本身就因为观测计数的问题存在各种不同的分辨率，其观测数据在底层逻辑上也适合组织为栅格数据。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Cocos 学习：Cramped Room Of Death Demo</title>
+      <link>http://localhost:1313/tech/2025/design-pattern-in-cocos/</link>
+      <pubDate>Mon, 05 May 2025 16:23:13 +0800</pubDate><author>junpo_yu@163.com (Junpo Yu)</author>
+      <guid>http://localhost:1313/tech/2025/design-pattern-in-cocos/</guid>
+      <description>&lt;h2 id=&#34;cocos-学习之设计模式以-cramped-room-of-death-为例&#34;&gt;Cocos 学习之设计模式：以 Cramped Room Of Death 为例&lt;/h2&gt;&#xA;&lt;p&gt;本文基于 &lt;a href=&#34;https://www.bilibili.com/video/BV1JL4y1M7Y4&#34; target=&#34;_blank&#34; rel=&#34;noopener noreffer &#34;&gt;《Cocos 游戏开发》Steam游戏复刻教程 &lt;/a&gt; ，但是并不涉及 Cocos Creator 的使用细节和 TypeScript 的基础语法等内容，而是专注于项目实现过程中的思想和设计模式。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>如何优雅地从 EarthData 下载数据</title>
+      <link>http://localhost:1313/tech/2025/how-to-download-from-earthdata/</link>
+      <pubDate>Thu, 16 Jan 2025 19:13:23 +0800</pubDate><author>junpo_yu@163.com (Junpo Yu)</author>
+      <guid>http://localhost:1313/tech/2025/how-to-download-from-earthdata/</guid>
+      <description>&lt;p&gt;EarthData 是一个由 NASA 维护的数据门户网站，这里可以很方便地检索并下载地理或者气象数据，例如 MODIS 数据。&lt;/p&gt;&#xA;&lt;p&gt;但是如果通过网页检索有一个弊端，就是 EarthData 会把检索到的所有文件的下载链接缓存到页面上，然后再生成下载元文件，当检索的数据量过大时，检索时间很长不说，大量的链接文本也会导致页面崩溃，因而前功尽弃。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>修改 ssh 端口解决连接 Github 超时问题</title>
+      <link>http://localhost:1313/tech/2024/modify-ssh-port-for-github/</link>
+      <pubDate>Sun, 22 Sep 2024 11:00:16 +0800</pubDate><author>junpo_yu@163.com (Junpo Yu)</author>
+      <guid>http://localhost:1313/tech/2024/modify-ssh-port-for-github/</guid>
+      <description>&lt;p&gt;某一天突然不能使用 SSH 连接到 Github 了，无论是 clone 还是 push 都不行，报错如下：&lt;/p&gt;&#xA;&lt;div class=&#34;code-block code-line-numbers open&#34; style=&#34;counter-reset: code-block 0&#34;&gt;&#xD;&#xA;    &lt;div class=&#34;code-header language-ba&#34;&gt;&#xD;&#xA;        &lt;span class=&#34;code-title&#34;&gt;&lt;i class=&#34;arrow fas fa-angle-right fa-fw&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt;&lt;/span&gt;&#xD;&#xA;        &lt;span class=&#34;ellipses&#34;&gt;&lt;i class=&#34;fas fa-ellipsis-h fa-fw&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt;&lt;/span&gt;&#xD;&#xA;        &lt;span class=&#34;copy&#34; title=&#34;Copy to clipboard&#34;&gt;&lt;i class=&#34;far fa-copy fa-fw&#34; aria-hidden=&#34;true&#34;&gt;&lt;/i&gt;&lt;/span&gt;&#xD;&#xA;    &lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ssh: connect to host github.com port 22: Connection timed out&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&#xD;&#xA;&lt;p&gt;也不知道是网络问题还是开启了 2FA，亦或者是防火墙的原因？但是一番排查都没有解决问题，随后在 StackFlow 上发现了如下配置方法。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>将多个区域的 GeoTIFF 文件合并为全球 TIFF</title>
+      <link>http://localhost:1313/tech/2024/merge-regional-tif-to-global/</link>
+      <pubDate>Sat, 14 Sep 2024 20:50:10 +0800</pubDate><author>junpo_yu@163.com (Junpo Yu)</author>
+      <guid>http://localhost:1313/tech/2024/merge-regional-tif-to-global/</guid>
+      <description>&lt;h2 id=&#34;一使用-arcmap-合并&#34;&gt;一、使用 ArcMap 合并&lt;/h2&gt;&#xA;&lt;p&gt;使用 ArcMap 的工具箱对多个 TIFF 文件进行合并。&lt;/p&gt;&#xA;&lt;p&gt;在 &lt;code&gt;ArcToolBox -&amp;gt; 数据管理工具 -&amp;gt; 栅格 -&amp;gt; 栅格数据集 -&amp;gt; 镶嵌至新栅格&lt;/code&gt; 。&lt;/p&gt;&#xA;&lt;p&gt;打开工具后，在 &lt;code&gt;输入栅格&lt;/code&gt; 栏选中需要合并的数据，在 &lt;code&gt;输出位置&lt;/code&gt; 选定输出路径。在&lt;code&gt;具有扩展名的栅格数据集名称&lt;/code&gt; 设置输出文件名，要带扩展名。波段数和源文件波段数相同，其余可选参数建议查询后按需填写。&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

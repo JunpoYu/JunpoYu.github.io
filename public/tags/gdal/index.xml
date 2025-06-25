@@ -1,0 +1,19 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Gdal - Tag - Junpo Yu&#39;s Blog</title>
+        <link>http://localhost:1313/tags/gdal/</link>
+        <description>Gdal - Tag - Junpo Yu&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>junpo_yu@163.com (Junpo Yu)</managingEditor>
+            <webMaster>junpo_yu@163.com (Junpo Yu)</webMaster><lastBuildDate>Sat, 14 Sep 2024 20:50:10 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/tags/gdal/" rel="self" type="application/rss+xml" /><item>
+    <title>将多个区域的 GeoTIFF 文件合并为全球 TIFF</title>
+    <link>http://localhost:1313/merge-regional-tif-to-global/</link>
+    <pubDate>Sat, 14 Sep 2024 20:50:10 &#43;0800</pubDate>
+    <author>Junpo Yu</author>
+    <guid>http://localhost:1313/merge-regional-tif-to-global/</guid>
+    <description><![CDATA[<h2 id="一使用-arcmap-合并">一、使用 ArcMap 合并</h2>
+<p>使用 ArcMap 的工具箱对多个 TIFF 文件进行合并。</p>
+<p>在 <code>ArcToolBox -&gt; 数据管理工具 -&gt; 栅格 -&gt; 栅格数据集 -&gt; 镶嵌至新栅格</code> 。</p>
+<p>打开工具后，在 <code>输入栅格</code> 栏选中需要合并的数据，在 <code>输出位置</code> 选定输出路径。在<code>具有扩展名的栅格数据集名称</code> 设置输出文件名，要带扩展名。波段数和源文件波段数相同，其余可选参数建议查询后按需填写。</p>]]></description>
+</item>
+</channel>
+</rss>

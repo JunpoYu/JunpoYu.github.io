@@ -1,0 +1,33 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>All 📊一些科研中的内容 - Junpo Yu&#39;s Blog</title>
+        <link>http://localhost:1313/posts/research/</link>
+        <description>All 📊一些科研中的内容 | Junpo Yu&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>junpo_yu@163.com (Junpo Yu)</managingEditor>
+            <webMaster>junpo_yu@163.com (Junpo Yu)</webMaster><lastBuildDate>Thu, 19 Jun 2025 12:23:04 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/posts/research/" rel="self" type="application/rss+xml" /><item>
+    <title>[General Reading]-Inception-TricksOfCNNTraing</title>
+    <link>http://localhost:1313/general-reading-inception-tricksofcnntraning/</link>
+    <pubDate>Thu, 19 Jun 2025 12:23:04 &#43;0800</pubDate>
+    <author>Junpo Yu</author>
+    <guid>http://localhost:1313/general-reading-inception-tricksofcnntraning/</guid>
+    <description><![CDATA[<h2 id="论文通读">论文通读</h2>
+<p>本文内容来自以下论文的通读总结，由于阅读过程不够细致，可能存在一定的理解偏差。</p>
+<ol>
+<li><a href="http://arxiv.org/abs/1409.4842" target="_blank" rel="noopener noreffer ">Going deeper with convolutions</a></li>
+<li><a href="http://arxiv.org/abs/1812.01187" target="_blank" rel="noopener noreffer ">Bag of Tricks for Image Classification with Convolutional Neural Networks</a></li>
+</ol>
+<h2 id="一going-deeper-with-convolutions">一、Going deeper with convolutions</h2>
+<h3 id="1-motivation">1. Motivation</h3>
+<p>目前提高深度学习模型性能最简单的方法就是使用更大的模型、更多的参数量，但是毫无疑问这会导致几个问题。首先是过拟合问题，越大的模型越容易过拟合，尤其是在训练不足的时候。其次是计算资源不足的问题，越大的模型训练所需要的计算资源也越多。</p>]]></description>
+</item>
+<item>
+    <title>Tensor Programs v Tuning Large Neural Networks via Zero Shot Hyperparameter Transfer</title>
+    <link>http://localhost:1313/tensor-programs-v-tuning-large-neural-networks-via-zero-shot-hyperparameter-transfer/</link>
+    <pubDate>Tue, 10 Jun 2025 15:19:58 &#43;0800</pubDate>
+    <author>Junpo Yu</author>
+    <guid>http://localhost:1313/tensor-programs-v-tuning-large-neural-networks-via-zero-shot-hyperparameter-transfer/</guid>
+    <description><![CDATA[<p>本文内容来自 <a href="http://arxiv.org/abs/2203.03466" target="_blank" rel="noopener noreffer ">Tensor Programs V: Tuning Large Neural Networks via Zero-Shot Hyperparameter Transfer</a>。</p>
+<p><strong>需要注意的是，本研究的目的是让某些最佳超参数在不同的大小的模型之间进行迁移，而不是找到最佳的模型大小或者最佳的超参数组合。</strong></p>]]></description>
+</item>
+</channel>
+</rss>

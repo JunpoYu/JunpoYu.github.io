@@ -1,0 +1,53 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Math - Tag - Junpo Yu&#39;s Blog</title>
+        <link>http://localhost:1313/tags/math/</link>
+        <description>Math - Tag - Junpo Yu&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>junpo_yu@163.com (Junpo Yu)</managingEditor>
+            <webMaster>junpo_yu@163.com (Junpo Yu)</webMaster><lastBuildDate>Sat, 15 Feb 2025 14:55:29 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/tags/math/" rel="self" type="application/rss+xml" /><item>
+    <title>最小二乘</title>
+    <link>http://localhost:1313/least-squares/</link>
+    <pubDate>Sat, 15 Feb 2025 14:55:29 &#43;0800</pubDate>
+    <author>Junpo Yu</author>
+    <guid>http://localhost:1313/least-squares/</guid>
+    <description><![CDATA[<h2 id="最小二乘">最小二乘</h2>
+<p>最小二乘法是参数估计中的一种方法，例如在做线性回归时，我们通常会构建一个误差函数，用来衡量回归模型的预测值和真实值之间的误差，通过最小化这个误差构建最优回归模型。而当我们选择残差平方和作为误差函数时，最小化这个误差函数的过程就是最小二乘法。</p>]]></description>
+</item>
+<item>
+    <title>先验概率与后验概率</title>
+    <link>http://localhost:1313/prior-and-posterior-probabilities/</link>
+    <pubDate>Wed, 15 Jan 2025 20:36:06 &#43;0800</pubDate>
+    <author>Junpo Yu</author>
+    <guid>http://localhost:1313/prior-and-posterior-probabilities/</guid>
+    <description><![CDATA[<p><strong>已知</strong> ：</p>
+<p>人群中某个人患癌的概率是 1%，现在我们有一个测试某个对象是否患癌的机器，但是机器并不完美。对于确定患癌的人，机器有 10% 的概率给出不患癌的判断，对于确定不患癌的人，机器有 3% 的概率给出患癌的判断。我们使用 0 表示患癌，使用 1 表示不患癌。使用事件 C 表示是否患癌，使用事件 T 表示机器的判断，所以我们有以下概率分布：
+$$
+\begin{align*}
+P(C=1)&amp;=0.01 \newline
+P(C=0)&amp;=0.99 \newline
+P(T=1|C=1)&amp;=0.9 \newline
+P(T=0|C=1)&amp;=0.1 \newline
+P(T=1|C=0)&amp;=0.03 \newline
+P(T=0|C=0)&amp;=0.97
+\end{align*}
+$$</p>]]></description>
+</item>
+<item>
+    <title>深入浅出决定系数R2</title>
+    <link>http://localhost:1313/what-is-r-square/</link>
+    <pubDate>Wed, 06 Nov 2024 15:48:37 &#43;0800</pubDate>
+    <author>Junpo Yu</author>
+    <guid>http://localhost:1313/what-is-r-square/</guid>
+    <description><![CDATA[<p>决定系数$R^2$是一个在数学或者说统计学常见的评价标准，尤其是对于回归问题，模型的好坏完全可以用只通过$R^2$来衡量。</p>
+<p>但是在使用这个指标之前我们有必要了解其背后的原理，尤其是和另一个非常容易混淆的相关系数$R$的关系。</p>]]></description>
+</item>
+<item>
+    <title>什么是似然</title>
+    <link>http://localhost:1313/what-is-likelihood/</link>
+    <pubDate>Sun, 22 Sep 2024 17:01:16 &#43;0800</pubDate>
+    <author>Junpo Yu</author>
+    <guid>http://localhost:1313/what-is-likelihood/</guid>
+    <description><![CDATA[<p>我们对概率（Probability）都很了解，描述一个事件发生的可能性。例如投掷一枚硬币，其正面向上的概率为 0.5，连续两次都是正面向上的概率为 0.25。</p>]]></description>
+</item>
+</channel>
+</rss>
