@@ -117,6 +117,18 @@
         alt="/rubysiu.jpg"
         title="/rubysiu.jpg" /></a></div><h1 class="home-title">Junpo Yu's Blog</h1><div class="home-subtitle"><div id="id-1" class="typeit"></div></div><div class="links"><a href="https://github.com/JunpoYu" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:junpo_yu@163.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/what-is-r-square/">深入浅出决定系数R2</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2024-11-06">2024-11-06</time></span></div><div class="content"><p>决定系数$R^2$是一个在数学或者说统计学常见的评价标准，尤其是对于回归问题，模型的好坏完全可以用只通过$R^2$来衡量。</p>
+<p>但是在使用这个指标之前我们有必要了解其背后的原理，尤其是和另一个非常容易混淆的相关系数$R$的关系。</p></div><div class="post-footer">
+        <a href="/what-is-r-square/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/math/">Math</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/make-latex-compatible/">hugo 博客 latex 公式兼容</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2024-11-01">2024-11-01</time></span></div><div class="content"><p>技术博客逃不了写公式，$LaTEX$必然是最好的选择，但是 hugo 对 LaTEX 的兼容并不好，因此采用 MathJax 渲染。</p>
+<p>最简单的做法是将以下代码插入到 <code>layouts\partials\footer.html</code>，也可以用自己喜欢的方式将 js 代码添加到页面 html 中。</p></div><div class="post-footer">
+        <a href="/make-latex-compatible/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/hugo/">Hugo</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/how-to-write-a-paper/">如何写一篇论文</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2024-10-15">2024-10-15</time></span></div><div class="content"><p>准备开始着手写自己的第一篇论文，结果憋了半个月憋不出半坨。。。</p>
 <p>于是决定先学习一下写论文的基本流程和技巧。</p>
@@ -239,23 +251,6 @@
 <p>此部分照搬 <a href="https://www.sulvblog.cn/posts/blog/hugo_archives_chinese/" target="_blank" rel="noopener noreffer ">Sulv&rsquo;s Blog</a>，定位到 <code>themes/PaperMod/layouts/_default/archives.html</code>，建议将<code> layouts、i18n、assets</code>下的文件复制到站点根目录，以免更新主题导致覆盖。</p></div><div class="post-footer">
         <a href="/how-to-configure-papermod-theme/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/hugo/">Hugo</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/merge-regional-tif-to-global/">将多个区域的 GeoTIFF 文件合并为全球 TIFF</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2024-09-14">2024-09-14</time></span></div><div class="content"><h2 id="一使用-arcmap-合并">一、使用 ArcMap 合并</h2>
-<p>使用 ArcMap 的工具箱对多个 TIFF 文件进行合并。</p>
-<p>在 <code>ArcToolBox -&gt; 数据管理工具 -&gt; 栅格 -&gt; 栅格数据集 -&gt; 镶嵌至新栅格</code> 。</p>
-<p>打开工具后，在 <code>输入栅格</code> 栏选中需要合并的数据，在 <code>输出位置</code> 选定输出路径。在<code>具有扩展名的栅格数据集名称</code> 设置输出文件名，要带扩展名。波段数和源文件波段数相同，其余可选参数建议查询后按需填写。</p></div><div class="post-footer">
-        <a href="/merge-regional-tif-to-global/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/research-skills/">Research Skills</a>,&nbsp;<a href="/tags/gdal/">Gdal</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/how-to-use-hugo-on-github/">使用Hugo和GitHub部署博客</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2024-09-12">2024-09-12</time></span></div><div class="content"><h2 id="一windows-安装-hugo">一、Windows 安装 Hugo</h2>
-<h3 id="1-准备工作">1. 准备工作</h3>
-<p>首先需要安装 Git 和 GO，这样的教程有很多。</p>
-<h3 id="2-预构建的二进制安装">2. 预构建的二进制安装</h3>
-<p>在 <a href="https://github.com/gohugoio/hugo/releases/latest" target="_blank" rel="noopener noreffer ">hugo 发布页</a> 下载最新的二进制文件，在合适的目录下解压，将目录添加的 <code>PATH</code> 中。</p></div><div class="post-footer">
-        <a href="/how-to-use-hugo-on-github/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/hugo/">Hugo</a></div></div>
 </article><ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
@@ -271,6 +266,10 @@
                 </li><li class="page-item active">
                     <span class="page-link">
                         <a href="/page/4/">4</a>
+                    </span>
+                </li><li class="page-item ">
+                    <span class="page-link">
+                        <a href="/page/5/">5</a>
                     </span>
                 </li></ul></div></div>
             </main><footer class="footer">

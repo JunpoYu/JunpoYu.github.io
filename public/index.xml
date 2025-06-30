@@ -4,7 +4,7 @@
         <link>http://localhost:1313/</link>
         <description>你所经历的每一个日常，也许正是连续不断的奇迹</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>junpo_yu@163.com (Junpo Yu)</managingEditor>
-            <webMaster>junpo_yu@163.com (Junpo Yu)</webMaster><lastBuildDate>Sun, 22 Jun 2025 12:23:38 &#43;0800</lastBuildDate>
+            <webMaster>junpo_yu@163.com (Junpo Yu)</webMaster><lastBuildDate>Sat, 28 Jun 2025 20:52:24 &#43;0800</lastBuildDate>
             <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
         <item>
     <title>TODO LIST</title>
@@ -12,7 +12,35 @@
     <pubDate>Mon, 24 Feb 2025 16:34:43 &#43;0800</pubDate>
     <author>Junpo Yu</author>
     <guid>http://localhost:1313/todo/</guid>
-    <description><![CDATA[<h2 id="todo">TODO</h2>]]></description>
+    <description><![CDATA[<h2 id="todo">TODO</h2>
+<ol>
+<li>什么是 variational inference</li>
+<li>什么是 Langevin dynamics during sampling</li>
+<li>什么是 usual variational bound</li>
+<li>什么是重要性采样</li>
+<li>什么是交叉熵</li>
+</ol>]]></description>
+</item>
+<item>
+    <title>生成式模型中的变分推断</title>
+    <link>http://localhost:1313/variational-inference-in-generative-model/</link>
+    <pubDate>Sat, 28 Jun 2025 20:52:24 &#43;0800</pubDate>
+    <author>Junpo Yu</author>
+    <guid>http://localhost:1313/variational-inference-in-generative-model/</guid>
+    <description><![CDATA[<p>本文主要探究变分推断在生成式模型中（以 VAE、DDPM 为例）是如何应用的。</p>
+<h2 id="什么是变分推断">什么是变分推断</h2>
+<p>首先我们要知道什么是变分推断（Variational Inference；VI）。变分通常同样用于近似某些难以直接表达的分布，例如我们现在已经有观测数据 x，我们希望知道后验分布 <span> $p(z|x)$ </span>。但是我们难以直接写出 <span> $p(z|x)$ </span>。此时我们可以选择一个比较简单的 <span> $q(z|x)$ </span>，通过优化（最小化 KL 散度）让两者尽可能接近。</p>]]></description>
+</item>
+<item>
+    <title>Denoising Diffusion Probabilistic Models</title>
+    <link>http://localhost:1313/denoising-diffusion-probabilistic-models/</link>
+    <pubDate>Wed, 25 Jun 2025 19:21:01 &#43;0800</pubDate>
+    <author>Junpo Yu</author>
+    <guid>http://localhost:1313/denoising-diffusion-probabilistic-models/</guid>
+    <description><![CDATA[<p>本文内容来自 <a href="http://arxiv.org/abs/2006.11239" target="_blank" rel="noopener noreffer ">Denoising Diffusion Probablilistic Models</a>（DDPM），也是 diffusion model 发扬光大的起点。</p>
+<h2 id="论文部分">论文部分</h2>
+<h2 id="代码实现">代码实现</h2>
+<h2 id="附录">附录</h2>]]></description>
 </item>
 <item>
     <title>如何在 Hugo 中正确的使用 Latex</title>
@@ -87,24 +115,6 @@ $$
     <guid>http://localhost:1313/use-fancybox-in-hugo/</guid>
     <description><![CDATA[<p>由于原生 Hugo 的页面不支持点击图片放大，而有时候我在博客中会使用一些内容比较多的图片，这就导致图片上的内容很小看不清。</p>
 <p>有一种方法可以通过修改 Mark Render Hooks 实现 fancybox 方法图片，具体实现方法来自 <a href="https://www.nan0in27.cn/p/hugo%E5%9B%BE%E7%89%87%E7%82%B9%E5%87%BB%E6%94%BE%E5%A4%A7/" target="_blank" rel="noopener noreffer ">nan0in&rsquo;s blog</a>，在此转载以备日后查阅。</p>]]></description>
-</item>
-<item>
-    <title>Cocos 学习：Cramped Room Of Death Demo</title>
-    <link>http://localhost:1313/design-pattern-in-cocos/</link>
-    <pubDate>Mon, 05 May 2025 16:23:13 &#43;0800</pubDate>
-    <author>Junpo Yu</author>
-    <guid>http://localhost:1313/design-pattern-in-cocos/</guid>
-    <description><![CDATA[<h2 id="cocos-学习之设计模式以-cramped-room-of-death-为例">Cocos 学习之设计模式：以 Cramped Room Of Death 为例</h2>
-<p>本文基于 <a href="https://www.bilibili.com/video/BV1JL4y1M7Y4" target="_blank" rel="noopener noreffer ">《Cocos 游戏开发》Steam游戏复刻教程 </a> ，但是并不涉及 Cocos Creator 的使用细节和 TypeScript 的基础语法等内容，而是专注于项目实现过程中的思想和设计模式。</p>]]></description>
-</item>
-<item>
-    <title>Config Img Path in Typora</title>
-    <link>http://localhost:1313/config-img-path-in-typora/</link>
-    <pubDate>Sun, 04 May 2025 11:14:40 &#43;0800</pubDate>
-    <author>Junpo Yu</author>
-    <guid>http://localhost:1313/config-img-path-in-typora/</guid>
-    <description><![CDATA[<h2 id="在-typora-中配置图片的相对路径">在 Typora 中配置图片的相对路径</h2>
-<p>在自建博客中插入图片通常使用<strong>图床</strong>和<strong>本地相对路径</strong>两种方式。图床毫无疑问是最简单且方便的，目前也有很多免费的图床服务可以使用，但是总有人会担心将自己的数据交给别人是比较危险的（比如我）。但是通过 Markdown 编辑器（例如 Typora）插入图片时就不得不考虑图片本地路径和博客构建路径之间的不兼容，好在 Typora 目前已经支持在 md 文件中使用 font-matter 自定义图片预览的相对路径，又不影响图片构建。</p>]]></description>
 </item>
 </channel>
 </rss>

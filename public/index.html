@@ -118,8 +118,28 @@
         title="/rubysiu.jpg" /></a></div><h1 class="home-title">Junpo Yu's Blog</h1><div class="home-subtitle"><div id="id-1" class="typeit"></div></div><div class="links"><a href="https://github.com/JunpoYu" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:junpo_yu@163.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/todo/">TODO LIST</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2025-02-24">2025-02-24</time></span></div><div class="content"><h2 id="todo">TODO</h2></div><div class="post-footer">
+    </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2025-02-24">2025-02-24</time></span></div><div class="content"><h2 id="todo">TODO</h2>
+<ol>
+<li>什么是 variational inference</li>
+<li>什么是 Langevin dynamics during sampling</li>
+<li>什么是 usual variational bound</li>
+<li>什么是重要性采样</li>
+<li>什么是交叉熵</li>
+</ol></div><div class="post-footer">
         <a href="/todo/">Read More</a></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/variational-inference-in-generative-model/">生成式模型中的变分推断</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2025-06-28">2025-06-28</time></span></div><div class="content"><p>本文主要探究变分推断在生成式模型中（以 VAE、DDPM 为例）是如何应用的。</p>
+<h2 id="什么是变分推断">什么是变分推断</h2>
+<p>首先我们要知道什么是变分推断（Variational Inference；VI）。变分通常同样用于近似某些难以直接表达的分布，例如我们现在已经有观测数据 x，我们希望知道后验分布 <span> $p(z|x)$ </span>。但是我们难以直接写出 <span> $p(z|x)$ </span>。此时我们可以选择一个比较简单的 <span> $q(z|x)$ </span>，通过优化（最小化 KL 散度）让两者尽可能接近。</p></div><div class="post-footer">
+        <a href="/variational-inference-in-generative-model/">Read More</a></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/denoising-diffusion-probabilistic-models/">Denoising Diffusion Probabilistic Models</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2025-06-25">2025-06-25</time></span></div><div class="content"><p>本文内容来自 <a href="http://arxiv.org/abs/2006.11239" target="_blank" rel="noopener noreffer ">Denoising Diffusion Probablilistic Models</a>（DDPM），也是 diffusion model 发扬光大的起点。</p>
+<h2 id="论文部分">论文部分</h2>
+<h2 id="代码实现">代码实现</h2>
+<h2 id="附录">附录</h2></div><div class="post-footer">
+        <a href="/denoising-diffusion-probabilistic-models/">Read More</a></div>
 </article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/use-latex-in-hugo/">如何在 Hugo 中正确的使用 Latex</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2025-06-22">2025-06-22</time></span></div><div class="content"><p>在之前的文章中我们曾经实现了 Hugo 渲染 Latex 公式，见 {{ref &ldquo;/constructions/2024/make-latex-compatible/index.md&rdquo;}}，但是在实际的使用中，我们会发现某些公式总是会出现渲染错误。例如使用 <code>$</code> 包含的行内公式无法被渲染；行间公式无法正确的换行；某些介于公式之间的文本被错误的渲染为了斜体等各种情况。</p></div><div class="post-footer">
@@ -141,22 +161,6 @@
     </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2025-06-10">2025-06-10</time></span></div><div class="content"><p>本文内容来自 <a href="http://arxiv.org/abs/2203.03466" target="_blank" rel="noopener noreffer ">Tensor Programs V: Tuning Large Neural Networks via Zero-Shot Hyperparameter Transfer</a>。</p>
 <p><strong>需要注意的是，本研究的目的是让某些最佳超参数在不同的大小的模型之间进行迁移，而不是找到最佳的模型大小或者最佳的超参数组合。</strong></p></div><div class="post-footer">
         <a href="/tensor-programs-v-tuning-large-neural-networks-via-zero-shot-hyperparameter-transfer/">Read More</a></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/what-is-gaussian-process/">什么是高斯过程</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2025-06-04">2025-06-04</time></span></div><div class="content"><h2 id="从高斯分布开始">从高斯分布开始</h2>
-<p>在讨论高斯过程（GP）之前，我们先从最简单的高斯分布开始。高斯分布是一种概率分布，相信学过概率论的人都了解什么是概率分布。</p>
-<p>对于简单的一元高斯分布，其定义如下：
-$$
-p(x)=\frac{1}{\sigma\sqrt{2\pi}}\exp (-\frac{(x-\mu)^2}{2\sigma^2})
-$$
-在给定均值 $\mu$ 和方差 $\sigma$ 之后，我们就可以确定一个高斯分布，并计算出事件 $x$ 所对应的概率。</p></div><div class="post-footer">
-        <a href="/what-is-gaussian-process/">Read More</a></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/how-to-write-a-paper-again/">再谈学术写作</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2025-05-27">2025-05-27</time></span></div><div class="content"><p>在下的第一篇学术论文翻译成英文后，被批的体无完肤，因此将一些需要注意的点记录下来。</p>
-<h2 id="一abstract">一、Abstract</h2>
-<p>摘要的写作应该简洁，突出重点，主要可以分为四个部分：<strong>背景、方案、结果和意义</strong>。</p></div><div class="post-footer">
-        <a href="/how-to-write-a-paper-again/">Read More</a></div>
 </article><ul class="pagination"><li class="page-item active">
                     <span class="page-link">
                         <a href="/">1</a>
@@ -170,8 +174,10 @@ $$
                         <a href="/page/3/">3</a>
                     </span>
                 </li><li class="page-item ">
+                    <span class="page-link" aria-hidden="true">&hellip;</span>
+                </li><li class="page-item ">
                     <span class="page-link">
-                        <a href="/page/4/">4</a>
+                        <a href="/page/5/">5</a>
                     </span>
                 </li></ul></div></div>
             </main><footer class="footer">

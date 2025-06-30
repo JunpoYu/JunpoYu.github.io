@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>生成式模型中的变分推断 - Junpo Yu&#39;s Blog</title><meta name="Description" content="你所经历的每一个日常，也许正是连续不断的奇迹"><meta property="og:url" content="http://localhost:1313/variational-inference-in-generative-model/">
+  <meta property="og:site_name" content="Junpo Yu&#39;s Blog">
+  <meta property="og:title" content="生成式模型中的变分推断">
+  <meta property="og:description" content="本文主要探究变分推断在生成式模型中（以 VAE、DDPM 为例）是如何应用的。
+什么是变分推断 首先我们要知道什么是变分推断（Variational Inference；VI）。变分通常同样用于近似某些难以直接表达的分布，例如我们现在已经有观测数据 x，我们希望知道后验分布 $p(z|x)$ 。但是我们难以直接写出 $p(z|x)$ 。此时我们可以选择一个比较简单的 $q(z|x)$ ，通过优化（最小化 KL 散度）让两者尽可能接近。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-06-28T20:52:24+08:00">
+    <meta property="article:modified_time" content="2025-06-29T13:58:03+08:00">
+    <meta property="og:image" content="http://localhost:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/logo.png">
+  <meta name="twitter:title" content="生成式模型中的变分推断">
+  <meta name="twitter:description" content="本文主要探究变分推断在生成式模型中（以 VAE、DDPM 为例）是如何应用的。
+什么是变分推断 首先我们要知道什么是变分推断（Variational Inference；VI）。变分通常同样用于近似某些难以直接表达的分布，例如我们现在已经有观测数据 x，我们希望知道后验分布 $p(z|x)$ 。但是我们难以直接写出 $p(z|x)$ 。此时我们可以选择一个比较简单的 $q(z|x)$ ，通过优化（最小化 KL 散度）让两者尽可能接近。">
+<meta name="application-name" content="Junpo Yu&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Junpo Yu&#39;s Blog">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/variational-inference-in-generative-model/" /><link rel="prev" href="http://localhost:1313/what-is-gaussian-process/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "生成式模型中的变分推断",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/variational-inference-in-generative-model\/"
+        },"genre": "posts","wordcount":  1571 ,
+        "url": "http:\/\/localhost:1313\/variational-inference-in-generative-model\/","datePublished": "2025-06-28T20:52:24+08:00","dateModified": "2025-06-29T13:58:03+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Junpo Yu"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Junpo Yu&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/rubysiu.jpg"
+        data-srcset="/rubysiu.jpg, /rubysiu.jpg 1.5x, /rubysiu.jpg 2x"
+        data-sizes="auto"
+        alt="/rubysiu.jpg"
+        title="/rubysiu.jpg" />Junpo Yu&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/tech/"> 技术性文章 </a><a class="menu-item" href="/posts/builds/"> 构建 </a><a class="menu-item" href="/posts/knowledge/"> 理论知识 </a><a class="menu-item" href="/posts/research/"> 科研相关 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Junpo Yu&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/rubysiu.jpg"
+        data-srcset="/rubysiu.jpg, /rubysiu.jpg 1.5x, /rubysiu.jpg 2x"
+        data-sizes="auto"
+        alt="/rubysiu.jpg"
+        title="/rubysiu.jpg" />Junpo Yu&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/tech/" title="">技术性文章</a><a class="menu-item" href="/posts/builds/" title="">构建</a><a class="menu-item" href="/posts/knowledge/" title="">理论知识</a><a class="menu-item" href="/posts/research/" title="">科研相关</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">生成式模型中的变分推断</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-06-28">2025-06-28</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;1571 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;4 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#什么是变分推断">什么是变分推断</a></li>
+    <li><a href="#变分推断在-vae-中的应用">变分推断在 VAE 中的应用</a></li>
+    <li><a href="#变分推断在-ddpm-中的应用">变分推断在 DDPM 中的应用</a></li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本文主要探究变分推断在生成式模型中（以 VAE、DDPM 为例）是如何应用的。</p>
+<h2 id="什么是变分推断">什么是变分推断</h2>
+<p>首先我们要知道什么是变分推断（Variational Inference；VI）。变分通常同样用于近似某些难以直接表达的分布，例如我们现在已经有观测数据 x，我们希望知道后验分布 <span> $p(z|x)$ </span>。但是我们难以直接写出 <span> $p(z|x)$ </span>。此时我们可以选择一个比较简单的 <span> $q(z|x)$ </span>，通过优化（最小化 KL 散度）让两者尽可能接近。</p>
+<p>而在生成式模型中，我们通常会认为观测数据遵从某些潜在变量（Latent Variable）$z$ 的控制，即 <span> $p(x)=\int p(z)p(x|z)dz$ </span>。举个例子，如果我们希望建立模型，这个模型可以生成各式各样的图片。此时如果我们让模型直接给我们随机生成一张图片，那么你可能会得到一只狗的图片，或者一辆车。但是如果我们给定一些约束，例如我们希望得到一只猫的图片，那么模型就会正确地生成一只猫。此时我们先不管如何添加约束，而是思考一下，这个过程中模型是如何控制生成图片的类型的呢？显然模型中存在某些部分（参数）控制着模型每次输出的图片的类型（或者其他约束信息，例如颜色、形状等）。那么我们认为模型实际上学习到了一些能够描述图片本质的信息的变量，而由于我们无法描述或者观测到这些变量，所以将其称之为潜在变量。</p>
+<blockquote>
+<p>如果我们不考虑潜在变量的控制效果，那基本就是原始的自编码器（AutoEncoder；AE）的思想，即让模型想办法直接学习 <span> $p(x)$ </span>，但这会导致严重的过拟合问题。因此变分自编码器（Variational AutoEncoder；VAE） 提出了潜在变量的概念，并要求该潜在变量遵循标准正态分布，然后使用变分推断来优化模型的学习过程，从而解决了正则化和连续采样的问题。</p>
+</blockquote>
+<p>回到开始，我们有观测数据 <span> $x$ </span>，我们认为模型的学习目标是 <span> $ p(x)=\int p(x|z)p(z)dz$ </span>。其中 <span> $p(x)$ </span> 是先验分布，且我们假设其为标准正态分布。$p(x|z)$ 是似然，即给定潜在变量 $z$ 后观测数据 $x$ 出现的概率。</p>
+<blockquote>
+<p>由于模型实际上建模了 $x$ 和 $z$ 的联合分布，因此也可以用 $p(x,z)$ 来表示整个模型。</p>
+</blockquote>
+<blockquote>
+<p>在实际生成过程中，往往通过两步采样的方式，即先采样 $z\sim p(z)$ ，然后采样 $x\sim p(x|z)$ 来生成结果。</p>
+</blockquote>
+<h2 id="变分推断在-vae-中的应用">变分推断在 VAE 中的应用</h2>
+<p>模型的最终目的是最大化 $log\left(p\left(x\right)\right)$ ，但是边缘似然 $log(p(x))$ 存在对 $z$ 的积分，因为潜在变量 $z$ 往往对应着一个高维空间，因此实际中这个积分是很难解的。因此我们引入一个近似的后验分布 $q(z|x)$ ，也称为变分分布，进行如下恒等变化：</p>
+<div>
+<p>$$
+\begin{align*}
+\log\left(p\left(x\right)\right)&amp;=\log\int p\left(x|z\right)p(z)dz \\
+&amp;=\log\int q(z|x)\frac{p(x|z)p(z)}{q(z|x)}dz \\
+&amp;=\log\mathbb{E}_{q(z|x)}\left[\frac{p(x|z)p(z)}{q(z|x)}\right]
+\end{align*}
+$$</p>
+</div>
+<blockquote>
+<p>其中应用了重要性采样的思想，即对于一个难以求采样的分布 $p(x)$ ，我们希望计算某个 $f(x)$ 在该分布下的期望，可以使用一个容易采样的分布 $q(x)$ 来间接估计，其核心思想可以表述为：<span> $ \int p(x)f(x)dx=\int q(x)\frac{f(x)p(x)}{q(x)}dx=\mathbb E_{q(x)}\left[f(x)\frac{p(x)}{q(x)}\right] $ </span>。
+通过对 $q(x)$ 的采样 $N$ 个样本来近似的求出 $f(x)$ 在 $x\sim p(x)$ 下的期望，其中 <span> $w_i=\frac{p(x)}{q(x)} $</span> 称为重要性权重。</p>
+</blockquote>
+<p>再根据 Jensen 不等式得出：</p>
+<div>
+$$
+\log(p(x))=log\mathbb{E}_{q(z|x)}\left[\frac{p(x|z)p(z)}{q(z|x)}\right] \ge \mathbb{E}_{q(z|x)}\left[\log\left(\frac{p(x|z)p(z)}{q(z|x)}\right)\right]
+$$
+</div>
+<blockquote>
+<p>Jensen 不等式是指，对于凸函数有 $\mathbb E[f(x)] \ge f(\mathbb E(x))$，对于凹函数有 $\mathbb E[f(x)] \le f(\mathbb E(x))$。</p>
+</blockquote>
+<p>此时我们得到了 $\log(p(x)) $ 的下限，我们也将其称之为证据下界（Evidence Lower Bound；ELBO）。即：</p>
+<div>
+<p>$$
+\begin{align*}
+\mathbf{ELBO}&amp;=\mathbb E_{q(z|x)}\left[\log\left(\frac{p(x|z)p(z)}{q(z|x)}\right)\right] \\
+&amp;= \mathbb E_{q(z|x)}\left[\log p(x|z)\right]+ \mathbb E_{q(z|x)}\left[\log p(z) - \log q(z|x)\right] \\
+&amp;= \mathbb E_{q(z|x)}\left[\log p(x|z)\right] + D_{KL}(q(z|x)\mid\mid p(z))
+\end{align*}
+$$</p>
+</div>
+<p>经过变换，我们将 ELBO 转为了两项之和。其中第一项代表重构项，描述了模型的生成能力。第二项表示正则项，约束了潜在变量不能偏离高斯先验。且此时我们的目标变成了最大化 ELBO。</p>
+<blockquote>
+<p>最后一步推导涉及到 KL 散度，如果不懂可以先看一下 <a href="https://zhouyifan.net/2022/10/13/20221012-entropy/" target="_blank" rel="noopener noreffer ">从零理解熵、交叉熵、KL散度 | 周弈帆的博客</a> 。</p>
+</blockquote>
+<h2 id="变分推断在-ddpm-中的应用">变分推断在 DDPM 中的应用</h2>
+<p>对于去噪扩散模型（Denosing Diffusion Probabilistic Model）而言，整个模型分为两个过程，即加噪过程 <span> $q(x_t|x_{t-1})$</span> 和去噪过程 <span> $p(x_{t-1}|x_t)$ </span>，观测数据为 <span>$x_0$ </span>，潜在变量就是每一步的噪声 <span> $x_1,\dots,x_t$ </span>。此时建模目标是是：</p>
+<div>
+<p>$$
+p(x_0)=\int p(x_{0:T})dx_{1:T} \\
+x_T\sim \mathcal N(\mathbf 0, \mathbf I)
+$$</p>
+</div>
+由于加噪过程是人为定义的 <span>$q(x_t|x_{t-1})=\mathcal N(x_t;\sqrt{1-\beta} x_{t-1},\beta_t \mathbf I) $ </span>，因此整个近似后验 <span> $q(x_{1:T}|x_0)$ </span> 都可以推导。通过变分推断，我们得到如下结果：
+<div>
+<p>$$
+\begin{align*}
+\log p(x_0)&amp;=\log \int q(x_{1:T}|x_0)\frac{p(x_{0:T})}{q(x_{1:T}|x_0)}dx_{1:T}\\
+&amp;=\log \mathbb E_{q(x_{1:T}|x_0)}\left[\frac{p(x_{0:T})}{q(x_{1:T}|x_0)}\right]\\
+&amp;\ge  \mathbb E_{q(x_{1:T}|x_0)}\left[\log\frac{p(x_{0:T})}{q(x_{1:T}|x_0)} \right]
+\end{align*}
+$$</p>
+</div>
+<p>继续简化 ELBO：</p>
+<div>
+<p>$$
+\begin{align*}
+\mathbb{E}<em>{q}\left[\log \frac{p</em>\theta(x_{0:T})}{q(x_{1:T}|x_0)}\right] = \mathbb{E}<em>{q} \left[\log p(x_T) + \sum</em>{t=1}^T \log \frac{p_\theta(x_{t-1}|x_t)}{q(x_t|x_{t-1})} \right]
+\end{align*}
+$$</p>
+</div>
+<p>由于 <span> $p(x_T)$  </span> 是标准正态分布，因此 ELBO 简化为每一步的加噪和去噪的 KL 散度之和。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2025-06-29</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/variational-inference-in-generative-model/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on X" data-sharer="x" data-url="http://localhost:1313/variational-inference-in-generative-model/" data-title="生成式模型中的变分推断"><i class="fab fa-x-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Threads" data-sharer="threads" data-url="http://localhost:1313/variational-inference-in-generative-model/" data-title="生成式模型中的变分推断"><i class="fab fa-threads fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:1313/variational-inference-in-generative-model/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/variational-inference-in-generative-model/" data-title="生成式模型中的变分推断"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:1313/variational-inference-in-generative-model/" data-title="生成式模型中的变分推断"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:1313/variational-inference-in-generative-model/" data-title="生成式模型中的变分推断"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Diaspora" data-sharer="diaspora" data-url="http://localhost:1313/variational-inference-in-generative-model/" data-title="生成式模型中的变分推断" data-description=""><i class="fab fa-diaspora fa-fw" aria-hidden="true"></i></a><a href="https://t.me/share/url?url=http%3a%2f%2flocalhost%3a1313%2fvariational-inference-in-generative-model%2f&amp;text=%e7%94%9f%e6%88%90%e5%bc%8f%e6%a8%a1%e5%9e%8b%e4%b8%ad%e7%9a%84%e5%8f%98%e5%88%86%e6%8e%a8%e6%96%ad" target="_blank" title="Share on Telegram"><i class="fab fa-telegram fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/what-is-gaussian-process/" class="prev" rel="prev" title="什么是高斯过程"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>什么是高斯过程</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.134.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://junpoyu.github.io/" target="_blank">Junpo Yu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/contrib/auto-render.min.js"></script><script src="/lib/katex/contrib/copy-tex.min.js"></script><script src="/lib/katex/contrib/mhchem.min.js"></script><script src="/lib/cookieconsent/cookieconsent.min.js"></script><script>window.config={"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

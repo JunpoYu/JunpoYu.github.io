@@ -117,52 +117,28 @@
         alt="/rubysiu.jpg"
         title="/rubysiu.jpg" /></a></div><h1 class="home-title">Junpo Yu's Blog</h1><div class="home-subtitle"><div id="id-1" class="typeit"></div></div><div class="links"><a href="https://github.com/JunpoYu" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:junpo_yu@163.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/what-is-gaussian-process/">什么是高斯过程</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2025-06-04">2025-06-04</time></span></div><div class="content"><h2 id="从高斯分布开始">从高斯分布开始</h2>
-<p>在讨论高斯过程（GP）之前，我们先从最简单的高斯分布开始。高斯分布是一种概率分布，相信学过概率论的人都了解什么是概率分布。</p>
-<p>对于简单的一元高斯分布，其定义如下：
-$$
-p(x)=\frac{1}{\sigma\sqrt{2\pi}}\exp (-\frac{(x-\mu)^2}{2\sigma^2})
-$$
-在给定均值 $\mu$ 和方差 $\sigma$ 之后，我们就可以确定一个高斯分布，并计算出事件 $x$ 所对应的概率。</p></div><div class="post-footer">
-        <a href="/what-is-gaussian-process/">Read More</a></div>
+        <a href="/merge-regional-tif-to-global/">将多个区域的 GeoTIFF 文件合并为全球 TIFF</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2024-09-14">2024-09-14</time></span></div><div class="content"><h2 id="一使用-arcmap-合并">一、使用 ArcMap 合并</h2>
+<p>使用 ArcMap 的工具箱对多个 TIFF 文件进行合并。</p>
+<p>在 <code>ArcToolBox -&gt; 数据管理工具 -&gt; 栅格 -&gt; 栅格数据集 -&gt; 镶嵌至新栅格</code> 。</p>
+<p>打开工具后，在 <code>输入栅格</code> 栏选中需要合并的数据，在 <code>输出位置</code> 选定输出路径。在<code>具有扩展名的栅格数据集名称</code> 设置输出文件名，要带扩展名。波段数和源文件波段数相同，其余可选参数建议查询后按需填写。</p></div><div class="post-footer">
+        <a href="/merge-regional-tif-to-global/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/research-skills/">Research Skills</a>,&nbsp;<a href="/tags/gdal/">Gdal</a></div></div>
 </article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/how-to-write-a-paper-again/">再谈学术写作</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2025-05-27">2025-05-27</time></span></div><div class="content"><p>在下的第一篇学术论文翻译成英文后，被批的体无完肤，因此将一些需要注意的点记录下来。</p>
-<h2 id="一abstract">一、Abstract</h2>
-<p>摘要的写作应该简洁，突出重点，主要可以分为四个部分：<strong>背景、方案、结果和意义</strong>。</p></div><div class="post-footer">
-        <a href="/how-to-write-a-paper-again/">Read More</a></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/use-shp-to-cut-raster/">使用 shp 文件裁切（掩膜）栅格数据</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2025-05-25">2025-05-25</time></span></div><div class="content"><p>在地学科研绘图中，我们经常会使用 shp 文件来确定某些边界，同时又使用栅格文件（tiff, nc）来保存数据。为什么要分为两种文件呢？因为 shp 文件作为矢量数据，可以非常精确的划分边界。而栅格数据存在分辨率的问题，过粗的分辨率无法精确表示边界，过细的分辨率则会让文件变得庞大。但是各种地学数据则适合用栅格数据表达，因为其本身就因为观测计数的问题存在各种不同的分辨率，其观测数据在底层逻辑上也适合组织为栅格数据。</p></div><div class="post-footer">
-        <a href="/use-shp-to-cut-raster/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/research-skills/">Research Skills</a>,&nbsp;<a href="/tags/drawing/">Drawing</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/use-fancybox-in-hugo/">在 Hugo 中使用 Fancybox 实现图片点击放大</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2025-05-23">2025-05-23</time></span></div><div class="content"><p>由于原生 Hugo 的页面不支持点击图片放大，而有时候我在博客中会使用一些内容比较多的图片，这就导致图片上的内容很小看不清。</p>
-<p>有一种方法可以通过修改 Mark Render Hooks 实现 fancybox 方法图片，具体实现方法来自 <a href="https://www.nan0in27.cn/p/hugo%E5%9B%BE%E7%89%87%E7%82%B9%E5%87%BB%E6%94%BE%E5%A4%A7/" target="_blank" rel="noopener noreffer ">nan0in&rsquo;s blog</a>，在此转载以备日后查阅。</p></div><div class="post-footer">
-        <a href="/use-fancybox-in-hugo/">Read More</a><div class="post-tags">
+        <a href="/how-to-use-hugo-on-github/">使用Hugo和GitHub部署博客</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2024-09-12">2024-09-12</time></span></div><div class="content"><h2 id="一windows-安装-hugo">一、Windows 安装 Hugo</h2>
+<h3 id="1-准备工作">1. 准备工作</h3>
+<p>首先需要安装 Git 和 GO，这样的教程有很多。</p>
+<h3 id="2-预构建的二进制安装">2. 预构建的二进制安装</h3>
+<p>在 <a href="https://github.com/gohugoio/hugo/releases/latest" target="_blank" rel="noopener noreffer ">hugo 发布页</a> 下载最新的二进制文件，在合适的目录下解压，将目录添加的 <code>PATH</code> 中。</p></div><div class="post-footer">
+        <a href="/how-to-use-hugo-on-github/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/hugo/">Hugo</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/design-pattern-in-cocos/">Cocos 学习：Cramped Room Of Death Demo</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2025-05-05">2025-05-05</time></span></div><div class="content"><h2 id="cocos-学习之设计模式以-cramped-room-of-death-为例">Cocos 学习之设计模式：以 Cramped Room Of Death 为例</h2>
-<p>本文基于 <a href="https://www.bilibili.com/video/BV1JL4y1M7Y4" target="_blank" rel="noopener noreffer ">《Cocos 游戏开发》Steam游戏复刻教程 </a> ，但是并不涉及 Cocos Creator 的使用细节和 TypeScript 的基础语法等内容，而是专注于项目实现过程中的思想和设计模式。</p></div><div class="post-footer">
-        <a href="/design-pattern-in-cocos/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/cocos/">Cocos</a>,&nbsp;<a href="/tags/game/">Game</a>,&nbsp;<a href="/tags/design-pattern/">Design Pattern</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/config-img-path-in-typora/">Config Img Path in Typora</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2025-05-04">2025-05-04</time></span></div><div class="content"><h2 id="在-typora-中配置图片的相对路径">在 Typora 中配置图片的相对路径</h2>
-<p>在自建博客中插入图片通常使用<strong>图床</strong>和<strong>本地相对路径</strong>两种方式。图床毫无疑问是最简单且方便的，目前也有很多免费的图床服务可以使用，但是总有人会担心将自己的数据交给别人是比较危险的（比如我）。但是通过 Markdown 编辑器（例如 Typora）插入图片时就不得不考虑图片本地路径和博客构建路径之间的不兼容，好在 Typora 目前已经支持在 md 文件中使用 font-matter 自定义图片预览的相对路径，又不影响图片构建。</p></div><div class="post-footer">
-        <a href="/config-img-path-in-typora/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/writing/">Writing</a>,&nbsp;<a href="/tags/typora/">Typora</a></div></div>
 </article><ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
                     </span>
-                </li><li class="page-item active">
-                    <span class="page-link">
-                        <a href="/page/2/">2</a>
-                    </span>
+                </li><li class="page-item ">
+                    <span class="page-link" aria-hidden="true">&hellip;</span>
                 </li><li class="page-item ">
                     <span class="page-link">
                         <a href="/page/3/">3</a>
@@ -171,7 +147,7 @@ $$
                     <span class="page-link">
                         <a href="/page/4/">4</a>
                     </span>
-                </li><li class="page-item ">
+                </li><li class="page-item active">
                     <span class="page-link">
                         <a href="/page/5/">5</a>
                     </span>

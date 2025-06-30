@@ -4,7 +4,7 @@
         <link>http://localhost:1313/posts/tech/</link>
         <description>All 💡技术性文章 | Junpo Yu&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>junpo_yu@163.com (Junpo Yu)</managingEditor>
-            <webMaster>junpo_yu@163.com (Junpo Yu)</webMaster><lastBuildDate>Sun, 25 May 2025 21:01:30 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/posts/tech/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>junpo_yu@163.com (Junpo Yu)</webMaster><atom:link href="http://localhost:1313/posts/tech/" rel="self" type="application/rss+xml" /><item>
     <title>使用 shp 文件裁切（掩膜）栅格数据</title>
     <link>http://localhost:1313/use-shp-to-cut-raster/</link>
     <pubDate>Sun, 25 May 2025 21:01:30 &#43;0800</pubDate>
