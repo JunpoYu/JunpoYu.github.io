@@ -4,7 +4,7 @@
         <link>http://localhost:1313/</link>
         <description>你所经历的每一个日常，也许正是连续不断的奇迹</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>junpo_yu@163.com (Junpo Yu)</managingEditor>
-            <webMaster>junpo_yu@163.com (Junpo Yu)</webMaster><lastBuildDate>Sat, 28 Jun 2025 20:52:24 &#43;0800</lastBuildDate>
+            <webMaster>junpo_yu@163.com (Junpo Yu)</webMaster><lastBuildDate>Mon, 30 Jun 2025 16:08:03 &#43;0800</lastBuildDate>
             <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
         <item>
     <title>TODO LIST</title>
@@ -17,9 +17,25 @@
 <li>什么是 variational inference</li>
 <li>什么是 Langevin dynamics during sampling</li>
 <li>什么是 usual variational bound</li>
-<li>什么是重要性采样</li>
-<li>什么是交叉熵</li>
+<li>DDPM</li>
+<li>DLFC-CH16
+<ol>
+<li>矩阵求导</li>
+<li>线代本质</li>
+</ol>
+</li>
 </ol>]]></description>
+</item>
+<item>
+    <title>[Deep Learning: Foudations and Concepts] CH16-Continuous Latent Variables</title>
+    <link>http://localhost:1313/dlfc-ch16-continuous-latent-variables/</link>
+    <pubDate>Mon, 30 Jun 2025 16:08:03 &#43;0800</pubDate>
+    <author>Junpo Yu</author>
+    <guid>http://localhost:1313/dlfc-ch16-continuous-latent-variables/</guid>
+    <description><![CDATA[<p>本文内容来自 <a href="https://www.bishopbook.com/" target="_blank" rel="noopener noreffer ">Deep Learning: Foundations and Concepts</a> 一书的第十六章。</p>
+<p>正文的数学公式会尽可能简洁，某些公式的详细推导过程在 Appendix 中给出。</p>
+<h2 id="ch16-continuous-latent-variables">CH16 Continuous Latent Variables</h2>
+<p>什么是潜在变量（Latent Variables）？</p>]]></description>
 </item>
 <item>
     <title>生成式模型中的变分推断</title>
@@ -40,6 +56,7 @@
     <description><![CDATA[<p>本文内容来自 <a href="http://arxiv.org/abs/2006.11239" target="_blank" rel="noopener noreffer ">Denoising Diffusion Probablilistic Models</a>（DDPM），也是 diffusion model 发扬光大的起点。</p>
 <h2 id="论文部分">论文部分</h2>
 <h2 id="代码实现">代码实现</h2>
+<p>该部分代码参考<a href="https://nn.labml.ai/diffusion/ddpm/index.html" target="_blank" rel="noopener noreffer ">Annotated Research Paper Implementations</a> 提供的代码示例。</p>
 <h2 id="附录">附录</h2>]]></description>
 </item>
 <item>
@@ -48,7 +65,10 @@
     <pubDate>Sun, 22 Jun 2025 12:23:38 &#43;0800</pubDate>
     <author>Junpo Yu</author>
     <guid>http://localhost:1313/use-latex-in-hugo/</guid>
-    <description><![CDATA[<p>在之前的文章中我们曾经实现了 Hugo 渲染 Latex 公式，见 {{ref &ldquo;/constructions/2024/make-latex-compatible/index.md&rdquo;}}，但是在实际的使用中，我们会发现某些公式总是会出现渲染错误。例如使用 <code>$</code> 包含的行内公式无法被渲染；行间公式无法正确的换行；某些介于公式之间的文本被错误的渲染为了斜体等各种情况。</p>]]></description>
+    <description><![CDATA[<p>2025.7.1 更新：
+实际中下面提到的方法在某些情况下还是会出现问题，要么就是本地无法渲染，要么就是网页无法渲染。不得不说这些静态博客对于 latex 的支持都是依托答辩。
+有一个更加通用的方式就是使用 shortcode，比如 LoveIt 主题提供的 <code><data id="id-1" data-raw></data></code>，可以避免其包裹的部分被 Hugo 转义。使用这种 shortcode 包裹行间公式，虽然会在本地渲染时存在一些 <code>{{}}</code> 字符，但是可以保证网页渲染正确。
+对于行内公式我仍然建议使用 <code>&lt;span&gt;&lt;/span&gt;</code>，毕竟行内出现多余的字符还是很难受的。</p>]]></description>
 </item>
 <item>
     <title>[General Reading]-Inception-TricksOfCNNTraing</title>
@@ -106,15 +126,6 @@ $$
     <author>Junpo Yu</author>
     <guid>http://localhost:1313/use-shp-to-cut-raster/</guid>
     <description><![CDATA[<p>在地学科研绘图中，我们经常会使用 shp 文件来确定某些边界，同时又使用栅格文件（tiff, nc）来保存数据。为什么要分为两种文件呢？因为 shp 文件作为矢量数据，可以非常精确的划分边界。而栅格数据存在分辨率的问题，过粗的分辨率无法精确表示边界，过细的分辨率则会让文件变得庞大。但是各种地学数据则适合用栅格数据表达，因为其本身就因为观测计数的问题存在各种不同的分辨率，其观测数据在底层逻辑上也适合组织为栅格数据。</p>]]></description>
-</item>
-<item>
-    <title>在 Hugo 中使用 Fancybox 实现图片点击放大</title>
-    <link>http://localhost:1313/use-fancybox-in-hugo/</link>
-    <pubDate>Fri, 23 May 2025 20:09:41 &#43;0800</pubDate>
-    <author>Junpo Yu</author>
-    <guid>http://localhost:1313/use-fancybox-in-hugo/</guid>
-    <description><![CDATA[<p>由于原生 Hugo 的页面不支持点击图片放大，而有时候我在博客中会使用一些内容比较多的图片，这就导致图片上的内容很小看不清。</p>
-<p>有一种方法可以通过修改 Mark Render Hooks 实现 fancybox 方法图片，具体实现方法来自 <a href="https://www.nan0in27.cn/p/hugo%E5%9B%BE%E7%89%87%E7%82%B9%E5%87%BB%E6%94%BE%E5%A4%A7/" target="_blank" rel="noopener noreffer ">nan0in&rsquo;s blog</a>，在此转载以备日后查阅。</p>]]></description>
 </item>
 </channel>
 </rss>

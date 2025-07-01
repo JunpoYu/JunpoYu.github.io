@@ -147,8 +147,7 @@
 <p>打开工具后，在 <code>输入栅格</code> 栏选中需要合并的数据，在 <code>输出位置</code> 选定输出路径。在<code>具有扩展名的栅格数据集名称</code> 设置输出文件名，要带扩展名。波段数和源文件波段数相同，其余可选参数建议查询后按需填写。</p>
 <p>打开环境配置，此处可以配置 <code>输出坐标系、处理范围</code> 等，如果需要修改合并之后的坐标系，或者自定义输出文件的地理范围，都可以在此处配置。</p>
 <blockquote>
-<p>该方法可以用于处理少量数据的合并，设计到大量数据请使用下一个方法。</p>
-</blockquote>
+<p>该方法可以用于处理少量数据的合并，设计到大量数据请使用下一个方法。</p></blockquote>
 <h2 id="二使用-gdal-库进行合并">二、使用 gdal 库进行合并</h2>
 <div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
     <div class="code-header language-bash">
@@ -158,8 +157,7 @@
     </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">gdalwarp input_1.tif input_2.tif -dstnodata <span class="m">0</span> -t_srs EPSG:4326 -te -180 -90 <span class="m">180</span> <span class="m">90</span> -tr 0.25 0.25 -r near -multi -wo <span class="s2">&#34;NUM_THREADS=ALL_CPUS&#34;</span> -co <span class="nv">COMPRESS</span><span class="o">=</span>LZW -co <span class="nv">BIGTIFF</span><span class="o">=</span>YES global_output.tif</span></span></code></pre></div></div>
 <p>使用上述指令进行合并，<code>-dstnodata</code> 指定 nodata 值，<code>-t_srs</code> 指定投影，<code>-te</code> 指定处理范围，<code>-tr</code> 指定分辨率，<code>-r</code> 指定插值方法，其余保持不变，最后指定输出文件名。</p>
 <blockquote>
-<p>此处不推荐使用 <code>gdal_merge.py</code>，因为其占用内存较高。</p>
-</blockquote>
+<p>此处不推荐使用 <code>gdal_merge.py</code>，因为其占用内存较高。</p></blockquote>
 <p>可以修改 <code>-r</code> 参数指定不同的采样方法，如果需要还可以加入 -<code>srcnodata 0</code> 参数来指定重采样时不要处理的原始数据中的无用值。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
@@ -189,7 +187,7 @@
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.134.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.145.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://junpoyu.github.io/" target="_blank">Junpo Yu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

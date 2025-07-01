@@ -2,11 +2,12 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>http://localhost:1313/todo/</loc><lastmod>2025-06-26T22:12:24&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://localhost:1313/</loc><lastmod>2025-06-29T13:58:03&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://localhost:1313/posts/</loc><lastmod>2025-06-29T13:58:03&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://localhost:1313/variational-inference-in-generative-model/</loc><lastmod>2025-06-29T13:58:03&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>http://localhost:1313/denoising-diffusion-probabilistic-models/</loc><lastmod>2025-06-26T22:12:24&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://localhost:1313/todo/</loc><lastmod>2025-06-30T22:01:29&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://localhost:1313/dlfc-ch16-continuous-latent-variables/</loc><lastmod>2025-06-30T22:01:29&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://localhost:1313/</loc><lastmod>2025-06-30T22:01:29&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://localhost:1313/posts/</loc><lastmod>2025-06-30T22:01:29&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://localhost:1313/variational-inference-in-generative-model/</loc><lastmod>2025-06-30T22:01:29&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>http://localhost:1313/denoising-diffusion-probabilistic-models/</loc><lastmod>2025-06-30T22:01:29&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>http://localhost:1313/use-latex-in-hugo/</loc><lastmod>2025-06-25T17:24:30&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>http://localhost:1313/general-reading-inception-tricksofcnntraning/</loc><lastmod>2025-06-25T17:24:30&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>http://localhost:1313/tensor-programs-v-tuning-large-neural-networks-via-zero-shot-hyperparameter-transfer/</loc><lastmod>2025-06-25T17:24:30&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>

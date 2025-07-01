@@ -168,8 +168,7 @@
 <p>在 <a href="https://github.com/gohugoio/hugo/releases/latest" target="_blank" rel="noopener noreffer ">hugo 发布页</a> 下载最新的二进制文件，在合适的目录下解压，将目录添加的 <code>PATH</code> 中。</p>
 <h2 id="二构建网站并添加主题">二、构建网站并添加主题</h2>
 <blockquote>
-<p>建议使用 git bash。</p>
-</blockquote>
+<p>建议使用 git bash。</p></blockquote>
 <h3 id="1-构建网站">1. 构建网站</h3>
 <p>使用指令构建 hugo 网站。</p>
 <div class="code-block code-line-numbers open" style="counter-reset: code-block 0">
@@ -189,8 +188,7 @@
     </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">git submodule add --depth<span class="o">=</span><span class="m">1</span> https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
 </span></span><span class="line"><span class="cl">git submodule update --init --recursive <span class="c1"># needed when you reclone your repo (submodules may not get cloned automatically)</span></span></span></code></pre></div></div>
 <blockquote>
-<p>除此之外也可以使用 <code>Git Clone</code>、<code>ZIP</code>、<code>Hugo module </code> 等方法安装。</p>
-</blockquote>
+<p>除此之外也可以使用 <code>Git Clone</code>、<code>ZIP</code>、<code>Hugo module </code> 等方法安装。</p></blockquote>
 <p>修改配置文件 <code>hugo.yaml</code> ，添加 <code>theme: [&quot;PaperMod&quot;]</code>。</p>
 <h2 id="三撰写第一篇文章">三、撰写第一篇文章</h2>
 <h3 id="1-生成文章">1. 生成文章</h3>
@@ -199,16 +197,14 @@
 <h3 id="2-本地预览">2. 本地预览</h3>
 <p><code>hugo server -D</code> 启动本地服务器，访问 <code>localhost:1313</code> 即可预览，<code>-D</code> 参数表示构建草稿。</p>
 <blockquote>
-<p>文章 meta 信息中的 draft 字段表示文章是否为草稿，草稿文件默认不会被构建。</p>
-</blockquote>
+<p>文章 meta 信息中的 draft 字段表示文章是否为草稿，草稿文件默认不会被构建。</p></blockquote>
 <h2 id="四使用-action-部署到-github-pages">四、使用 Action 部署到 GitHub Pages</h2>
 <p>为什么不直接提交 <code>public</code> 到 <code>**.github.io</code> ？因为我不想再用一个额外的库来同步整个 Hugo 站点。</p>
 <p>使用 <code>Action</code> 操作可以直接将所有站点文件上传到 <code>**.github.io</code>，然后通过 <code>Action</code> 自动构建 Pages。</p>
 <h3 id="1-添加-workflow">1. 添加 workflow</h3>
 <p>建立新文件 <code>.github/workflows/hugo.yaml</code>，内容如下：</p>
 <blockquote>
-<p>下面的文件为自用文件，请修改 branches 和 HUGO_VERSION，如果使用 submodule 方式添加 themes，则 deploy.steps 下的 uses 和 with 字段请保留。</p>
-</blockquote>
+<p>下面的文件为自用文件，请修改 branches 和 HUGO_VERSION，如果使用 submodule 方式添加 themes，则 deploy.steps 下的 uses 和 with 字段请保留。</p></blockquote>
 <div class="code-block code-line-numbers" style="counter-reset: code-block 0">
     <div class="code-header language-yaml">
         <span class="code-title"><i class="arrow fas fa-angle-right fa-fw" aria-hidden="true"></i></span>
@@ -279,7 +275,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="sd">      - name: Upload artifact
 </span></span></span><span class="line"><span class="cl"><span class="sd">        uses: actions/upload-pages-artifact@v3
 </span></span></span><span class="line"><span class="cl"><span class="sd">        with:
-</span></span></span><span class="line"><span class="cl"><span class="sd">          path: ./public</span><span class="w"> 
+</span></span></span><span class="line"><span class="cl"><span class="sd">          path: ./public</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="l">​</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="c"># Deployment job</span><span class="w">
 </span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">deploy</span><span class="p">:</span><span class="w">
@@ -336,7 +332,7 @@
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.134.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.145.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://junpoyu.github.io/" target="_blank">Junpo Yu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

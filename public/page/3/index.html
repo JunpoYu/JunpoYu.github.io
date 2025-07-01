@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
     <head>
-	<meta name="generator" content="Hugo 0.134.2"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+	<meta name="generator" content="Hugo 0.145.0"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
@@ -117,6 +117,12 @@
         alt="/rubysiu.jpg"
         title="/rubysiu.jpg" /></a></div><h1 class="home-title">Junpo Yu's Blog</h1><div class="home-subtitle"><div id="id-1" class="typeit"></div></div><div class="links"><a href="https://github.com/JunpoYu" title="GitHub" target="_blank" rel="noopener noreffer me"><i class="fab fa-github fa-fw" aria-hidden="true"></i></a><a href="mailto:junpo_yu@163.com" title="Email" rel="me"><i class="far fa-envelope fa-fw" aria-hidden="true"></i></a><a href="/index.xml" title="RSS" target="_blank" rel="noopener noreffer me"><i class="fas fa-rss fa-fw" aria-hidden="true"></i></a></div></div>
 <article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
+        <a href="/config-img-path-in-typora/">Config Img Path in Typora</a>
+    </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2025-05-04">2025-05-04</time></span></div><div class="content"><h2 id="在-typora-中配置图片的相对路径">在 Typora 中配置图片的相对路径</h2>
+<p>在自建博客中插入图片通常使用<strong>图床</strong>和<strong>本地相对路径</strong>两种方式。图床毫无疑问是最简单且方便的，目前也有很多免费的图床服务可以使用，但是总有人会担心将自己的数据交给别人是比较危险的（比如我）。但是通过 Markdown 编辑器（例如 Typora）插入图片时就不得不考虑图片本地路径和博客构建路径之间的不兼容，好在 Typora 目前已经支持在 md 文件中使用 font-matter 自定义图片预览的相对路径，又不影响图片构建。</p></div><div class="post-footer">
+        <a href="/config-img-path-in-typora/">Read More</a><div class="post-tags">
+                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/writing/">Writing</a>,&nbsp;<a href="/tags/typora/">Typora</a></div></div>
+</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
         <a href="/deep-neural-networks/">深度神经网络</a>
     </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2025-03-03">2025-03-03</time></span></div><div class="content"><p>一个拥有足够多的合适的基函数的线性模型，能够以任意精度近似任意一个的非线性变换。这就是深度神经网络生效的基础，但是这种模型有一些非常严重的局限性，这些局限性通常是由于基函数是固定的且和训练集数据无关的特点而引发的。</p></div><div class="post-footer">
         <a href="/deep-neural-networks/">Read More</a><div class="post-tags">
@@ -151,22 +157,6 @@
 <p>但是如果通过网页检索有一个弊端，就是 EarthData 会把检索到的所有文件的下载链接缓存到页面上，然后再生成下载元文件，当检索的数据量过大时，检索时间很长不说，大量的链接文本也会导致页面崩溃，因而前功尽弃。</p></div><div class="post-footer">
         <a href="/how-to-download-from-earthdata/">Read More</a><div class="post-tags">
                 <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/research-skills/">Research Skills</a></div></div>
-</article><article class="single summary" itemscope itemtype="http://schema.org/Article"><h1 class="single-title" itemprop="name headline">
-        <a href="/prior-and-posterior-probabilities/">先验概率与后验概率</a>
-    </h1><div class="post-meta"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span>&nbsp;<span class="post-publish">published on <time datetime="2025-01-15">2025-01-15</time></span></div><div class="content"><p><strong>已知</strong> ：</p>
-<p>人群中某个人患癌的概率是 1%，现在我们有一个测试某个对象是否患癌的机器，但是机器并不完美。对于确定患癌的人，机器有 10% 的概率给出不患癌的判断，对于确定不患癌的人，机器有 3% 的概率给出患癌的判断。我们使用 0 表示患癌，使用 1 表示不患癌。使用事件 C 表示是否患癌，使用事件 T 表示机器的判断，所以我们有以下概率分布：
-$$
-\begin{align*}
-P(C=1)&amp;=0.01 \newline
-P(C=0)&amp;=0.99 \newline
-P(T=1|C=1)&amp;=0.9 \newline
-P(T=0|C=1)&amp;=0.1 \newline
-P(T=1|C=0)&amp;=0.03 \newline
-P(T=0|C=0)&amp;=0.97
-\end{align*}
-$$</p></div><div class="post-footer">
-        <a href="/prior-and-posterior-probabilities/">Read More</a><div class="post-tags">
-                <i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;<a href="/tags/math/">Math</a></div></div>
 </article><ul class="pagination"><li class="page-item ">
                     <span class="page-link">
                         <a href="/">1</a>
@@ -189,7 +179,7 @@ $$</p></div><div class="post-footer">
                     </span>
                 </li></ul></div></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.134.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.145.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://junpoyu.github.io/" target="_blank">Junpo Yu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

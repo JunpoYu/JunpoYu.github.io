@@ -13,7 +13,7 @@
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
     <meta property="article:published_time" content="2025-06-28T20:52:24+08:00">
-    <meta property="article:modified_time" content="2025-06-29T13:58:03+08:00">
+    <meta property="article:modified_time" content="2025-06-30T22:01:29+08:00">
     <meta property="og:image" content="http://localhost:1313/logo.png">
 
   <meta name="twitter:card" content="summary_large_image">
@@ -25,7 +25,7 @@
 <meta name="apple-mobile-web-app-title" content="Junpo Yu&#39;s Blog">
 <meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/variational-inference-in-generative-model/" /><link rel="prev" href="http://localhost:1313/what-is-gaussian-process/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/variational-inference-in-generative-model/" /><link rel="prev" href="http://localhost:1313/what-is-gaussian-process/" /><link rel="next" href="http://localhost:1313/dlfc-ch16-continuous-latent-variables/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
         <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
     {
@@ -37,7 +37,7 @@
             "@type": "WebPage",
             "@id": "http:\/\/localhost:1313\/variational-inference-in-generative-model\/"
         },"genre": "posts","wordcount":  1571 ,
-        "url": "http:\/\/localhost:1313\/variational-inference-in-generative-model\/","datePublished": "2025-06-28T20:52:24+08:00","dateModified": "2025-06-29T13:58:03+08:00","publisher": {
+        "url": "http:\/\/localhost:1313\/variational-inference-in-generative-model\/","datePublished": "2025-06-28T20:52:24+08:00","dateModified": "2025-06-30T22:01:29+08:00","publisher": {
             "@type": "Organization",
             "name": ""},"author": {
                 "@type": "Person",
@@ -143,15 +143,12 @@
 <p>首先我们要知道什么是变分推断（Variational Inference；VI）。变分通常同样用于近似某些难以直接表达的分布，例如我们现在已经有观测数据 x，我们希望知道后验分布 <span> $p(z|x)$ </span>。但是我们难以直接写出 <span> $p(z|x)$ </span>。此时我们可以选择一个比较简单的 <span> $q(z|x)$ </span>，通过优化（最小化 KL 散度）让两者尽可能接近。</p>
 <p>而在生成式模型中，我们通常会认为观测数据遵从某些潜在变量（Latent Variable）$z$ 的控制，即 <span> $p(x)=\int p(z)p(x|z)dz$ </span>。举个例子，如果我们希望建立模型，这个模型可以生成各式各样的图片。此时如果我们让模型直接给我们随机生成一张图片，那么你可能会得到一只狗的图片，或者一辆车。但是如果我们给定一些约束，例如我们希望得到一只猫的图片，那么模型就会正确地生成一只猫。此时我们先不管如何添加约束，而是思考一下，这个过程中模型是如何控制生成图片的类型的呢？显然模型中存在某些部分（参数）控制着模型每次输出的图片的类型（或者其他约束信息，例如颜色、形状等）。那么我们认为模型实际上学习到了一些能够描述图片本质的信息的变量，而由于我们无法描述或者观测到这些变量，所以将其称之为潜在变量。</p>
 <blockquote>
-<p>如果我们不考虑潜在变量的控制效果，那基本就是原始的自编码器（AutoEncoder；AE）的思想，即让模型想办法直接学习 <span> $p(x)$ </span>，但这会导致严重的过拟合问题。因此变分自编码器（Variational AutoEncoder；VAE） 提出了潜在变量的概念，并要求该潜在变量遵循标准正态分布，然后使用变分推断来优化模型的学习过程，从而解决了正则化和连续采样的问题。</p>
-</blockquote>
+<p>如果我们不考虑潜在变量的控制效果，那基本就是原始的自编码器（AutoEncoder；AE）的思想，即让模型想办法直接学习 <span> $p(x)$ </span>，但这会导致严重的过拟合问题。因此变分自编码器（Variational AutoEncoder；VAE） 提出了潜在变量的概念，并要求该潜在变量遵循标准正态分布，然后使用变分推断来优化模型的学习过程，从而解决了正则化和连续采样的问题。</p></blockquote>
 <p>回到开始，我们有观测数据 <span> $x$ </span>，我们认为模型的学习目标是 <span> $ p(x)=\int p(x|z)p(z)dz$ </span>。其中 <span> $p(x)$ </span> 是先验分布，且我们假设其为标准正态分布。$p(x|z)$ 是似然，即给定潜在变量 $z$ 后观测数据 $x$ 出现的概率。</p>
 <blockquote>
-<p>由于模型实际上建模了 $x$ 和 $z$ 的联合分布，因此也可以用 $p(x,z)$ 来表示整个模型。</p>
-</blockquote>
+<p>由于模型实际上建模了 $x$ 和 $z$ 的联合分布，因此也可以用 $p(x,z)$ 来表示整个模型。</p></blockquote>
 <blockquote>
-<p>在实际生成过程中，往往通过两步采样的方式，即先采样 $z\sim p(z)$ ，然后采样 $x\sim p(x|z)$ 来生成结果。</p>
-</blockquote>
+<p>在实际生成过程中，往往通过两步采样的方式，即先采样 $z\sim p(z)$ ，然后采样 $x\sim p(x|z)$ 来生成结果。</p></blockquote>
 <h2 id="变分推断在-vae-中的应用">变分推断在 VAE 中的应用</h2>
 <p>模型的最终目的是最大化 $log\left(p\left(x\right)\right)$ ，但是边缘似然 $log(p(x))$ 存在对 $z$ 的积分，因为潜在变量 $z$ 往往对应着一个高维空间，因此实际中这个积分是很难解的。因此我们引入一个近似的后验分布 $q(z|x)$ ，也称为变分分布，进行如下恒等变化：</p>
 <div>
@@ -165,8 +162,7 @@ $$</p>
 </div>
 <blockquote>
 <p>其中应用了重要性采样的思想，即对于一个难以求采样的分布 $p(x)$ ，我们希望计算某个 $f(x)$ 在该分布下的期望，可以使用一个容易采样的分布 $q(x)$ 来间接估计，其核心思想可以表述为：<span> $ \int p(x)f(x)dx=\int q(x)\frac{f(x)p(x)}{q(x)}dx=\mathbb E_{q(x)}\left[f(x)\frac{p(x)}{q(x)}\right] $ </span>。
-通过对 $q(x)$ 的采样 $N$ 个样本来近似的求出 $f(x)$ 在 $x\sim p(x)$ 下的期望，其中 <span> $w_i=\frac{p(x)}{q(x)} $</span> 称为重要性权重。</p>
-</blockquote>
+通过对 $q(x)$ 的采样 $N$ 个样本来近似的求出 $f(x)$ 在 $x\sim p(x)$ 下的期望，其中 <span> $w_i=\frac{p(x)}{q(x)} $</span> 称为重要性权重。</p></blockquote>
 <p>再根据 Jensen 不等式得出：</p>
 <div>
 $$
@@ -174,8 +170,7 @@ $$
 $$
 </div>
 <blockquote>
-<p>Jensen 不等式是指，对于凸函数有 $\mathbb E[f(x)] \ge f(\mathbb E(x))$，对于凹函数有 $\mathbb E[f(x)] \le f(\mathbb E(x))$。</p>
-</blockquote>
+<p>Jensen 不等式是指，对于凸函数有 $\mathbb E[f(x)] \ge f(\mathbb E(x))$，对于凹函数有 $\mathbb E[f(x)] \le f(\mathbb E(x))$。</p></blockquote>
 <p>此时我们得到了 $\log(p(x)) $ 的下限，我们也将其称之为证据下界（Evidence Lower Bound；ELBO）。即：</p>
 <div>
 <p>$$
@@ -188,8 +183,7 @@ $$</p>
 </div>
 <p>经过变换，我们将 ELBO 转为了两项之和。其中第一项代表重构项，描述了模型的生成能力。第二项表示正则项，约束了潜在变量不能偏离高斯先验。且此时我们的目标变成了最大化 ELBO。</p>
 <blockquote>
-<p>最后一步推导涉及到 KL 散度，如果不懂可以先看一下 <a href="https://zhouyifan.net/2022/10/13/20221012-entropy/" target="_blank" rel="noopener noreffer ">从零理解熵、交叉熵、KL散度 | 周弈帆的博客</a> 。</p>
-</blockquote>
+<p>最后一步推导涉及到 KL 散度，如果不懂可以先看一下 <a href="https://zhouyifan.net/2022/10/13/20221012-entropy/" target="_blank" rel="noopener noreffer ">从零理解熵、交叉熵、KL散度 | 周弈帆的博客</a> 。</p></blockquote>
 <h2 id="变分推断在-ddpm-中的应用">变分推断在 DDPM 中的应用</h2>
 <p>对于去噪扩散模型（Denosing Diffusion Probabilistic Model）而言，整个模型分为两个过程，即加噪过程 <span> $q(x_t|x_{t-1})$</span> 和去噪过程 <span> $p(x_{t-1}|x_t)$ </span>，观测数据为 <span>$x_0$ </span>，潜在变量就是每一步的噪声 <span> $x_1,\dots,x_t$ </span>。此时建模目标是是：</p>
 <div>
@@ -210,18 +204,18 @@ $$</p>
 </div>
 <p>继续简化 ELBO：</p>
 <div>
-<p>$$
-\begin{align*}
-\mathbb{E}<em>{q}\left[\log \frac{p</em>\theta(x_{0:T})}{q(x_{1:T}|x_0)}\right] = \mathbb{E}<em>{q} \left[\log p(x_T) + \sum</em>{t=1}^T \log \frac{p_\theta(x_{t-1}|x_t)}{q(x_t|x_{t-1})} \right]
-\end{align*}
-$$</p>
+$$
+\begin{align}
+\mathbb{E}_{q}\left[\log \frac{p_\theta(x_{0:T})}{q(x_{1:T}|x_0)}\right] = \mathbb{E}_{q} \left[\log p(x_T) + \sum_{t=1}^T \log \frac{p_\theta(x_{t-1}|x_t)}{q(x_t|x_{t-1})} \right]
+\end{align}
+$$
 </div>
 <p>由于 <span> $p(x_T)$  </span> 是标准正态分布，因此 ELBO 简化为每一步的加噪和去噪的 KL 散度之和。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
         <div class="post-info-line">
             <div class="post-info-mod">
-                <span>Updated on 2025-06-29</span>
+                <span>Updated on 2025-06-30</span>
             </div></div>
         <div class="post-info-line">
             <div class="post-info-md"><span>
@@ -240,11 +234,12 @@ $$</p>
         </section>
     </div>
 
-    <div class="post-nav"><a href="/what-is-gaussian-process/" class="prev" rel="prev" title="什么是高斯过程"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>什么是高斯过程</a></div>
+    <div class="post-nav"><a href="/what-is-gaussian-process/" class="prev" rel="prev" title="什么是高斯过程"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>什么是高斯过程</a>
+            <a href="/dlfc-ch16-continuous-latent-variables/" class="next" rel="next" title="[Deep Learning: Foudations and Concepts] CH16-Continuous Latent Variables">[Deep Learning: Foudations and Concepts] CH16-Continuous Latent Variables<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.134.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.145.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://junpoyu.github.io/" target="_blank">Junpo Yu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

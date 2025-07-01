@@ -102,13 +102,11 @@ $$
 继续简化 ELBO：
 
 <div>
-
 $$
-\begin{align*}
+\begin{align}
 \mathbb{E}_{q}\left[\log \frac{p_\theta(x_{0:T})}{q(x_{1:T}|x_0)}\right] = \mathbb{E}_{q} \left[\log p(x_T) + \sum_{t=1}^T \log \frac{p_\theta(x_{t-1}|x_t)}{q(x_t|x_{t-1})} \right]
-\end{align*}
+\end{align}
 $$
-
 </div>
 
 由于 <span> $p(x_T)$  </span> 是标准正态分布，因此 ELBO 简化为每一步的加噪和去噪的 KL 散度之和。

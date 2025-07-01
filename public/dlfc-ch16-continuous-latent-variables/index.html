@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>[Deep Learning: Foudations and Concepts] CH16-Continuous Latent Variables - Junpo Yu&#39;s Blog</title><meta name="Description" content="你所经历的每一个日常，也许正是连续不断的奇迹"><meta property="og:url" content="http://localhost:1313/dlfc-ch16-continuous-latent-variables/">
+  <meta property="og:site_name" content="Junpo Yu&#39;s Blog">
+  <meta property="og:title" content="[Deep Learning: Foudations and Concepts] CH16-Continuous Latent Variables">
+  <meta property="og:description" content="本文内容来自 Deep Learning: Foundations and Concepts 一书的第十六章。
+正文的数学公式会尽可能简洁，某些公式的详细推导过程在 Appendix 中给出。
+CH16 Continuous Latent Variables 什么是潜在变量（Latent Variables）？">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-06-30T16:08:03+08:00">
+    <meta property="article:modified_time" content="2025-06-30T22:01:29+08:00">
+    <meta property="og:image" content="http://localhost:1313/logo.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="http://localhost:1313/logo.png">
+  <meta name="twitter:title" content="[Deep Learning: Foudations and Concepts] CH16-Continuous Latent Variables">
+  <meta name="twitter:description" content="本文内容来自 Deep Learning: Foundations and Concepts 一书的第十六章。
+正文的数学公式会尽可能简洁，某些公式的详细推导过程在 Appendix 中给出。
+CH16 Continuous Latent Variables 什么是潜在变量（Latent Variables）？">
+<meta name="application-name" content="Junpo Yu&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Junpo Yu&#39;s Blog">
+<meta name="referrer" content="no-referrer" /><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="http://localhost:1313/dlfc-ch16-continuous-latent-variables/" /><link rel="prev" href="http://localhost:1313/variational-inference-in-generative-model/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="/lib/fontawesome-free/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/fontawesome-free/css/all.min.css"></noscript><link rel="preload" href="/lib/animate/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="/lib/animate/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "[Deep Learning: Foudations and Concepts] CH16-Continuous Latent Variables",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "http:\/\/localhost:1313\/dlfc-ch16-continuous-latent-variables\/"
+        },"genre": "posts","wordcount":  3084 ,
+        "url": "http:\/\/localhost:1313\/dlfc-ch16-continuous-latent-variables\/","datePublished": "2025-06-30T16:08:03+08:00","dateModified": "2025-06-30T22:01:29+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Junpo Yu"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Junpo Yu&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/rubysiu.jpg"
+        data-srcset="/rubysiu.jpg, /rubysiu.jpg 1.5x, /rubysiu.jpg 2x"
+        data-sizes="auto"
+        alt="/rubysiu.jpg"
+        title="/rubysiu.jpg" />Junpo Yu&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/tech/"> 技术性文章 </a><a class="menu-item" href="/posts/builds/"> 构建 </a><a class="menu-item" href="/posts/knowledge/"> 理论知识 </a><a class="menu-item" href="/posts/research/"> 科研相关 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-desktop">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Junpo Yu&#39;s Blog"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/rubysiu.jpg"
+        data-srcset="/rubysiu.jpg, /rubysiu.jpg 1.5x, /rubysiu.jpg 2x"
+        data-sizes="auto"
+        alt="/rubysiu.jpg"
+        title="/rubysiu.jpg" />Junpo Yu&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="Search titles or contents..." id="search-input-mobile">
+                        <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="Search">
+                            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="Clear">
+                            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                    <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
+                        Cancel
+                    </a>
+                </div><a class="menu-item" href="/posts/tech/" title="">技术性文章</a><a class="menu-item" href="/posts/builds/" title="">构建</a><a class="menu-item" href="/posts/knowledge/" title="">理论知识</a><a class="menu-item" href="/posts/research/" title="">科研相关</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><div class="search-dropdown desktop">
+        <div id="search-dropdown-desktop"></div>
+    </div>
+    <div class="search-dropdown mobile">
+        <div id="search-dropdown-mobile"></div>
+    </div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">[Deep Learning: Foudations and Concepts] CH16-Continuous Latent Variables</h1><div class="post-meta">
+            <div class="post-meta-line"><span class="post-author"><a href="https://junpoyu.github.io/" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw" aria-hidden="true"></i>Junpo Yu</a></span></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2025-06-30">2025-06-30</time>&nbsp;<i class="fas fa-pencil-alt fa-fw" aria-hidden="true"></i>&nbsp;3084 words&nbsp;
+                <i class="far fa-clock fa-fw" aria-hidden="true"></i>&nbsp;7 minutes&nbsp;</div>
+        </div><div class="details toc" id="toc-static"  data-kept="">
+                <div class="details-summary toc-title">
+                    <span>Contents</span>
+                    <span><i class="details-icon fas fa-angle-right" aria-hidden="true"></i></span>
+                </div>
+                <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#ch16-continuous-latent-variables">CH16 Continuous Latent Variables</a>
+      <ul>
+        <li><a href="#161-principal-component-analysis">16.1 Principal Component Analysis</a>
+          <ul>
+            <li><a href="#1611-maximum-variance-formulation">16.1.1 Maximum variance formulation</a></li>
+            <li><a href="#1612-minimal-error-formulation">16.1.2 Minimal error formulation</a></li>
+            <li><a href="#1613-data-compression">16.1.3 Data compression</a></li>
+            <li><a href="#1614-data-whitening">16.1.4 Data whitening</a></li>
+            <li><a href="#1615-high-dimensional-data">16.1.5 High-dimensional Data</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#appandix">Appandix</a>
+      <ul>
+        <li><a href="#a161">A16.1</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+            </div><div class="content" id="content"><p>本文内容来自 <a href="https://www.bishopbook.com/" target="_blank" rel="noopener noreffer ">Deep Learning: Foundations and Concepts</a> 一书的第十六章。</p>
+<p>正文的数学公式会尽可能简洁，某些公式的详细推导过程在 Appendix 中给出。</p>
+<h2 id="ch16-continuous-latent-variables">CH16 Continuous Latent Variables</h2>
+<p>什么是潜在变量（Latent Variables）？</p>
+<p>这个概念主要是相对于高维数据而言的，对于很多高维数据，我们可以认为它们实际上是由一些低维的潜在变量控制。举个例子，对于手写数字图片（见下图），一般而言我们会认为每一个像素点都是一个维度，假如整个图片有 100x100 个像素，那么每个图片都是一个高达 10000 维的数据。但是换个角度思考，我们可以认为这些图片实际上是由第一张图片经过一些变化，例如平移和旋转得到的。让我们暂时忽略数字部分在像素级别的细微差异，我们是否可以认为，以下五张图片实际上是由三个变量（纵向平移，横向平移，中心旋转）所控制的呢？完全可以，此时我们可以认为这几张图片是由这三个潜在变量控制生成的，因为你只要拿到第一张图片，然后通过修改这三个变量，就可以得到后续所有的图片。而在观测数据中我们只能看到像素，而看不到控制生成过程的三个变量，所以这些变量就称之为潜在变量。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/dlfc-ch16-continuous-latent-variables/Figure1.png"
+        data-srcset="/dlfc-ch16-continuous-latent-variables/Figure1.png, /dlfc-ch16-continuous-latent-variables/Figure1.png 1.5x, /dlfc-ch16-continuous-latent-variables/Figure1.png 2x"
+        data-sizes="auto"
+        alt="/dlfc-ch16-continuous-latent-variables/Figure1.png"
+        title="手写数字3" width="885" height="182" /></p>
+<p>上面的例子也许不是很严谨，例如控制生成过程的也许还有好多个其他的潜在变量，但是我们主要关注这种思想。实际上现实中绝大多数数据都符合这种特点，<strong>即高维的数据往往集中在某些低维流形上，且其维度远小于原始数据维度</strong>。此时我们就可以通过这些低维流形所代表在潜在变量来生成一些数据，但是生成的数据往往和现实不太一致，因为现实数据往往带有噪音。因此我们在生成的数据上添加一些噪音，从而使其更加接近观测数据。</p>
+<blockquote>
+<p>这个过程很自然的启发了一些生成式模型。</p></blockquote>
+<p>而要从观测数据中找到控制其生成过程的潜在变量，我们就需要想办法抛弃无用的维度，将高维的观测数据降维到真正的低维流形上。</p>
+<h3 id="161-principal-component-analysis">16.1 Principal Component Analysis</h3>
+<p>主成分分析（PCA）是一种非常常用的降维手段，也被称之为 Kosambi–Karhunen–Loeve transform。PCA 有两种定义，一是最大化投影后数据方差的线性投影；二是最小化投影代价的线性投影，投影代价通常定义为投影前后数据的均方距离。我们会从两个角度分别尝试推导出 PCA 的数学过程。</p>
+<blockquote>
+<p>所有推导过程以单变量为基础，多变量降维请参考 canonical correlation analysis。</p></blockquote>
+<h4 id="1611-maximum-variance-formulation">16.1.1 Maximum variance formulation</h4>
+<p>我们有 $N$ 个观测数据 <span> ${\mathbf{x}_n}={\mathbf{x}_1,\dots,\mathbf{x}_N}$ </span>，每个数据由一个 D 维向量表示，即 <span> $\mathbf{x}_i\in \mathbb{R}^D $ </span> 。我们希望将其降维到一个 $M$ 维空间中（$M&lt;D$），即每个数据点使用 $M$ 维向量表示。通常而言 $M$ 是给定的，后面我们会讨论一些选择 $M$ 的技巧。</p>
+<p>现在考虑一个简单情况，即 $M=1$。我们希望将数据投影到一条线上，我们可以使用一个向量<span> $\mathbf{u}_t$ </span>来表示，而且我们关注的是向量的方向，而不在乎其长度，因为这个向量代表的是我们所要投影到的一维空间方向，至于这个向量到底多长，我们并不在乎，所以我们规定 <span> $\mathbf{u}_t^T\mathbf{u}_t=1$ </span>。投影后的向量就可以表示为 <span> $\mathbf{u}_t\mathbf{x}_n$ </span>，此时我们不难求出投影后数据的均值为 <span> $\mathbf{u}_t^T\bar{\mathbf{x}}$ </span>，方差为 <span> $\mathbf{u}_t^T \mathbf{S}\mathbf{u}_t$ </span>。</p>
+<blockquote>
+<p>均值和方差的推导见 Appendix A1.1~A1.2。</p></blockquote>
+<p>我们要最大化投影后数据的方差，即 <span> $\max \mathbf{u}_t^T \mathbf{S} \mathbf{u}_t$ </span>，但是可能出现 <span> $\mathbf{u}_t^T \mathbf{S} \mathbf{u}_t =a$ </span>，有 <span> $\hat{\mathbf{u}}_t=k\mathbf{u_t}$ </span>， 令 <span> $\hat{\mathbf{u}}_t^T \mathbf{S} \hat{\mathbf{u}}_t=k^2\mathbf{u}_t^T \mathbf{S} \mathbf{u}_t=k^2 a$ </span> 。但我们不想关注向量的长度，因此我们要引入约束项 <span> $\mathbf{u}_t^T\mathbf{u}_t=1$ </span>。</p>
+<p>此时使用拉格朗日乘子法，构建带约束的最大化方程：</p>
+<data id="id-1" data-raw></data>
+<p>该方程对 <span> $\mathbf{u}_t$ </span> 求偏导得：</p>
+<data id="id-2" data-raw></data>
+<blockquote>
+<p>求导过程见 Appendix A1.3。</p></blockquote>
+<p>显然投影向量 <span> $\mathbf{u}_t$ </span> 是协方差矩阵 $\mathbf{S}$ 的一个特征向量，此时两边左乘 <span> $\mathbf{x}_t^T$ </span> 得到投影后的方差 <span> $\mathbf{u}_t^T \mathbf{S}\mathbf{u}_t=\lambda_1$ </span>。当 $M&gt;1$ 时，令投影后方差最大化的投影向量就是协方差矩阵的前 $M$ 个最大特征值所对应的特征向量。由此我们就推导出了 PCA 降维的数学过程，即对协方差矩阵做特征值分解，从最大的特征值开始选择对应的特征向量，就是降维所需要的投影向量。</p>
+<p>但是这种方法的计算量太大，对于维度为 $D$ 的数据，其计算成本为 $O(D^3)$ 。</p>
+<h4 id="1612-minimal-error-formulation">16.1.2 Minimal error formulation</h4>
+<p>有 $D$ 维基向量 <span> ${\mathbf{u}_n}={\mathbf{u}_1,\dots,\mathbf{u}_N}$ </span>，满足  <span> $ \mathbf{u}_i^T\mathbf{u}_f = \delta_{ij}$ </span> ，意思是 $i=j$ 时 <span> $\mathbf{u}_i^T\mathbf{u}_f=1$ </span>，否则 <span> $\mathbf{u}_i^T\mathbf{u}_f=0$ </span>，这意味着 <span> ${\mathbf{u}_n}$ </span> 是一组完全正交的基向量。</p>
+<p>对于 $D$ 维的观测数据  <span> ${\mathbf{x}_n}={\mathbf{x}_1,\dots,\mathbf{x}_N}$ </span>，我们可以使用新的基向量做如下转换：</p>
+<data id="id-3" data-raw></data>
+<p>这相当于在新的基向量张成的空间中表示观测数据，原始数据 <span>$\mathbf{n}_n$</span> 的分量 <span> $\mathbf{x}_n={x_1,\dots,x_D}$ </span>，被替换为 <span> ${\alpha_1,\dots,\alpha_D}$ </span>。此时我们在上式基础上同时左乘某个基向量 <span> $\mathbf{u}_j^T$ </span>，同时应用基向量之间的正交性，可以得到：</p>
+<data id="id-4" data-raw></data>
+<p>我们将公式（1.4）的结果带入公式（1.3），可以改写为：</p>
+<data id="id-5" data-raw></data>
+<p>此时我们成功使用了自定义的完全正交基向量来表示观测数据，但是我们的目标是对数据进行降维，这意味着我们不能使用全部的 $D$ 个基向量，如果要降到 $M$ 维，那么我们就只能使用其中的 $M$ 个基向量来重新表示，但是选择哪些基向量比较好呢？</p>
+<p>假设我们选择了前 $M$ 个基向量，我们可以将观测的数据近似的表示为：</p>
+<data id="id-6" data-raw></data>
+<p>其中 <span> ${z_{ni}}$ </span> 依赖于特定的观测数据点，而 <span> ${b_i}$ </span> 则是对于所有数据点都一致的常量。这种表示下观测数据只有 $M$ 维基向量描述，而公式中的第二项用来补偿降维所失去维度，从而使我们可以在 $D$ 维中表示降维后的数据。</p>
+<p>现在我们只需要确定 <span> $z_{ni},\mathbf{u}_i,b_i$ </span> 就可以确定降维过程了。该怎么确定呢？答案就在这一小节的标题中，我们要最小化投影前后的数据的投影代价，使用投影前数据和投影后近似数据的距离来描述投影代价。因此我们需要建立如下代价函数：</p>
+<data id="id-7" data-raw></data>
+<p>结合公式（1.6）和（1.7），我们将代价函数分别对每个变量求偏导，令偏导为零从而求出使代价函数最小的变量值。首先考虑对 <span> $z_{ni}$ </span>求偏导，我们可以得到：</p>
+<data id="id-8" data-raw></data>
+<p>其中 $j$ 是为了避免在推导过程中和 $i$ 混用引起歧义，其含义和 $i$ 类似，表示某个特定基向量，推导过程见 Appendix A1.4~A1.9。</p>
+<p>同理我们对 <span> $b_j$ </span>求偏导可以得到：</p>
+<data id="id-9" data-raw></data>
+<p>推导过程见 Appendix A1.10~A1.12。</p>
+<p>我们将公式 1.8 和 1.9 代回 1.6，得到</p>
+<data id="id-10" data-raw></data>
+<p>此时我们得到了降维后近似变量的表达式，然后我们只要做相减就可以求出原始变量和降维后近似变量的距离。注意我们用公式 1.5 来表示原始变量，这样整个计算都在我们新定义的基向量空间中进行。</p>
+<data id="id-11" data-raw></data>
+<p>详细推导过程见 Appendix A1.13。</p>
+<p>这个公式说明了降维前后数据向量的差距都落在了我们选择的 $M$ 维空间中之外，根据该公式我们可以定义 $N$ 个数据点的总投影代价。</p>
+<data id="id-12" data-raw></data>
+<p>推导过程见 Appendix 1.14。</p>
+<p>此时我们最小化这个代价函数，同时带有约束 <span> $\mathbf{u}_i^T\mathbf{u}_i=1$ </span>。我们以 $D=2,M=1$ 为例使用拉普拉斯乘子法。</p>
+<data id="id-13" data-raw></data>
+<p>由此可见，降维后的丢弃基向量就是协方差矩阵的特征向量的一部分，我们将其推广到 $M$ 维可以得到 <span> $J=\sum_{i=M+1}^D\lambda_i$ </span>，因此我们只需要抛弃最小的特征值所代表的基向量，就可以令投影代价最小化。</p>
+<h4 id="1613-data-compression">16.1.3 Data compression</h4>
+<p>这一章节简要描述了 PCA 在数据有损压缩中的一些应用，并对如何看待降维后的近似变量提供了一种新的看法，即降维后的数据实际上是原始数据的均值加上我们给定的 $M$ 个自由度来描述压缩后的数据，因此压缩后数据的信息量完全取决于这 $M$ 个维度的信息，所以 $M$ 越大，保留的信息就越多，就越像原始数据。</p>
+<h4 id="1614-data-whitening">16.1.4 Data whitening</h4>
+<p>数据白化其实不属于降维，而是数据预处理的一种，其效果类似于标准化或者归一化，即把数据的某些数量级差距过大的属性转为数据量近似的表示方法。</p>
+<h4 id="1615-high-dimensional-data">16.1.5 High-dimensional Data</h4>
+<p>这一节概述了如何对高维数据做 PCA，因为做 PCA 的复杂度和数据维度 $D$ 的三次方成正比，因此直接对高维数据进行 PCA 的成本是难接受的，这一章节描述了一种将 PCA 转入原始数据的某一个低维空间中进行处理的方法。</p>
+<blockquote>
+<p>我平常不使用 PCA，因此这一节就大概看了一下。</p></blockquote>
+<h2 id="appandix">Appandix</h2>
+<h3 id="a161">A16.1</h3>
+<p>A1 是 CH16.1 中的公式推导过程。</p>
+<data id="id-14" data-raw></data>
+<data id="id-15" data-raw></data>
+<hr>
+<data id="id-16" data-raw></data>
+<hr>
+<data id="id-17" data-raw></data>
+<p>对于某个特定的数据点 <span>$x_n$</span> 的偏导可以不失一般性地推广到上式的求和中，因此下面我们以特定数据点的 <span>$x_n$</span> 的偏导过程为例。</p>
+<p>首先给出向量微积分的基本公式</p>
+<data id="id-18" data-raw></data>
+<p>对于某个数据点的投影代价</p>
+<data id="id-19" data-raw></data>
+<p>我们结合 A3.2 和 A3.3，对某个特定的 <span>$z_{nj}$</span> 求偏导，因此我们将 $j$ 项单独拆出来</p>
+<data id="id-20" data-raw></data>
+<p>注意一点，$j$ 项是我们希望求得降维后用以表示降维数据的基向量，因此它一定在 $M$ 维中。我们结合 A3.2, A3.4 得到如下解。</p>
+<data id="id-21" data-raw></data>
+<p>中间两个求和项由正交向量内积为零而消去了，此时令导数为零就可以得到</p>
+<data id="id-22" data-raw></data>
+<hr>
+<p>结合公式 A3.2 和 A3.3，我们将 <span> $b_j$   </span>项单独拆出来。</p>
+<data id="id-23" data-raw></data>
+<p>对 <span>$b_j$ </span>求偏导的过程如下：</p>
+<data id="id-24" data-raw></data>
+<p>这里我们依然是对某个特定数据 <span>$\mathbf{x}_n$ </span>做的计算，但是 <span>$b_j$</span> 实际上对所有数据点都是一致的，因此我们可以将所有数据的求和加到公式中，得到</p>
+<data id="id-25" data-raw></data>
+<hr>
+<data id="id-26" data-raw></data>
+<hr>
+<data id="id-27" data-raw></data>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2025-06-30</span>
+            </div></div>
+        <div class="post-info-line">
+            <div class="post-info-md"><span>
+                            <a class="link-to-markdown" href="/dlfc-ch16-continuous-latent-variables/index.md" target="_blank">Read Markdown</a>
+                        </span></div>
+            <div class="post-info-share">
+                <span><a href="javascript:void(0);" title="Share on X" data-sharer="x" data-url="http://localhost:1313/dlfc-ch16-continuous-latent-variables/" data-title="[Deep Learning: Foudations and Concepts] CH16-Continuous Latent Variables"><i class="fab fa-x-twitter fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Threads" data-sharer="threads" data-url="http://localhost:1313/dlfc-ch16-continuous-latent-variables/" data-title="[Deep Learning: Foudations and Concepts] CH16-Continuous Latent Variables"><i class="fab fa-threads fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Facebook" data-sharer="facebook" data-url="http://localhost:1313/dlfc-ch16-continuous-latent-variables/"><i class="fab fa-facebook-square fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Hacker News" data-sharer="hackernews" data-url="http://localhost:1313/dlfc-ch16-continuous-latent-variables/" data-title="[Deep Learning: Foudations and Concepts] CH16-Continuous Latent Variables"><i class="fab fa-hacker-news fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Line" data-sharer="line" data-url="http://localhost:1313/dlfc-ch16-continuous-latent-variables/" data-title="[Deep Learning: Foudations and Concepts] CH16-Continuous Latent Variables"><i data-svg-src="/lib/simple-icons/icons/line.min.svg" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on 微博" data-sharer="weibo" data-url="http://localhost:1313/dlfc-ch16-continuous-latent-variables/" data-title="[Deep Learning: Foudations and Concepts] CH16-Continuous Latent Variables"><i class="fab fa-weibo fa-fw" aria-hidden="true"></i></a><a href="javascript:void(0);" title="Share on Diaspora" data-sharer="diaspora" data-url="http://localhost:1313/dlfc-ch16-continuous-latent-variables/" data-title="[Deep Learning: Foudations and Concepts] CH16-Continuous Latent Variables" data-description=""><i class="fab fa-diaspora fa-fw" aria-hidden="true"></i></a><a href="https://t.me/share/url?url=http%3a%2f%2flocalhost%3a1313%2fdlfc-ch16-continuous-latent-variables%2f&amp;text=%5bDeep%20Learning%3a%20Foudations%20and%20Concepts%5d%20CH16-Continuous%20Latent%20Variables" target="_blank" title="Share on Telegram"><i class="fab fa-telegram fa-fw" aria-hidden="true"></i></a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/variational-inference-in-generative-model/" class="prev" rel="prev" title="生成式模型中的变分推断"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>生成式模型中的变分推断</a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.145.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+                </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://junpoyu.github.io/" target="_blank">Junpo Yu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a>
+        </div>
+
+        <div id="fixed-buttons-hidden"><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/cookieconsent/cookieconsent.min.css"><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/sharer/sharer.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/contrib/auto-render.min.js"></script><script src="/lib/katex/contrib/copy-tex.min.js"></script><script src="/lib/katex/contrib/mhchem.min.js"></script><script src="/lib/cookieconsent/cookieconsent.min.js"></script><script>window.config={"comment":{},"cookieconsent":{"content":{"dismiss":"Got it!","link":"Learn more","message":"This website uses Cookies to improve your experience."},"enable":true,"palette":{"button":{"background":"#f0f0f0"},"popup":{"background":"#1aa3ff"}},"theme":"edgeless"},"data":{"id-1":"\n$$\n\\begin{aligned}\\mathcal{L}(\\mathbf{x},\\lambda_1)=\\mathbf{u}_t^T\\mathbf{S}\\mathbf{u}_t + \\lambda_1(1-\\mathbf{u}_t^T\\mathbf{u}_t) \\end{aligned}\\tag{1.1}\n$$\n","id-10":"\n$$\n\\begin{align}\n\\tilde{\\mathbf{x}}_n=\\sum_{i=1}^M(\\mathbf{u}_i^T\\mathbf{x}_n)\\mathbf{x}_n+\\sum_{i=M+1}^D(\\bar{\\mathbf{x}}_n^T\\mathbf{u}_i)\\mathbf{u}_i\n\\end{align}\\tag{1.10}\n$$\n","id-11":"\n$$\n\\begin{align}\n\\mathbf{x}_n-\\tilde{\\mathbf{x}}_n=\\sum_{i=M+1}^D\\{(\\mathbf{x}_n-\\bar{\\mathbf{x}})^T\\mathbf{u}_i\\}\\mathbf{u}_i\n\\end{align}\\tag{1.11}\n$$\n","id-12":"\n$$\n\\begin{align}\nJ=\\frac{1}{N}\\sum_{n=1}^N\\sum_{i=M+1}^D(\\mathbf{x}_n^T\\mathbf{u}_i-\\bar{\\mathbf{x}}^T\\mathbf{u}_i)^2=\\sum_{i=M+1}^D\\mathbf{u}_i^T\\mathbf{S}\\mathbf{u}_i\n\\end{align}\\tag{1.12}\n$$\n","id-13":"\n$$\n\\begin{align}\nJ\u0026=\\mathbf{u}_2^T\\mathbf{S}\\mathbf{u}_2\\\\\\\\\n\\tilde{J}\u0026=\\mathbf{u}_2^T\\mathbf{S}\\mathbf{u}_2+\\lambda_2(1-\\mathbf{u}_2^T\\mathbf{u}_2)\\\\\\\\\n\\frac{\\partial J}{\\partial \\mathbf{u}_2}\u0026=\\frac{\\partial \\mathbf{u}_2^T\\mathbf{S}\\mathbf{u}_2}{\\partial \\mathbf{u}_2}+\\frac{\\partial\\lambda_2}{\\partial \\mathbf{u}_2}-\\frac{\\partial \\lambda_2\\mathbf{u}_2^T\\mathbf{u}_2}{\\partial \\mathbf{u}_2}\\\\\\\\\n\u0026=2\\mathbf{S}\\mathbf{u}_2-2\\lambda_2\\mathbf{u}_2=0\\\\\\\\\n\\mathbf{S}\\mathbf{u}_2\u0026=\\lambda_2\\mathbf{u}_2\n\\end{align}\n$$\n","id-14":"\n$$\n\\begin{align}\n\\frac{1}{N}\\sum_{n=1}^{N}\\mathbf{u}_t^T\\mathbf{x}_n=\\mathbf{u}_t^T\\frac{1}{N}\\sum_{n=1}^{N}\\mathbf{x}_n=\\mathbf{u}_t^T\\bar{\\mathbf{x}} \n\\end{align}\\tag{A1.1}\n$$\n","id-15":"\n$$\n\\begin{align}\n\\frac{1}{N}\\sum_{n=1}^{N}\\{\\mathbf{u}_t^T\\mathbf{x}_n-\\mathbf{u}_t^T\\bar{\\mathbf{x}}\\}^2\n\u0026=\\frac{1}{N}\\sum_{n=1}^{N}\\left[\\mathbf{u}_t^T (\\mathbf{x}_n - \\bar{\\mathbf{x}})\\right]^2\\\\\\\\\n\u0026=\\frac{1}{N}\\sum_{n=1}^N (\\mathbf{x}_n-\\bar{\\mathbf{x}})^T \\mathbf{u}_t \\mathbf{u}_t^T (\\mathbf{x}_n-\\bar{\\mathbf{x}})\\\\\\\\\n\u0026=\\mathbf{u}_t^T \\left( \\frac{1}{N}\\sum_{n=1}^N (\\mathbf{x}_n-\\bar{\\mathbf{x}})(\\mathbf{x}_n-\\bar{\\mathbf{x}})^T \\right) \\mathbf{u}_t\\\\\\\\\n\u0026= \\mathbf{u}_t^T \\mathbf{S} \\mathbf{u}_t \n\\end{align}\\tag{A1.2}\n$$\n","id-16":"\n$$\n\\begin{align}\n\\mathcal{L}(\\mathbf{x},\\lambda_1)\u0026=\\mathbf{u}_t^T\\mathbf{S}\\mathbf{u}_t + \\lambda_1(1-\\mathbf{u}_t^T\\mathbf{u}_t) \\\\\\\\\n\\frac{\\partial \\mathcal{L}}{\\partial \\mathbf{u}_t}\u0026=\\frac{\\partial (\\mathbf{u}_t^T\\mathbf{S}\\mathbf{u}_t)}{\\partial \\mathbf{u}_t}+\n\\frac{\\partial \\lambda_1}{\\partial \\mathbf{u}_t} - \\frac{\\partial (\\lambda_1\\mathbf{u}_t^T\\mathbf{u}_t)}{\\partial \\mathbf{u}_t}=\n2\\mathbf{S}\\mathbf{u_t}-2\\lambda_1\\mathbf{u_t}=0\\\\\\\\\n\\mathbf{S}\\mathbf{u}_t\u0026=\\lambda_1\\mathbf{u}_t \n\\end{align}\\tag{A1.3}\n$$\n","id-17":"\n$$\n\\begin{align}\nJ\u0026=\\frac{1}{N}\\sum_{n=1}^N\\mid\\mid \\mathbf{x}_n-\\tilde{\\mathbf{x}}_n\\mid\\mid^2\\\\\\\\\n\u0026=\\frac{1}{N}\\sum_{n=1}^N(\\mathbf{x}_n-\\tilde{\\mathbf{x}}_n)^T(\\mathbf{x}_n-\\tilde{\\mathbf{x}}_n)\\\\\\\\\n\u0026=\\frac{1}{N}\\sum_{n=1}^N\\left(\\mathbf{x}_n-\\sum_{i=1}^M z_{ni}\\mathbf{u}_i-\\sum_{i=M+1}^D b_i\\mathbf{u}_i \\right)^T\\left(\\mathbf{x}_n-\\sum_{i=1}^M z_{ni}\\mathbf{u}_i-\\sum_{i=M+1}^D b_i\\mathbf{u}_i \\right)\n\\end{align}\\tag{A1.4}\n$$\n","id-18":"\n$$\n\\begin{align}\n\\frac{\\partial}{\\partial \\alpha}(\\mathbf{a}-\\alpha\\mathbf{u})^T(\\mathbf{a}-\\alpha\\mathbf{u})=-2\\mathbf{u}^T(\\mathbf{a}-\\alpha\\mathbf{u})\n\\end{align}\\tag{A1.5}\n$$\n","id-19":"\n$$\n\\begin{align}\nJ=\\left(\\mathbf{x}_n-\\sum_{i=1}^M z_{ni}\\mathbf{u}_i-\\sum_{i=M+1}^D b_i\\mathbf{u}_i \\right)^T\\left(\\mathbf{x}_n-\\sum_{i=1}^M z_{ni}\\mathbf{u}_i-\\sum_{i=M+1}^D b_i\\mathbf{u}_i \\right)\n\\end{align}\\tag{A1.6}\n$$\n","id-2":"\n$$\n\\mathbf{S}\\mathbf{u}_t=\\lambda_1\\mathbf{u}_t \\tag{1.2}\n$$\n","id-20":"\n$$\n\\begin{align}\n\\mathbf{a}\u0026=\\left(\\mathbf{x}_n-\\sum_{i=1,i\\ne j}^M z_{ni}\\mathbf{u}_i-\\sum_{i=M+1}^D b_i\\mathbf{u}_i \\right)\\\\\\\\\n\\alpha\\mathbf{u}\u0026=z_{nj}\\mathbf{u}_j\n\\end{align}\\tag{A1.7}\n$$\n","id-21":"\n$$\n\\begin{align}\n\\frac{\\partial}{\\partial z_{nj}}\u0026=-2\\mathbf{u}_j^T\\left(\\mathbf{x}_n-\\sum_{i=1,i\\ne j}^M z_{ni}\\mathbf{u}_i-\\sum_{i=M+1}^D b_i\\mathbf{u}_i-z_{nj}\\mathbf{u}_j\\right)\\\\\\\\\n\u0026=-2\\mathbf{u}_j^T\\mathbf{x}_n+2\\mathbf{u}_j^T\\sum_{i=1,i\\ne j}^M z_{ni}\\mathbf{u}_i+2\\mathbf{u}_j^T\\sum_{i=M+1}^D b_i\\mathbf{u}_i+2\\mathbf{u}_j^Tz_{nj}\\mathbf{u}_j\\\\\\\\\n\u0026=-2\\mathbf{u}_j^T\\mathbf{x}_n+2\\mathbf{u}_j^Tz_{nj}\\mathbf{u}_j\n\\end{align}\\tag{A1.8}\n$$\n","id-22":"\n$$\n\\begin{align}\n\\frac{\\partial}{\\partial z_{nj}}\u0026=-2\\mathbf{u}_j^T\\mathbf{x}_n+2\\mathbf{u}_j^Tz_{nj}\\mathbf{u}_j=0\\\\\\\\\nz_{nj}\u0026=\\mathbf{u}_j^T\\mathbf{x}_n=\\mathbf{x}_n^T\\mathbf{u}_j\n\\end{align}\\tag{A1.9}\n$$\n","id-23":"\n$$\n\\begin{align}\n\\mathbf{a}\u0026=\\left(\\mathbf{x}_n-\\sum_{i=1}^M z_{ni}\\mathbf{u}_i-\\sum_{i=M+1,i\\ne j}^D b_i\\mathbf{u}_i \\right)\\\\\\\\\n\\alpha\\mathbf{u}\u0026=b_{j}\\mathbf{u}_j\n\\end{align}\\tag{A1.10}\n$$\n","id-24":"\n$$\n\\begin{align}\n\\frac{\\partial}{\\partial b_j}\u0026=-2\\mathbf{u}_j^T\\left(\\mathbf{x}_n-\\sum_{i=1}^M z_{ni}\\mathbf{u}_i-\\sum_{i=M+1,i\\ne j}^D b_i\\mathbf{u}_i-b_j\\mathbf{u}_j\\right)\\\\\\\\\n\u0026=-2\\mathbf{u}_j^T\\mathbf{x}_n+2\\mathbf{u}_j^T\\sum_{i=1}^M z_{ni}\\mathbf{u}_i+2\\mathbf{u}_j^T\\sum_{i=M+1,i\\ne j}^D b_i\\mathbf{u}_i+2\\mathbf{u}_j^Tb_j\\mathbf{u}_j\\\\\\\\\n\u0026=-2\\mathbf{u}_j^T\\mathbf{x}_n+2\\mathbf{u}_j^Tb_j\\mathbf{u}_j=0\\\\\\\\\nb_j\u0026=\\mathbf{u}_j^T\\mathbf{x}\n\\end{align}\\tag{A1.11}\n$$\n","id-25":"\n$$\n\\begin{align}\nb_j\u0026=\\frac{1}{N}\\sum_{n=1}^N\\mathbf{u}_j^T\\mathbf{x}_n=\\mathbf{u}_j^T\\bar{\\mathbf{x}}=\\bar{\\mathbf{x}}^T\\mathbf{u}_j\n\\end{align}\\tag{A1.12}\n$$\n","id-26":"\n$$\n\\begin{align}\n\\mathbf{x}_n-\\tilde{\\mathbf{x}}_n\u0026=\\sum_{i=1}^D(\\mathbf{x}_n^T\\mathbf{u}_i)\\mathbf{u}_i-\\sum_{i=1}^M(\\mathbf{x}_n^T\\mathbf{u}_i)\\mathbf{u}_i-\\sum_{i=M+1}^D(\\bar{\\mathbf{x}}^T\\mathbf{u}_i)\\mathbf{u}_i\\\\\\\\\n\u0026=\\sum_{M+1}^D(\\mathbf{x}_n^T\\mathbf{u}_i)\\mathbf{u}_i-\\sum_{i=M+1}^D(\\bar{\\mathbf{x}}^T\\mathbf{u}_i)\\mathbf{u}_i\\\\\\\\\n\u0026=\\sum_{i=M+1}^D\\{(\\mathbf{x}_n-\\bar{\\mathbf{x}})^T\\mathbf{u}_i\\}\\mathbf{u}_i\n\\end{align}\\tag{A1.13}\n$$\n","id-27":"\n$$\n\\begin{align}\nJ \u0026= \\frac{1}{N} \\sum_{n=1}^N \\|\\mathbf{x}_n - \\tilde{\\mathbf{x}}_n\\|^2\\\\\\\\\n\\mathbf{x}_n - \\tilde{\\mathbf{x}}_n \u0026= \\sum_{i=M+1}^D a_{ni} \\mathbf{u}_i,\n\\quad \\text{where } a_{ni} = (\\mathbf{x}_n - \\bar{\\mathbf{x}})^T\\mathbf{u}_i\\\\\\\\\n\\|\\mathbf{x}_n - \\tilde{\\mathbf{x}}_n\\|^2\n\u0026= \\left( \\sum_{i=M+1}^D a_{ni} \\mathbf{u}_i \\right)^T \\left( \\sum_{j=M+1}^D a_{nj} \\mathbf{u}_j \\right)\n= \\sum_{i,j=M+1}^D a_{ni} a_{nj} \\mathbf{u}_i^T \\mathbf{u}_j\\\\\\\\\n\\mathbf{u}_i^T \\mathbf{u}_j\u0026 = \\delta_{ij}\\\\\\\\\n\\|\\mathbf{x}_n - \\tilde{\\mathbf{x}}_n\\|^2 \u0026= \\sum_{i=M+1}^D [(\\mathbf{x}_n - \\bar{\\mathbf{x}})^T \\mathbf{u}_i]^2\\\\\\\\\nJ \u0026= \\frac{1}{N} \\sum_{n=1}^N \\sum_{i=M+1}^D [(\\mathbf{x}_n - \\bar{\\mathbf{x}})^T \\mathbf{u}_i]^2\n= \\frac{1}{N} \\sum_{i=M+1}^D \\sum_{n=1}^N [(\\mathbf{x}_n - \\bar{\\mathbf{x}})^T \\mathbf{u}_i]^2\\\\\\\\\nS \u0026= \\frac{1}{N} \\sum_{n=1}^N (\\mathbf{x}_n - \\bar{\\mathbf{x}})(\\mathbf{x}_n - \\bar{\\mathbf{x}})^T\\\\\\\\\n\\frac{1}{N} \\sum_{n=1}^N [(\\mathbf{x}_n - \\bar{\\mathbf{x}})^T \\mathbf{u}_i]^2\n\u0026= \\frac{1}{N} \\sum_{n=1}^N \\mathbf{u}_i^T (\\mathbf{x}_n - \\bar{\\mathbf{x}})(\\mathbf{x}_n - \\bar{\\mathbf{x}})^T \\mathbf{u}_i\n= \\mathbf{u}_i^T \\left( \\frac{1}{N} \\sum_{n=1}^N (\\mathbf{x}_n - \\bar{\\mathbf{x}})(\\mathbf{x}_n - \\bar{\\mathbf{x}})^T \\right) \\mathbf{u}_i\n= \\mathbf{u}_i^T S \\mathbf{u}_i\\\\\\\\\nJ \u0026= \\sum_{i=M+1}^D \\mathbf{u}_i^T S \\mathbf{u}_i\n\\end{align}\\tag{A1.14}\n$$\n","id-3":"\n\\[\n\\begin{align}\n\\mathbf{x}_n=\\sum_{i=1}^{D}\\alpha_{ni}\\mathbf{u}_i\n\\end{align}\\tag{1.3}\n\\]\n","id-4":"\n$$\n\\begin{aligned}\n\\mathbf{u}_j^T\\mathbf{x}_n \n    \u0026= \\sum_{i=1}^D \\alpha_{ni} \\mathbf{u}_j^T \\mathbf{u}_i \n    = \\alpha_{nj} \\\\\\\\\n\\alpha_{nj} \n    \u0026= \\mathbf{u}_j^T \\mathbf{x}_n \n    = \\mathbf{x}_n^T \\mathbf{u}_j\n\\end{aligned}\n\\tag{1.4}\n$$\n","id-5":"\n$$\n\\begin{align}\n\\mathbf{x}_n = \\sum_{i=1}^D \\left( \\mathbf{x}_n^T \\mathbf{u}_i \\right) \\mathbf{u}_i\n\\end{align}\\tag{1.5}\n$$\n","id-6":"\n$$\n\\begin{align}\n\\tilde{\\mathbf{x}}_n = \\sum_{i=1}^{M} z_{ni} \\mathbf{u}_i + \\sum_{i=M+1}^{D} b_i \\mathbf{u}_i\n\\end{align}\\tag{1.6}\n$$\n","id-7":"\n$$\n\\begin{align}\nJ=\\frac{1}{N}\\sum_{n=1}^N\\mid\\mid x_n-\\tilde{x}_n\\mid\\mid^2\n\\end{align}\\tag{1.7}\n$$\n","id-8":"\n$$\n\\begin{align}\nz_{nj}=\\mathbf{u}_j^T\\mathbf{x}_n,\\quad\\text{where } j\u0026=1,\\dots,M\n\\end{align}\\tag{1.8}\n$$\n","id-9":"\n$$\n\\begin{align}\nb_j=\\bar{\\mathbf{x}}^T\\mathbf{u}_j,\\quad \\text{where }j=M+1,\\dots,D\n\\end{align}\\tag{1.9}\n$$\n"},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":true,"left":"\\begin{equation}","right":"\\end{equation}"},{"display":true,"left":"\\begin{equation*}","right":"\\end{equation*}"},{"display":true,"left":"\\begin{align}","right":"\\end{align}"},{"display":true,"left":"\\begin{align*}","right":"\\end{align*}"},{"display":true,"left":"\\begin{alignat}","right":"\\end{alignat}"},{"display":true,"left":"\\begin{alignat*}","right":"\\end{alignat*}"},{"display":true,"left":"\\begin{gather}","right":"\\end{gather}"},{"display":true,"left":"\\begin{CD}","right":"\\end{CD}"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","maxResultLength":10,"noResultsFound":"No results found","snippetLength":50,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body>
+</html>

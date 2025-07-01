@@ -1,11 +1,5 @@
-+++
-title = '[Deep Learning: Foudations and Concepts] CH16-Continuous Latent Variables'
-date = 2025-06-30T16:08:03+08:00
-draft = true
-math = true
-summary = ""
+# [Deep Learning: Foudations and Concepts] CH16-Continuous Latent Variables
 
-+++
 
 本文内容来自 [Deep Learning: Foundations and Concepts](https://www.bishopbook.com/) 一书的第十六章。
 
@@ -70,11 +64,11 @@ $$
 对于 $D$ 维的观测数据  <span> $\{\mathbf{x}_n\}=\{\mathbf{x}_1,\dots,\mathbf{x}_N\}$ </span>，我们可以使用新的基向量做如下转换：
 
 {{<raw>}}
-$$
+\[
 \begin{align}
 \mathbf{x}_n=\sum_{i=1}^{D}\alpha_{ni}\mathbf{u}_i
 \end{align}\tag{1.3}
-$$
+\]
 {{</raw>}}
 
 这相当于在新的基向量张成的空间中表示观测数据，原始数据 <span>$\mathbf{n}_n$</span> 的分量 <span> $\mathbf{x}_n=\{x_1,\dots,x_D\}$ </span>，被替换为 <span> $\{\alpha_1,\dots,\alpha_D\}$ </span>。此时我们在上式基础上同时左乘某个基向量 <span> $\mathbf{u}_j^T$ </span>，同时应用基向量之间的正交性，可以得到：
@@ -217,7 +211,7 @@ $$
 
 ## Appandix
 
-### Appendix A1 
+### A16.1 
 
 A1 是 CH16.1 中的公式推导过程。
 

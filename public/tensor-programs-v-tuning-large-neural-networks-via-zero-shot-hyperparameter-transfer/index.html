@@ -153,8 +153,7 @@
 <h2 id="1introduction">1、Introduction</h2>
 <p>超参数调优一直是深度学习领域一项重要的技术，也是构建深度学习模型不可或缺的一步。好的超参数配置能够降低训练消耗的资源、提高模型的拟合能力。但是随着深度学习的发展，模型变得愈发庞大，对于这种参数量非常大的模型进行调优时不得不考虑其所需的成本。一种普遍用于降低调优成本的方法是，首先在相同结构，但是参数量较小的模型上进行调优，然后将这个结果直接应用在最终所使用的大模型上。</p>
 <blockquote>
-<p>这里涉及一个概念，即 zero-shot HP transfer，零样本超参数迁移。意思是将一个在小模型验证过的超参数，在不需要任何额外调整的情况下直接应用到另一个大模型上。</p>
-</blockquote>
+<p>这里涉及一个概念，即 zero-shot HP transfer，零样本超参数迁移。意思是将一个在小模型验证过的超参数，在不需要任何额外调整的情况下直接应用到另一个大模型上。</p></blockquote>
 <p>但是已有研究发现，当模型参数趋于无限大时，模型将无法进行特征学习<a href="#1" rel="">[1]</a>。例如对于标准参数化（Standard Parameterization）来说，其初始化时将模型的参数设定为相同的单位大小，但是实际上在训练过程中，由于不同网络层的学习率或者说参数更新的尺度不平衡，很容易导致某些参数出现爆炸性的缩放，从而导致模型无法正确的进行特征学习，这种现象在大模型中非常容易出现。因此在小模型中得到的调优方法在大模型中可能根本不适用。</p>
 <p>图1 是一个基于 Transformer 的例子，通过改变 Learning Rate 的大小，观察其对于不同的模型宽度（每层神经元数量）的学习效果的影响（以训练损失表示）。</p>
 <p><img
@@ -186,8 +185,7 @@
 </ol>
 <p>除了超参数的稳定性之外，本文还发现对于 $\mu P$ 而言，更大的参数就代表了更好的性能。这种结论在标准参数化中往往不一定成立。</p>
 <blockquote>
-<p>需要注意的是，本文的研究专注于训练损失，而不考虑测试损失。但是在如果模型本身具有良好的泛化能力，那么本文的方法同样有效，因为测试损失往往和训练损失高度相关。但是在某些场景下，例如小样本调优，此时测试损失会受到更多其他因素的影响。相关问题在 Section 6 中讨论。</p>
-</blockquote>
+<p>需要注意的是，本文的研究专注于训练损失，而不考虑测试损失。但是在如果模型本身具有良好的泛化能力，那么本文的方法同样有效，因为测试损失往往和训练损失高度相关。但是在某些场景下，例如小样本调优，此时测试损失会受到更多其他因素的影响。相关问题在 Section 6 中讨论。</p></blockquote>
 <p>虽然 $\mu Transfer$ 可以实现超参数迁移，但是并不是所有的超参数都适用。</p>
 <table>
   <thead>
@@ -214,8 +212,7 @@
 </ol>
 <p>而最右列所谓的 <span>$\mu$ </span>Transferred Across，是指可迁移的超参数，是在根据一类超参数决定如何迁移的，因为这一类超参数决定了模型的规模。</p>
 <blockquote>
-<p>* 表示该参数只在 transformer 上进行了测试，其他则都有理论验证。</p>
-</blockquote>
+<p>* 表示该参数只在 transformer 上进行了测试，其他则都有理论验证。</p></blockquote>
 <p>本文的贡献：</p>
 <ol>
 <li>证明了通过 <span>$\mu P$</span> 进行超参数零样本迁移的可能性。</li>
@@ -225,8 +222,7 @@
 <li>发布了相关 PyTorch 包。</li>
 </ol>
 <blockquote>
-<p>后文可能引起混淆的一些术语：目标模型（Target Model）表示要调优的大模型（Large Model），代理模型（Proxy Model）表示实际代理了调优过程的小模型（Small Model），简化 Transformer 的参数 <span>$d_{model},d_{head}=d_k,d_v,n_{head},d_{ffn}$</span></p>
-</blockquote>
+<p>后文可能引起混淆的一些术语：目标模型（Target Model）表示要调优的大模型（Large Model），代理模型（Proxy Model）表示实际代理了调优过程的小模型（Small Model），简化 Transformer 的参数 <span>$d_{model},d_{head}=d_k,d_v,n_{head},d_{ffn}$</span></p></blockquote>
 <h2 id="2parametrization-matters-a-primer">2、Parametrization Matters: A Primer</h2>
 <p>本章将简单解释一下为什么正确的参数化可以允许超参数在不同宽度的模型中迁移，详细的数学解释在 Appendix J.1to J.3 中。</p>
 <p>根据中心极限定理（CLT，Central Limit Theorem），如果我们有 <span>$x_1,\dots,x_n$</span> 是独立同分布的从一个均值为零、方差为一的分布中采样得到。那么对于 <span>$(x_1+\dots+x_n)$</span>，其均值为零 ，方差为 <span>$n$</span>。这个结果由以下公式得到：</p>
@@ -240,8 +236,7 @@ $$</p>
 </div>
 <p>如果我们对<span> $S_{n}$</span> 进行缩放，例如对于 <span>$\frac{1}{n}S_{n}$</span> 而言，其均值 <span>$E(\frac{1}{n}S_{n})=\frac{1}{n}S_{n}=\frac{\mu}{n}$</span>，而方差 <span>$Var(\frac{1}{n}S_{n})=\frac{1}{n^{2}}Var(S_{n})=\frac{\sigma^{2}}{n}$</span>。</p>
 <blockquote>
-<p>注意均值和方差的计算过程</p>
-</blockquote>
+<p>注意均值和方差的计算过程</p></blockquote>
 <p>很显然，如果我们不进行缩放，当 <span>$n\to \infty$ </span> 时，那么 <span>$S_n$ </span> 的分布将会发散。或者进行 <span>$\frac{1}{n}$ </span> 缩放，那么 <span>$S_n$ </span> 的方差也会趋向于零，一个均值为零，方差为零的分布是完全没有意义的。</p>
 <p>当然实际上存在一个缩放，可以保证<span> $S_n$</span> 的分布仍然是标准高斯分布，这个缩放因子就是<span> $\frac{1}{\sqrt(n)}$</span>。</p>
 <p>现在我们定义这样一个公式</p>
@@ -254,14 +249,12 @@ $$</p>
 <blockquote>
 <p>这里我们可以将<span> $x_1,\dots,x_n$ </span> 视为神经网络中的一层神经元。对于小规模网络 n，如果我们为了降低训练损失而对某一层的神经元进行了某种缩放，例如添加了BN 层，此时 <span> $c$ </span> 就是一个超参数，而我们可以通过调节 $c$ 来改变模型的性能。现在我们希望在一个小模型上找到一个最优的缩放因子，使得损失函数最小，然后将其应用到一个更大的模型上，那么通过将这个缩放因子 $c$ 设置为<span> $c=\frac{\alpha}{\sqrt{n}}$ </span> 的形式，从而使 $c$ 对于规模 n 的变化不敏感。从而实现这个最优 $c$ 可以从小模型直接迁移到大模型的效果。</p>
 <p>为什么分母是 <span> $\sqrt n$？</span>这里因为我们假定是标准高斯分布，通过前面的推导可以发现，分母设置为 $\sqrt n$ 时，缩放之后的分布只和分子相关，而不和问题规模 n 相关。</p>
-<p>如果你实在感到困惑，请先放一放，继续看下去。</p>
-</blockquote>
+<p>如果你实在感到困惑，请先放一放，继续看下去。</p></blockquote>
 <p>需要强调的是，如果要让任意超参数都是可迁移的（Transferable），那么就不能只对某个超参数进行参数化，而是要对所有 $\mu$Transferable 类别下超参数进行参数化。更具体地解释将在 Section 5 给出。</p>
 <h2 id="3hyperparameters-dont-transfer-conventionally">3、Hyperparameters Don’t Transfer Conventionally</h2>
 <p>目前社区中的研究表现出一些存在矛盾的观点。一方面，人们普遍认为不同的模型，无论是大小还是结构，其最有超参数就是不同的。例如很多研究中对于不同大小和不同结构的模型进行单独的调优。但是在另一方面，涉及不同模型之间的对比时，人们往往固定一个组超参数，认为这样的对比才是公平的。这隐含的认为不同的模型之间最优超参数是可以相同的。但<strong>超参数实际上会随着模型变宽变大，不断变化</strong>，本章证明了这个结论。</p>
 <blockquote>
-<p>这一章其实就是在不同的模型上进行标准参数化（SP）和 $\mu Transfer$ 的区别，我在这里就直接展示并描述结果。</p>
-</blockquote>
+<p>这一章其实就是在不同的模型上进行标准参数化（SP）和 $\mu Transfer$ 的区别，我在这里就直接展示并描述结果。</p></blockquote>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -432,8 +425,7 @@ $$</p>
 这保证了在初始化时<span> $f(x)=\Theta(\mid X\mid)$ </span>，即输出和输入同阶。
 <p>我们设置学习率为 1，执行了一步 SGD 之后，新的参数更新为<span> $V&rsquo;\gets V+\theta U,U&rsquo;\gets U+\theta V$</span>。</p>
 <blockquote>
-<p>你可能对这里的参数更新感到疑惑，实际上对于 V 的更新需要对 V 进行求导，那么 V 自然而然就被消去，从而保留 U。对于 U 而言同理。</p>
-</blockquote>
+<p>你可能对这里的参数更新感到疑惑，实际上对于 V 的更新需要对 V 进行求导，那么 V 自然而然就被消去，从而保留 U。对于 U 而言同理。</p></blockquote>
 <p>一步更新之后我们得到</p>
 <div>
 <p>$$
@@ -512,15 +504,13 @@ $$</p>
         alt="/tensor-programs-v-tuning-large-neural-networks-via-zero-shot-hyperparameter-transfer/Figure17.png"
         title="Figure17.png" width="954" height="888" /></p>
 <blockquote>
-<p>下面是 Appendix E 的一些内容</p>
-</blockquote>
+<p>下面是 Appendix E 的一些内容</p></blockquote>
 <p>对于可迁移的超参数而言，其在 width 上的迁移已经在 Section 2 中进行了理论证明，但是在其他维度例如 depth 等上的迁移还只是实验结果。这一部分已经包含了大多数重要的超参数（如果正则化对你而言不是很重要的话），其中 weights multipliers 虽然使用较少，但是通过这个参数可以让同样规模的 $\mu P$ 和 SP 模型具有相同的训练动态效果。</p>
 <p>对于不可迁移的参数而言，其中大部分都是正则化相关的内容，因为 $\mu P$ 方法只关注模型规模，而不关注数据集大小，因此其对于正则化相关的参数可能并不适用。此外，对于某个参数是否属于正则化参数并没有一个明确的界限，例如 dropout 和 weight decay 是正则化参数，但是 batch size 也有正则化效果，但是后者往往对其他部分的影响更大，而不是被用于正则化。因此我们认为，对于主要起正则化效果的超参数，本方法无法使用；但是其他具有一定的正则化效果，但是本身不是以正则化为目的的超参数，本方法可以生效。</p>
 <p>对于定义了迁移（模型规模）的超参数，我们可以将其分为两类，一类是定义了在一次前向传播/方向传播中所需要执行的操作的个数的超参数，例如 width、depth，seq len等。另一类是定义了需要进行多少次传播的超参数，例如 batch size 和 training steps。</p>
 <p><strong>需要注意的是，本研究的目的是让最佳超参数在这些代表模型规模的参数之间进行迁移，而不是找到最佳的模型规模。</strong></p>
 <blockquote>
-<p>但是通过本方法，可以在小模型上对可迁移的超参数调优后，再搜索最佳最佳模型大小</p>
-</blockquote>
+<p>但是通过本方法，可以在小模型上对可迁移的超参数调优后，再搜索最佳最佳模型大小</p></blockquote>
 <p>我们提到 Section 2 我们推导了在 width 上进行迁移的理论证明，实际上 width 定义相当广泛。</p>
 <p>例如我们在推导时假定所有层的宽度按照同一个因子进行缩放，但实际上每一层进行单独的缩放也是可以的。</p>
 <p>在 attention-based 的模型中，$d_{head},n_{head}$ 都可以任意调整，例如固定某一个，或者同时调整两个。</p>
@@ -554,8 +544,7 @@ $$</p>
 <p>本文的方法和他们不同，不是为了解决超参数调优问题，而是将超参数调优和训练模型的消耗进行解耦。使用本方法时，无论目标模型多大，我们都可以找到一个固定大小的代理模型来找到最佳的超参数。本方法实际上和以上超参数调优方法是兼容的，因为这些方法可以在小模型调优时使用。本文使用的也是网格搜索和随机搜索。</p>
 <p>关于超参数迁移的方法也有很多，但是本文是唯一可以实现 zero-shot 即不需要任何额外训练就可以直接完成迁移的方法。此外本方法仅在模型规模上进行超参数迁移，不考虑在不同的任何或者数据集之间实现超参数迁移。但是相关的方法同样可以和本方法结合使用。</p>
 <blockquote>
-<p>文章还介绍了一下之前提出的学习率缩放方法，但没什么有用的信息</p>
-</blockquote>
+<p>文章还介绍了一下之前提出的学习率缩放方法，但没什么有用的信息</p></blockquote>
 <p>在输入层参数化上，通常对视觉模型的输入层使用 $fan_{in}$，而语言模型的输入层使用 $fan_{out}$ 初始化。</p>
 <p>说明了本文相对于 NTK 参数化（NTP）的优点，即不会导致 NTK 极限。</p>
 <p>再一次强调了本文的工作，是提出了一种宽神经网络的正确参数化方式，这里的“参数化”指的是随宽度调整超参数（如初始化和学习率）的方法规则（即“当宽度加倍时，应该怎样调整初始化和学习率？”），而不是针对某一具体宽度下如何设定超参数的具体细则（即“在宽度为1024时，初始化和学习率该如何设置？”）。</p>
@@ -568,8 +557,7 @@ $$</p>
 <li>不能对正则化参数进行迁移</li>
 </ol>
 <blockquote>
-<p>本文还有很长的 Appendix，介绍了本方法的理论推导，以及更多的实验结果和更多的解释。这里不多赘述。</p>
-</blockquote>
+<p>本文还有很长的 Appendix，介绍了本方法的理论推导，以及更多的实验结果和更多的解释。这里不多赘述。</p></blockquote>
 <h2 id="reference">Reference</h2>
 <p><a id="1">[1]</a> Yang, G., &amp; Hu, E. J. (2020). Feature learning in infinite-width neural networks. <em>arXiv preprint arXiv:2011.14522</em></p>
 <p><a id="2">[2]</a>Snoek, J., Larochelle, H., &amp; Adams, R. P. (2012). Practical bayesian optimization of machine learning algorithms. <em>Advances in neural information processing systems</em>, <em>25</em>.</p>
@@ -602,7 +590,7 @@ $$</p>
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.134.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.145.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://junpoyu.github.io/" target="_blank">Junpo Yu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

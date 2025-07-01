@@ -7,6 +7,8 @@
 
 ## 代码实现
 
+该部分代码参考[Annotated Research Paper Implementations](https://nn.labml.ai/diffusion/ddpm/index.html) 提供的代码示例。
+
 
 
 ## 附录

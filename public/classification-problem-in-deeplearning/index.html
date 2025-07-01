@@ -159,8 +159,7 @@
 </ol>
 <blockquote>
 <p>$x$ 表示输入向量，$C_k$ 表示 k 个分类类别。</p>
-<p>在生成式概率模型中，由于建模了 $p(x|C_k)$ ，所以可以使用模型生成新的样本 $x$ ，因此称之为生成式模型。</p>
-</blockquote>
+<p>在生成式概率模型中，由于建模了 $p(x|C_k)$ ，所以可以使用模型生成新的样本 $x$ ，因此称之为生成式模型。</p></blockquote>
 <h2 id="二判别函数">二、判别函数</h2>
 <h3 id="1-二分类问题">1. 二分类问题</h3>
 <p>对于一个二分类问题构建决策函数：
@@ -178,8 +177,7 @@ $$
 <p>在多分类问题中，如果照搬二分类中超平面的方法，会导致决策空间中存在模棱两可的区域。无论是 one-vs-the-rest 还是 one-vs-one 方法都不能避免。</p>
 <blockquote>
 <p>one-vs-the-rest 表示使用一个决策面，将当前类别和其他所有类别区分，通过 k 个决策面实现 k 分类。</p>
-<p>one-vs-one 表示使用一个决策面，将当前类别和另一个类别区分，通过 k(k-1) 个决策面实现 k 分类。</p>
-</blockquote>
+<p>one-vs-one 表示使用一个决策面，将当前类别和另一个类别区分，通过 k(k-1) 个决策面实现 k 分类。</p></blockquote>
 <p>但是我们仍然可以使用判别函数，考虑由 k 个线性判别函数组成的 k 分类器。
 $$
 y_k(x)=\textbf w_k^T(x) + \textbf w_{k0}
@@ -192,8 +190,7 @@ $$
 给出。这种方法建立起来的判别区域一定是<strong>单连通且凸</strong>的（singly connected and convex）。</p>
 <blockquote>
 <p>所谓单连通是指区域内没有任何空洞或者开口，即整个区域是一个有限整体。例如一个实心圆内部的区域是单连通的，但是内部加一个同心圆，则外部的圆不再是单连通的。</p>
-<p>所谓凸是指，在区域内任取两点，则两点连线之间的任何点也在这个区域内。</p>
-</blockquote>
+<p>所谓凸是指，在区域内任取两点，则两点连线之间的任何点也在这个区域内。</p></blockquote>
 <h3 id="3-one-hot-编码">3. one-hot 编码</h3>
 <p>对于多变量分类的目标值，我们通常采用 one-hot 编码来表示其所属的类别。这种编码的含义是，输入变量分类到正确类别的概率为 1，分类到其他类别的概率为 0。</p>
 <p>使用 one-hot 编码时同样可以使用最小二乘法进行建模。例如对于以下判别函数：
@@ -219,8 +216,7 @@ y(x)=\tilde W^T\tilde X=\tilde X^{\dagger}T\tilde x
 $$
 从而得到判别函数。</p>
 <blockquote>
-<p>在最小二乘法中有一个特性，即若 t 满足 $a_n^T t_n+b=0$ ,其中 $a_n^T,b$ 都是常数向量，则有 $a_n^Ty(x)+b=0$。这可以证明当 $t_n$ 作为 one-hot 编码表示的概率之和为 1 时，则使用判别公式得到的概率分布之和同样为 1，但是不能保证每个概率值都在 0~1 之间。</p>
-</blockquote>
+<p>在最小二乘法中有一个特性，即若 t 满足 $a_n^T t_n+b=0$ ,其中 $a_n^T,b$ 都是常数向量，则有 $a_n^Ty(x)+b=0$。这可以证明当 $t_n$ 作为 one-hot 编码表示的概率之和为 1 时，则使用判别公式得到的概率分布之和同样为 1，但是不能保证每个概率值都在 0~1 之间。</p></blockquote>
 <p>需要注意的是，由于最小二乘是噪声符合高斯分布时极大似然的特殊形式，所以如果噪声不符合高斯分布，则最小二乘会得到糟糕的结果。另外平方误差函数对离群值非常敏感，因此稳定性较低。</p>
 <h2 id="三生成式概率模型">三、生成式概率模型</h2>
 <p>假如我们希望建立一个参数化的生成式概率模型，则我们需要建模类条件概率 $p(x|C_k)$ 并根据贝叶斯公式来计算后验概率。假设类条件概率服从高斯分布，则对于一个二分类问题，我们定义两个类别具有相同的协方差，同时我们有一个数据集 ${x_n,t_n},n=1,2&hellip;N$ ，以 $t_n=1$ 表示其属于类别 $C_1$，$t_n=0$ 表示属于类别 $C_2$ ，定义先验概率 $p(C_1)=\pi,p(C_2)=(1-\pi)$，则对于任一样本，有
@@ -259,8 +255,7 @@ $$
 <p>另外需要注意的是，如果数据集是线性可分的，那么极大似然会产生严重的过拟合，这是因为 $$\sigma$$ 函数的性质，如果数据集本身线性可分，则这个函数会将其参数趋于无限，从而使计算出的概率无限趋向0或1，以实现完美分类。而对于 $$\sigma(\textbf w^T\phi)=0.5$$ 即 $$\textbf w^T\phi=0$$ 的超平面，由于参数本身趋于无穷，因此分类边界处会变得非常陡峭。这个问题可以通过添加正则化系数来缓解。</p>
 <p>对于多类别逻辑回归，可以使用线性代数的相关知识建立同样的求解过程，此处不再赘述。像这样的线性分类模型可以使用单层神经网络表示。</p>
 <blockquote>
-<p>还有一种 probit regression，即采用 probit 函数作为激活函数的广义线性模型，这种模型的表现和 logistic regression 类似，但是其对于离群值更加敏感。</p>
-</blockquote>
+<p>还有一种 probit regression，即采用 probit 函数作为激活函数的广义线性模型，这种模型的表现和 logistic regression 类似，但是其对于离群值更加敏感。</p></blockquote>
 <h2 id="规范链接函数">规范链接函数</h2>
 <p>广义线性模型被定义为：假设目标变量 t 的条件分布属于指数族分布，并且通过一个激活函数将线性组合 $$\textbf w^T\phi$$ 映射到目标变量的期望值。</p>
 <p>所谓规范链接函数是就是指按照某种特定规则选定的激活函数，这种激活函数可以将广义线性模型的误差函数的梯度简化为预测误差和特征向量的乘积。即使对参数的梯度呈现如下形式：
@@ -280,8 +275,7 @@ p_{real}(C_k|x)=\frac{p_{real}(C_k)}{p_{balanced}(C_k)}p_{balanced}(C_k|x)
 $$
 这是因为当模型建立其类别条件概率 $p(x|C_k)$ 之后，后验概率就和先验概率成正比了。</p>
 <blockquote>
-<p>此处仍然存在一个问题，即我们假定模型从平衡数据中学习到的类别条件概率 $p(x|C_k)$ 是正确的，因此这个调整之后的后验概率才是正确的，但是为什么认为调整过的数据集训练出的 $p(x|C_k)$ 是正确的呢？</p>
-</blockquote>
+<p>此处仍然存在一个问题，即我们假定模型从平衡数据中学习到的类别条件概率 $p(x|C_k)$ 是正确的，因此这个调整之后的后验概率才是正确的，但是为什么认为调整过的数据集训练出的 $p(x|C_k)$ 是正确的呢？</p></blockquote>
 <h2 id="广义线性模型">广义线性模型</h2>
 <p>这一节其实是引出了广义线性模型的定义，而不是专门讨论广义线性模型。</p>
 <p>首先我们假设一个多分类问题中（二分类同样适用），其类别条件概率密度 $p(x|C_k)$ 服从高斯分布：
@@ -308,8 +302,7 @@ $$
 这个公式，就是 softmax 的函数形式，也就是说后验概率被表示为了一个关于 $x$ 的线性函数经过 softmax 变换后的结果。由于判别函数是线性函数，因此这个分类模型的决策边界也是线性的。</p>
 <p>这种模型就被称之为广义线性模型，即由一个线性模型和一个非线性激活函数结合，从而扩展了线性模型。</p>
 <blockquote>
-<p>在这个公式推导中，由于先验概率只线性模型的 bias 中出现，因此先验概率只影响了决策边界的平移。</p>
-</blockquote>
+<p>在这个公式推导中，由于先验概率只线性模型的 bias 中出现，因此先验概率只影响了决策边界的平移。</p></blockquote>
 <p>当不同类别间的协方差矩阵不同时，二次项不会相互抵消，因此判别函数会是二次型，也就是决策边界是二次型的。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info">
@@ -339,7 +332,7 @@ $$
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.134.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.145.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://junpoyu.github.io/" target="_blank">Junpo Yu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

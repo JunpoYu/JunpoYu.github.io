@@ -166,8 +166,7 @@
 <p>这里使用了泛型用于指定唯一实例的类型，TypeScript 对于泛型的支持和其他语言不同，因此可能也有其他写法，但形式上是差不多的。</p>
 <blockquote>
 <p>为什么要指定唯一实例的类型？</p>
-<p>因为这里的 <code>Singleton</code> 只是一个父类，所有希望使用工厂模式的类都可以继承这个类，通过 <code>super.GetInstance</code> 方法创建唯一实例。但是父类的方法并不知道子类的数据类型，因此通过泛型指定，可以提高代码的可读性，让 IDE 更好的识别，以及避免一些潜在的问题。</p>
-</blockquote>
+<p>因为这里的 <code>Singleton</code> 只是一个父类，所有希望使用工厂模式的类都可以继承这个类，通过 <code>super.GetInstance</code> 方法创建唯一实例。但是父类的方法并不知道子类的数据类型，因此通过泛型指定，可以提高代码的可读性，让 IDE 更好的识别，以及避免一些潜在的问题。</p></blockquote>
 <p>需要注意的是子类继承 <code>Singleton</code> 之后需要在自己的类中对外提供访问该静态实例的方法。</p>
 <div class="code-block code-line-numbers" style="counter-reset: code-block 0">
     <div class="code-header language-typescript">
@@ -180,7 +179,7 @@
 </span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="kr">super</span><span class="p">.</span><span class="nx">GetInstance</span><span class="p">&lt;</span><span class="nt">DataManager</span><span class="p">&gt;()</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">    <span class="nx">mapInfo</span>: <span class="kt">Array</span><span class="p">&lt;</span><span class="nt">Array</span><span class="err">&lt;</span><span class="na">ITile</span><span class="p">&gt;</span><span class="o">&gt;</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">mapInfo</span>: <span class="kt">Array</span><span class="p">&lt;</span><span class="nt">Array</span><span class="p">&lt;</span><span class="nt">ITile</span><span class="p">&gt;&gt;;</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">mapRowCount</span>: <span class="kt">number</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">mapColumnCount</span>: <span class="kt">number</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
@@ -199,7 +198,7 @@
         <span class="copy" title="Copy to clipboard"><i class="far fa-copy fa-fw" aria-hidden="true"></i></span>
     </div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-typescript" data-lang="typescript"><span class="line"><span class="cl"><span class="kr">class</span> <span class="nx">EventManager</span><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    <span class="nx">eventMap</span>: <span class="kt">MapM</span><span class="p">&lt;</span><span class="nt">string</span><span class="err">,</span> <span class="na">Array</span><span class="err">&lt;</span><span class="na">Function</span><span class="p">&gt;</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Map</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">eventMap</span>: <span class="kt">MapM</span><span class="p">&lt;</span><span class="nt">string</span><span class="p">,</span> <span class="na">Array</span><span class="p">&lt;</span><span class="nt">Function</span><span class="p">&gt;&gt;</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Map</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="c1">// 订阅一个事件，将处理方法添加的事件的方法列表中
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">on</span><span class="p">(</span><span class="nx">eventName</span>:<span class="kt">string</span><span class="p">,</span> <span class="nx">func</span>:<span class="kt">Function</span><span class="p">){</span>
@@ -242,7 +241,7 @@
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="kr">class</span> <span class="nx">EventManager</span><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    <span class="nx">eventMap</span>: <span class="kt">MapM</span><span class="p">&lt;</span><span class="nt">string</span><span class="err">,</span> <span class="na">Array</span><span class="err">&lt;</span><span class="na">IItem</span><span class="p">&gt;</span><span class="o">&gt;</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Map</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">eventMap</span>: <span class="kt">MapM</span><span class="p">&lt;</span><span class="nt">string</span><span class="p">,</span> <span class="na">Array</span><span class="p">&lt;</span><span class="nt">IItem</span><span class="p">&gt;&gt;</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Map</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="c1">// 订阅一个事件，将处理方法添加的事件的方法列表中
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nx">on</span><span class="p">(</span><span class="nx">eventName</span>:<span class="kt">string</span><span class="p">,</span> <span class="nx">func</span>:<span class="kt">Fcuntion</span><span class="p">,</span> <span class="nx">ctx</span>:<span class="kt">unknow</span><span class="p">){</span>
@@ -288,8 +287,7 @@
 <p>该状态机的执行逻辑为：当使用 <code>setParams()</code> 方法改变 <code>params</code> 时，调用 <code>run()</code> 方法，确定目标状态和需要执行的动作，执行状态转移 <code>setter::currentState()</code> ，当前状态变更后播放当前状态的动画以及执行某些动作。</p>
 <p>状态图 <code>stateMachine</code> 中使用 <code>State</code> 和 <code>SubStateMachine</code> 类型保存状态。<code>State</code> 很好理解，其描述了某一个状态，例如该状态对应的动画和数据等。那什么是 <code>SubStateMachine</code> ？实际上某些状态可能属于同一类状态，例如对于一个 2D 角色来说，很多动作例如待机、跑动等都是有方向性的，如果为这样的动作都设置四个状态，那么所需要的状态的个数就会变成四倍，转移关系也会变成四倍。因此为了简化这个过程，我们使用子状态机，来管理属于同一类的状态，具体使用哪个子状态，则有传入子状态机的参数决定。</p>
 <blockquote>
-<p>如果 currentState 是一个 SubStateMachine，同样也会在 <code>setter::currentState()</code> 时调用其 <code>run()</code> 方法，此时子状态机的 <code>run()</code> 被调用，其作用实际上和 <code>StateMachine</code> 完全一致，根据 params 和传入的参数确定子状态，进行状态转移。需要注意的是，子状态机完全由状态机管理，因此其仅仅保存所需的子状态图，params 列表由状态机维护。</p>
-</blockquote>
+<p>如果 currentState 是一个 SubStateMachine，同样也会在 <code>setter::currentState()</code> 时调用其 <code>run()</code> 方法，此时子状态机的 <code>run()</code> 被调用，其作用实际上和 <code>StateMachine</code> 完全一致，根据 params 和传入的参数确定子状态，进行状态转移。需要注意的是，子状态机完全由状态机管理，因此其仅仅保存所需的子状态图，params 列表由状态机维护。</p></blockquote>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
@@ -336,7 +334,7 @@
 </div>
 </article></div>
             </main><footer class="footer">
-        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.134.2">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
+        <div class="footer-container"><div class="footer-line">Powered by <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.145.0">Hugo</a> | Theme - <a href="https://github.com/dillonzq/LoveIt" target="_blank" rel="noopener noreffer" title="LoveIt 0.3.1-DEV"><i class="far fa-kiss-wink-heart fa-fw" aria-hidden="true"></i> LoveIt</a>
                 </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2019 - 2025</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://junpoyu.github.io/" target="_blank">Junpo Yu</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
         </div>
     </footer></div>

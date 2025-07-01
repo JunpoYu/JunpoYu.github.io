@@ -4,7 +4,7 @@
         <link>http://localhost:1313/posts/</link>
         <description>All Posts | Junpo Yu&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>junpo_yu@163.com (Junpo Yu)</managingEditor>
-            <webMaster>junpo_yu@163.com (Junpo Yu)</webMaster><lastBuildDate>Sat, 28 Jun 2025 20:52:24 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>junpo_yu@163.com (Junpo Yu)</webMaster><lastBuildDate>Mon, 30 Jun 2025 16:08:03 &#43;0800</lastBuildDate><atom:link href="http://localhost:1313/posts/" rel="self" type="application/rss+xml" /><item>
     <title>TODO LIST</title>
     <link>http://localhost:1313/todo/</link>
     <pubDate>Mon, 24 Feb 2025 16:34:43 &#43;0800</pubDate>
@@ -15,8 +15,13 @@
 <li>什么是 variational inference</li>
 <li>什么是 Langevin dynamics during sampling</li>
 <li>什么是 usual variational bound</li>
-<li>什么是重要性采样</li>
-<li>什么是交叉熵</li>
+<li>DDPM</li>
+<li>DLFC-CH16
+<ol>
+<li>矩阵求导</li>
+<li>线代本质</li>
+</ol>
+</li>
 </ol>]]></description>
 </item>
 <item>

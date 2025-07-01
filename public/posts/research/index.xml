@@ -10,7 +10,11 @@
     <pubDate>Wed, 25 Jun 2025 19:21:01 &#43;0800</pubDate>
     <author>Junpo Yu</author>
     <guid>http://localhost:1313/denoising-diffusion-probabilistic-models/</guid>
-    <description><![CDATA[<p>本文内容来自 <a href="http://arxiv.org/abs/2006.11239" target="_blank" rel="noopener noreffer ">Denoising Diffusion Probablilistic Models</a>（DDPM），也是 diffusion model 发扬光大的起点。</p>]]></description>
+    <description><![CDATA[<p>本文内容来自 <a href="http://arxiv.org/abs/2006.11239" target="_blank" rel="noopener noreffer ">Denoising Diffusion Probablilistic Models</a>（DDPM），也是 diffusion model 发扬光大的起点。</p>
+<h2 id="论文部分">论文部分</h2>
+<h2 id="代码实现">代码实现</h2>
+<p>该部分代码参考<a href="https://nn.labml.ai/diffusion/ddpm/index.html" target="_blank" rel="noopener noreffer ">Annotated Research Paper Implementations</a> 提供的代码示例。</p>
+<h2 id="附录">附录</h2>]]></description>
 </item>
 <item>
     <title>[General Reading]-Inception-TricksOfCNNTraing</title>
