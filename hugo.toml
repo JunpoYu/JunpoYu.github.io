@@ -69,6 +69,22 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
         name = "科研相关"
         url = "/posts/research/"
         title = ""
+      [[languages.zh-CN.menu.main]]
+        weight = 5
+        identifier = "life"
+        pre = ""
+        post = ""
+        name = "生活"
+        url = "/posts/life/"
+        title = ""
+      [[languages.zh-CN.menu.main]]
+        weight = 6
+        identifier = "archives"
+        pre = ""
+        post = ""
+        name = "归档"
+        url = "/archives/"
+        title = ""
     
     # 中文参数
     [languages.zh-CN.params]

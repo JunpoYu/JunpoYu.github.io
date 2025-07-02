@@ -1,80 +1,82 @@
 ---
-title: '如何配置 PaperMod 主题'
+title: 'How to configure PaperMod theme'
 date: 2024-09-14T21:14:25+08:00
 draft: false
 ShowToc: true
 TocOpen: true
 tags:
   - hugo
+categories:
+  - hugo
 ---
 
 
 
-所有的配置信息都填写在网站根目录下的 `hugo.yaml` 文件中。
+All configuration details are specified in the `hugo.yaml` file located in the website's root directory.
 
-## 一、配置文件
+## 1. Configuration
 
 ```yaml
-baseURL: https://jespery.github.io/ # 自己网站的 url
-languageCode: zh-cn # 语言
-title: RubySIU's Blog # 网站名
-theme: ["PaperMod"] # 使用的主题
+baseURL: https://jespery.github.io/ # your site's url
+languageCode: zh-cn # language
+title: RubySIU's Blog # your site's title
+theme: ["PaperMod"] # enabled theme
 
-enableInlineShortcodes: true #允许内联短码
-enableEmoji: true # 允许使用 Emoji 表情，建议 true
-enableRobotsTXT: true # 允许爬虫抓取到搜索引擎，建议 true
+enableInlineShortcodes: true # allow inline shortcodes
+enableEmoji: true # allow Emoji
+enableRobotsTXT: true # allow spider 
 
-hasCJKLanguage: true # 自动检测是否包含 中文日文韩文 如果文章中使用了很多中文引号的话可以开启
+hasCJKLanguage: true # automatically detect the presence of Chinese, Japanese or Korean text
 
-buildDrafts: false # 是否构建 drafts 文章
-buildFuture: false # 是否构建 future 文章
-buildExpired: false  # 是否构建 expired 文章
+buildDrafts: false # whether to generate draft articles
+buildFuture: false # whether to generate future articles
+buildExpired: false  # whether to generate expired articles
 
-paginate: 15 # 每页文章数
+paginate: 15 # number of articles per page
 
 minify:
     disableXML: true # 
 
-# defaultContentLanguage: zh # 最顶部首先展示的语言页面
+# defaultContentLanguage: zh # default language
 # defaultContentLanguageInSubdir: true
 
-outputs: # 此部分用于搜索页面
+outputs: # for search page
   home:
     - HTML
     - RSS
     - JSON
 
-menu: # 主页右上角菜单栏
+menu: # menu bar on the top right 
   main:
-    - identifier: search # 标识
-      name: 🔍搜索 # 菜单名
-      url: search/ # 对应 url
-      weight: 1 # 权重，用于排序
+    - identifier: search #
+      name: 🔍search # menu name
+      url: search/ # corresponding url
+      weight: 1 # weights for sort
     - identifier: archives
-      name: ⏱时间轴
+      name: ⏱time line
       url: archives/
       weight: 2
 
-params: # 参数
-  defaultTheme: auto # 自动切换亮暗主题
-  disableThemeToggle: false # 启用亮暗切换按钮
-  ShowAllPagesInArchive: true # 在 Archive 页面显示所有文件夹下的文章
+params:
+  defaultTheme: auto # automatically switches between light and dark theme
+  disableThemeToggle: false # enable the light/dark mode toggle button
+  ShowAllPagesInArchive: true # display all articles from all directories on the arvhive paeg
 
-  profileMode: # 使用 profile 模式
+  profileMode: # use profile mode
     enabled: true 
-    title: "RubySIU's Blog" # profile 主页的大标题
+    title: "RubySIU's Blog" # title of profile page
     # subtitle: ""
-    imageUrl: "chikaflare_icon.jpg" # 主页头像
-    imageTitle: "奇可芙蕾雅！" # 头像文字
+    imageUrl: "chikaflare_icon.jpg" # icon
+    imageTitle: "奇可芙蕾雅！" 
     imageWidth: 120 # custom size
     imageHeight: 120 # custom size
-    buttons: # 主页按钮
-      - name: 技术
+    buttons: # home page button
+      - name: tech
         url: "/posts"
       - name: 搭建
         url: "/builds"
 
-  socialIcons: # 主页社交入口
+  socialIcons: # social media links on the home page
     - name: "email"
       url: "mailto:junpo.yu@foxmail.com"
     - name: "Github"
@@ -82,14 +84,14 @@ params: # 参数
     - name: "RSS"
       url: "index.xml"
 
-  ShowShareButtons: false # 不显示分享按钮，因为都是外国网站
-  ShowReadingTime: true # 显示阅读时间 
-  ShowBreadCrumbs: false # 不显示面包屑导航
-  ShowPostNavLinks: true # 显示上一页、下一页
-  ShowCodeCopyButtons: true # 显示代码复制按钮
+  ShowShareButtons: false #
+  ShowReadingTime: true 
+  ShowBreadCrumbs: false 
+  ShowPostNavLinks: true 
+  ShowCodeCopyButtons: true 
 
 
-  fuseOpts: # 搜索配置，照搬
+  fuseOpts: # configuration of search
       isCaseSensitive: false
       shouldSort: true
       location: 0
@@ -102,11 +104,11 @@ params: # 参数
   
 ```
 
-## 二、修改时间轴页面为中文
+## 2. Modify the timeline page to display in Chinese
 
-此部分照搬 [Sulv's Blog](https://www.sulvblog.cn/posts/blog/hugo_archives_chinese/)，定位到 `themes/PaperMod/layouts/_default/archives.html`，建议将` layouts、i18n、assets`下的文件复制到站点根目录，以免更新主题导致覆盖。
+This section is directly adapted from  [Sulv's Blog](https://www.sulvblog.cn/posts/blog/hugo_archives_chinese/). you need to find the `themes/PaperMod/layouts/_default/archives.html` file and copy the files under `layouts、i18n、assets`  directories to the root directory to prevent them from bing overwritten during theme updates.
 
-修改 `archives.html` 为如下内容：
+Modify  `archives.html`  as follows:
 
 ```html
 {{- define "main" }}
