@@ -6,6 +6,8 @@ ShowToc: true
 TocOpen: true
 tags:
   - hugo
+categories:
+  - hugo
 ---
 
 ## 一、Windows 安装 Hugo

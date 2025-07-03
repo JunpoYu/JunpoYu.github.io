@@ -6,6 +6,8 @@ ShowToc: true
 TocOpen: true
 tags:
   - hugo
+categories:
+  - hugo
 ---
 
 技术博客逃不了写公式，$LaTEX$必然是最好的选择，但是 hugo 对 LaTEX 的兼容并不好，因此采用 MathJax 渲染。
