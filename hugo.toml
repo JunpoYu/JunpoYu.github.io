@@ -641,7 +641,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
     enable = true
     # Google Analytics
     [params.analytics.google]
-      id = ""
+      id = "G-LNVWEJ4HNJ"
       #  是否匿名化用户 IP
       anonymizeIP = true
       #  是否遵循浏览器的 "Do Not Track" 设置
