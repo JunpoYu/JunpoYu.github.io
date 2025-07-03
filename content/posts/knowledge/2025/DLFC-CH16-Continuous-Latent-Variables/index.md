@@ -1,3 +1,5 @@
+
+
 +++
 title = '[Deep Learning: Foudations and Concepts] CH16-Continuous Latent Variables'
 date = 2025-06-30T16:08:03+08:00
@@ -10,6 +12,8 @@ summary = ""
 本文内容来自 [Deep Learning: Foundations and Concepts](https://www.bishopbook.com/) 一书的第十六章。
 
 正文的数学公式会尽可能简洁，某些公式的详细推导过程在 Appendix 中给出。
+
+应当注意的是本文只是博主在学习过程中对于原书内容的摘要性记录，并不能完全代替原书内容。
 
 ## CH16 Continuous Latent Variables
 
@@ -215,6 +219,237 @@ $$
 
 > 我平常不使用 PCA，因此这一节就大概看了一下。
 
+
+
+### 16.2 Probabilistic Latent Variables
+
+上一节中我们介绍了 PCA，一种通过线性映射将高维数据变化到低维空间中的方法。更详细一点说是使用一组低维基向量的线性组合来近似表示高维数据，而线性组合的系数 <span> $z_{ni}$ </span> 被看作是一组确定的潜在变量。一组潜在变量可以描述对应的高维的观测数据，也可以理解为所有的高维观测数据都是从不同的潜在变量组合中生成的，由此引入了生成式模型的一些概念。但是现在这些潜在变量都是确定的值，因为他们是基向量的系数。但是如果潜在变量是一个联系概率分布呢？
+
+如果我们使用最大似然来表示一个使用概率潜在变量的 PCA，那就叫 Probabilistic PCA。它有以下几个有点：
+
+* 是一种受限高斯分布，限制了自由参数的数量，但是模型仍然可以捕捉数据中的主要相关性。
+* 可以通过生成的方式运行，从分布中提供样本。
+* 为 PCA 的贝叶斯处理奠定了基础，使得主子空间的维度可以自动从数据中确定。
+
+> 实际上书中给出了八条优点，但我觉得这三条最重要，可惜这三条我也没有完全理解。
+
+#### 16.2.1 Generative model
+
+我们首先定义 $M$ 维的潜在变量 $\mathbf{z}$ ，然后定义高斯先验 $p(\mathbf{z})$ 和对应的以 $D$ 维观测数据 $\mathbf{x}$ 作为条件的高斯条件分布 $p(\mathbf{z}|\mathbf{x})$ 。
+
+具体而言，我们将高斯先验定义为标准高斯分布。
+
+{{<raw>}}
+$$
+\begin{align}
+p(\mathbf{z})=\mathcal{N}(\mathbf{z}\mid\mathbf{0},\mathbf{I})
+\end{align}\tag{2.1}
+$$
+{{</raw>}}
+
+同样的，观测数据是潜在变量的线性变化，因此有
+
+{{<raw>}}
+$$
+\begin{align}
+p(\mathbf{x}\mid\mathbf{z})=\mathcal{N}(\mathbf{x}\mid\mathbf{Wz}+\boldsymbol{\mu},\sigma^2\mathbf{I})
+\end{align}\tag{2.2}
+$$
+
+
+{{</raw>}}
+
+其中 $\mathbf{W}$ 是一个 $D\times M$ 的矩阵，表示线性变换，实际上其列向量所张成的空间就代表了主子空间，而 $\boldsymbol{\mu}$ 则对均值进行了偏移。$\sigma$ 对条件分布的方差进行了缩放。我们可以生成式模型的角度来看待 probabilistic PCA，即首先从标准高斯分布中采样潜在变量 $\mathbf{z}$ ，然后在该潜在变量控制的条件分布上采样生成观测数据 $\mathbf{x}$ 。具体而言，观测数据是潜在变量的线性变化然后加上了一点高斯噪声，数学描述为：
+
+{{<raw>}}
+$$
+\begin{align}
+\mathbf{x}=\mathbf{Wz}+\boldsymbol{\mu}+\boldsymbol{\epsilon}
+\end{align}\tag{2.3}
+$$
+{{</raw>}}
+
+其中 $\mathbf{z}$ 是 $M$ 维潜在变量，$\boldsymbol{\epsilon}$ 是 $D$ 维均值为零，方差为 $\sigma^2\mathbf{I}$ 的高斯噪声。
+
+#### 16.2.2 Likelihood function
+
+根据公式 2.3 的描述，如果我们想要生成数据，那么我们就需要确定 $\mathbf{W},\boldsymbol{\mu},\sigma$ 这几个量。通过最大似然法，我们首先写出 $\mathbf{x}$ 的边缘概率分布。
+
+{{<raw>}}
+$$
+\begin{align}
+p(\mathbf{x})=\int p(\mathbf{x}\mid\mathbf{z})p(\mathbf{z})d\mathbf{z}
+\end{align}\tag{2.4}
+$$
+
+
+{{</raw>}}
+
+高斯分布的线性变换依然是高斯分布，因此我们可以定义
+
+{{<raw>}}
+$$
+\begin{align}
+p(\mathbf{x})&=\mathcal{N}(\mathbf{x}\mid\boldsymbol{\mu},\mathbf{C})\tag{2.5}\\\\
+\mathbf{C}&=\mathbf{WW^T}+\sigma^2\mathbf{I}\tag{2.6}
+\end{align}
+$$
+
+
+{{</raw>}}
+
+这个分布的均值和协方差矩阵推导如下
+
+{{<raw>}}
+$$
+\begin{align}
+\mathbb{E}[\mathbf{x}]&=\mathbb{E}[\mathbf{Wz}+\boldsymbol{\mu}+\boldsymbol{\epsilon}]=\boldsymbol{\mu}\tag{2.7}\\\\
+\text{cov}[\mathbf{x}]&=\text{cov}[\mathbf{Wz}+\boldsymbol{\epsilon}]\\\\
+&=\mathbb{E}[(\mathbf{Wz}+\boldsymbol{\epsilon})^\mathbf{T}(\mathbf{Wz}+\boldsymbol{\epsilon})]\\\\
+&=\mathbb{E}[\mathbf{WzzW}^\text{T}]+\mathbb{E}(\boldsymbol{\epsilon\epsilon}^\text{T})\\\\
+&=\mathbf{WW}^\text{T}+\sigma^2\mathbf{I}\tag{2.8}
+\end{align}
+$$
+
+
+{{</raw>}}
+
+推导过程中使用了 $\mathbf{z}$ 和 $\boldsymbol{\epsilon}$ 相互独立的特性。
+
+> 你也许发现一开始定义的边缘概率积分似乎不需要，我也这么觉得。
+
+现在我们使用了三个变量 $\mathbf{W},\boldsymbol{\mu},\sigma$ 来表示了观测数据分布，但其实这些变量仍然有一些冗余。为了说明这个问题，我们一个矩阵 $\tilde{\mathbf{W}}=\mathbf{WR}$，其中 $\mathbf{R}$ 是一个正交阵，使用正交阵的性质，我们可以得到如下结果
+
+{{<raw>}}
+$$
+\begin{align}
+\tilde{\mathbf{W}}\tilde{\mathbf{W}}^\text{T}=\mathbf{WRR^T W^T}=\mathbf{WW^T}
+\end{align}\tag{2.9}
+$$
+
+
+{{</raw>}}
+
+而上面这个公式的结果实际上出现在了观测数据 $\mathbf{x}$ 的协方差矩阵中。这里我们其实对线性变换矩阵 $\mathbf{W}$ 施加了一个新的线性变化，而由于变化矩阵 $\mathbf{R}$ 是正交阵，因此可以更具体说我们做了旋转。但是旋转后变换矩阵 $\tilde{\mathbf{W}}$ 对数据观测数据的方差分布没有任何影响。这意味着即使潜变量空间发生了旋转，模型的协方差结构是保持不变的，因此我们的变量中对于旋转的描述是冗余的，无论怎么旋转，最终结果都是一样的。
+
+此外，如果我们要写出 $p(\mathbf{x})$ 的表达式，我们需要求 $\mathbf{C}^{-1}$ ，这是因为对于多维高斯分布而言，其表达式形式如下：
+
+{{<raw>}}
+$$
+\begin{align}
+p(\mathbf{x})=\frac{1}{(2\pi)^{D/2}\mid \mathbf{C}\mid}\exp\left(-\frac{1}{2}(\mathbf{x}-\boldsymbol{\mu})^\text{T}\mathbf{C}^{-1}(\mathbf{x}-\boldsymbol{\mu})\right)
+\end{align}\tag{2.10}
+$$
+
+
+{{</raw>}}
+
+这涉及到对于一个 $D\times D$ 维的矩阵求逆，其可以通过矩阵求逆引理来降低计算量：
+
+{{<raw>}}
+$$
+\begin{align}
+C^{-1} = \sigma^{-2}\mathbf{I} - \sigma^{-2}\mathbf{W}\mathbf{M}^{-1}\mathbf{W}^{T}\tag{2.11} \\\\
+\mathbf{M} = \mathbf{W}^\text{T}\mathbf{W} + \sigma^2 \mathbf{I}\tag{2.12}
+\end{align}
+$$
+
+
+{{</raw>}}
+
+其中 $\mathbf{M}$ 是一个 $M\times M$ 维的矩阵，从而降低了求逆维度。
+
+> 矩阵求逆引理见 Appendix A2.1
+
+我们将观测数据 $\mathbf{x}$ 的边缘概率分布称之为预测分布，除此之外我们还需要后验分布
+
+{{<raw>}}
+$$
+\begin{align}
+p(\mathbf{z} \mid \mathbf{x}) = \mathcal{N} \left(\mathbf{z} \mid \mathbf{M}^{-1}\mathbf{W}^\text{T}(\mathbf{x} - \boldsymbol{\mu}), \sigma^2 \mathbf{M}^{-1} \right)
+\end{align}\tag{2.13}
+$$
+
+
+{{</raw>}}
+
+该公式的推导来自一个定理，见 Appendix A 2.2。
+
+需要注意的是后验分布的均值依赖于观测数据 $\mathbf{x}$ ，而方差则与观测数据无关。
+
+#### 16.2.3 Maximum likelihood
+
+现在我们考虑最大化似然。我们有观测数据 <span> $\mathbf{X}=\{\mathbf{x}_n\}$ </span>，根据公式 2.5 和 2.6 和 2.10 我们可以写出似然函数
+
+{{<raw>}}
+$$
+\begin{align}
+\ln p(\mathbf{X} \mid \boldsymbol{\mu}, \mathbf{W}, \sigma^2) = \sum_{n=1}^{N} \ln p(\mathbf{x}_n \mid \mathbf{W}, \boldsymbol{\mu}, \sigma^2) = -\frac{ND}{2} \ln(2\pi) - \frac{N}{2} \ln |\mathbf{C}| - \frac{1}{2} \sum_{n=1}^{N} (\mathbf{x}_n - \boldsymbol{\mu})^T \mathbf{C}^{-1} (\mathbf{x}_n - \boldsymbol{\mu}).
+\end{align}\tag{2.14}
+$$
+{{</raw>}}
+
+对数似然对 $\boldsymbol{\mu}$ 求偏导，令偏导等于零可以得到 $\boldsymbol{\mu}=\bar{\mathbf{x}}$ 。求导过程见 Appendix A2.3 和 A2.4。
+
+对 $\mathbf{W}$ 和 $\sigma$ 求偏导过于复杂，推导过程就不写了，但是依然存在闭式解。
+
+{{<raw>}}
+$$
+\begin{align}
+\mathbf{W}_{\text{ML}} = \mathbf{U}_M (\mathbf{L}_M - \sigma^2 \mathbf{I})^{1/2} \mathbf{R}
+\end{align}\tag{2.15}
+$$
+
+
+{{</raw>}}
+
+其中 <span> $\mathbf{U}_{M}$ </span>是一个 $D\times M$ 维矩阵，包含了观测数据的协方差矩阵 $\mathbf{S}$ 的特征向量的前 $M$ 列，对应了最大的 $M$ 个特征值。 <span> $\mathbf{L}_M$ </span> 表示一个 $M\times M$ 的对角阵，元素为特征向量所对应的特征值。$\mathbf{R}$ 表示一个任意的正交阵，其代表了主子空间旋转，由于前面提到的旋转不变性存在，因此其解不唯一。
+
+除了特征值最大的 $M$ 个特征向量之外，选择其他特征向量会导致最大似然估计落在鞍点上，这对最大化没有意义。
+
+{{<raw>}}
+$$
+\begin{align}
+\sigma^2_{\text{ML}} = \frac{1}{D-M} \sum_{i=M+1}^{D} \lambda_i
+\end{align}\tag{2.16}
+$$
+{{</raw>}}
+
+<span> $\sigma^2_{ML}$  </span>则描述了被丢弃的部分所解构出的噪声方差。
+
+我们将公式 2.15 代入 公式 2.6，得到
+
+{{<raw>}}
+$$
+\begin{align}
+\mathbf{C} &= \mathbf{U}_M (\mathbf{L}_M - \sigma^2 \mathbf{I})^{1/2} \mathbf{R} (\mathbf{R}^T (\mathbf{L}_M - \sigma^2 \mathbf{I})^{1/2} \mathbf{U}_M^T) + \sigma^2 \mathbf{I}\tag{2.17}\\\\
+&= \mathbf{U}_M (\mathbf{L}_M - \sigma^2 \mathbf{I}) \mathbf{U}_M^T + \sigma^2 \mathbf{I}\tag{2.18}
+\end{align}
+$$
+
+
+{{</raw>}}
+
+前面提到 $\mathbf{R}$ 是一个任意的正交阵，但是如果我们将其作为单位正交阵，那么就可以从公式 2.17 简化为 2.18。此时其中 <span> $\mathbf{L}_M - \sigma^2 \mathbf{I}$ </span>描述了对于主子空间特征向量矩阵 <span> $\mathbf{U}_M$ </span>中的每个特征向量 <span> $\mathbf{u_i}$ </span> 进行 <span> $\sqrt{\lambda_i - \sigma^2}$ </span> 缩放。
+
+观测数据被认为是由潜在变量和噪声的结合产生的。其中，潜在变量通过矩阵 $\mathbf{W}$ 投影到数据空间，并加上独立、同分布的高斯噪声。协方差矩阵 $\mathbf{C} $由两部分组成：由 $\mathbf{W}$ 投影所引入的变化和噪声的方差 $\sigma^2$。当我们希望找到表征数据主要结构的投影，即主成分，在引入噪声参数 $\sigma^2$ 后，这些主要的方差特征（即特征值）要减去噪声的方差贡献，以得到在没有噪声干扰下的数据空间方差。这个就是$(\lambda_i - \sigma^2)$，其中$\lambda_i$是特征值（公式 2.18）。最后，对应的实际投影是特征向量$\mathbf{u}_i$乘以方差的平方根$\sqrt{(\lambda_i - \sigma^2)}$（公式 2.15），这样做是因为在高斯分布中，若从一个分布映射到另一个分布中，方差的变换是平方根关系的，保持数据的尺度不变。
+
+----
+
+> 后面的内容说实话我没有完全读懂，因此只对大概的意思做一个简要总结。
+
+首先说明了 Probabilisic PCA 可以完全捕捉到主子空间各个方向上的方差，同时使用特征值的平均来近似其他方向的方差。
+
+其次说明了对于 $\mathbf{R}$ 可以通过某些约束来限制其为正交阵。
+
+和传统 PCA 将数据空间映射到潜在空间不同，Probabilisic PCA 通过公式 2.3 将潜在空间映射到数据空间。通过贝叶斯定理，我们可以使用后验分布 2.13 来构建将数据映射到潜在空间的过程，同时计算出其均值和方差。当我们令方差趋于零时，实际上就回到了传统 PCA，因为映射不再具有不确定性，而是精确的映射到某一个点。
+
+> 最后描述了一些关于参数量的计算，说实话我没看懂。
+
+#### 16.2.4 Factor analysis
+
+因子分析和 Probabilisic PCA 的区别在于，其观测数据的条件分布具有对角协方差矩阵。
+
 ## Appandix
 
 ### Appendix A1 
@@ -269,7 +504,7 @@ $$
 
 对于某个特定的数据点 <span>$x_n$</span> 的偏导可以不失一般性地推广到上式的求和中，因此下面我们以特定数据点的 <span>$x_n$</span> 的偏导过程为例。
 
-首先给出向量微积分的基本公式
+首先给出向量微积分的基本公式，注意这里是对变量的求导，实际上等价于二次函数求导。后面会有对向量的求导，形式略有不同。
 
 {{<raw>}}
 $$
@@ -396,4 +631,63 @@ S &= \frac{1}{N} \sum_{n=1}^N (\mathbf{x}_n - \bar{\mathbf{x}})(\mathbf{x}_n - \
 J &= \sum_{i=M+1}^D \mathbf{u}_i^T S \mathbf{u}_i
 \end{align}\tag{A1.14}
 $$
+{{</raw>}}
+
+### Appendix A2
+
+矩阵求逆引理公式
+
+{{<raw>}}
+$$
+\begin{align}
+(A + UCV)^{-1} = A^{-1} - A^{-1}U(C^{-1} + VA^{-1}U)^{-1}VA^{-1}\tag{A2.1}
+\end{align}
+$$
+
+
+{{</raw>}}
+
+----
+
+求解后验分布的定理
+
+{{<raw>}}
+$$
+\begin{align}
+\text{given}\quad p(\mathbf{x})&=\mathcal{N}(\mathbf{x}\mid\boldsymbol{\mu},\Lambda^{-1})\\\\
+p(\mathbf{y}\mid\mathbf{x})&=\mathcal{N}(\mathbf{y}\mid\mathbf{Ax}+\mathbf{b},\mathbf{L}^{-1})\\\\
+\text{have}\quad p(\mathbf{y})&=\mathcal{N}(\mathbf{y}|\mathbf{A}\boldsymbol{\mu}+\mathbf{b},\mathbf{L}^{-1}+\mathbf{A}\Lambda^{-1}\mathbf{A}^\text{T})\\\\
+p(\mathbf{x} \mid \mathbf{y}) &= \mathcal{N}(\mathbf{x} \mid \boldsymbol{\mu} + \Sigma \mathbf{A}^T \mathbf{L} (\mathbf{y} - \mathbf{A}\boldsymbol{\mu} - \mathbf{b}), \Sigma)\\\\
+\Sigma &= (\Lambda + \mathbf{A}^T \mathbf{L} \mathbf{A})^{-1}
+\end{align}\tag{A2.2}
+$$
+
+
+{{</raw>}}
+
+----
+
+首先给出对向量偏导的一个公式
+
+{{<raw>}}
+$$
+\begin{align}
+\frac{\partial}{\partial \boldsymbol{\mu}} [(\mathbf{x}_n - \boldsymbol{\mu})^T \mathbf{C}^{-1} (\mathbf{x}_n - \boldsymbol{\mu})] = -2\mathbf{C}^{-1}(\mathbf{x}_n - \boldsymbol{\mu})
+\end{align}\tag{A2.3}
+$$
+
+
+{{</raw>}}
+
+{{<raw>}}
+$$
+\begin{align}
+\frac{\partial}{\partial \boldsymbol{\mu}} \ln p(\mathbf{X} \mid \boldsymbol{\mu}, \mathbf{W}, \sigma^2)&=
+\frac{\partial}{\partial \boldsymbol{\mu}} \left(-\frac{1}{2} \sum_{n=1}^{N} (\mathbf{x}_n - \boldsymbol{\mu})^T \mathbf{C}^{-1} (\mathbf{x}_n - \boldsymbol{\mu})\right) = \sum_{n=1}^{N} \mathbf{C}^{-1} (\mathbf{x}_n - \boldsymbol{\mu})=0\\\\
+\sum_{n=1}^{N} \mathbf{C}^{-1} (\mathbf{x}_n - \boldsymbol{\mu})&=\mathbf{C}^{-1}\sum_{n=1}^{N}(\mathbf{x}_n -\boldsymbol{\mu})=0\\\\
+\boldsymbol{\mu}&= \frac{1}{N}\sum_{n=1}^N\mathbf{x}_n=\bar{\mathbf{x}}
+\end{align}\tag{A2.4}
+$$
+
+
 {{</raw>}}
