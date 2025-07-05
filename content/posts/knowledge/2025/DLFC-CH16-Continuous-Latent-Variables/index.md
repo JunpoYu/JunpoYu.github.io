@@ -5,13 +5,13 @@ title = '[Deep Learning: Foudations and Concepts] CH16-Continuous Latent Variabl
 date = 2025-06-30T16:08:03+08:00
 draft = true
 math = true
-summary = ""
+summary = "本文讲述连续潜变量模型的基础概念，以 PCA 为例讲解了模型的原理和建立模型的过程，并在最后引出了四种最流行的生成式模型结构。"
 
 +++
 
-本文内容来自 [Deep Learning: Foundations and Concepts](https://www.bishopbook.com/) 一书的第十六章。
+本文内容来自 [Deep Learning: Foundations and Concepts](https://www.bishopbook.com/) 一书的第十六章——连续潜在变量。
 
-正文的数学公式会尽可能简洁，某些公式的详细推导过程在 Appendix 中给出。
+正文的数学公式会尽可能详细易懂，但是某些公式的详细推导太长，因此其过程在 Appendix 中给出。
 
 应当注意的是本文只是博主在学习过程中对于原书内容的摘要性记录，并不能完全代替原书内容。
 
@@ -49,7 +49,7 @@ summary = ""
 
 {{<raw>}}
 $$
-\begin{aligned}\mathcal{L}(\mathbf{x},\lambda_1)=\mathbf{u}_t^T\mathbf{S}\mathbf{u}_t + \lambda_1(1-\mathbf{u}_t^T\mathbf{u}_t) \end{aligned}\tag{1.1}
+\begin{align*}\mathcal{L}(\mathbf{x},\lambda_1)=\mathbf{u}_t^T\mathbf{S}\mathbf{u}_t + \lambda_1(1-\mathbf{u}_t^T\mathbf{u}_t) \end{align*}\tag{1.1}
 $$
 {{</raw>}}
 
@@ -75,9 +75,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \mathbf{x}_n=\sum_{i=1}^{D}\alpha_{ni}\mathbf{u}_i
-\end{align}\tag{1.3}
+\end{align*}\tag{1.3}
 $$
 {{</raw>}}
 
@@ -85,14 +85,14 @@ $$
 
 {{<raw>}}
 $$
-\begin{aligned}
+\begin{align*}
 \mathbf{u}_j^T\mathbf{x}_n 
     &= \sum_{i=1}^D \alpha_{ni} \mathbf{u}_j^T \mathbf{u}_i 
     = \alpha_{nj} \\\\
 \alpha_{nj} 
     &= \mathbf{u}_j^T \mathbf{x}_n 
     = \mathbf{x}_n^T \mathbf{u}_j
-\end{aligned}
+\end{align*}
 \tag{1.4}
 $$
 {{</raw>}}
@@ -101,9 +101,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \mathbf{x}_n = \sum_{i=1}^D \left( \mathbf{x}_n^T \mathbf{u}_i \right) \mathbf{u}_i
-\end{align}\tag{1.5}
+\end{align*}\tag{1.5}
 $$
 {{</raw>}}
 
@@ -113,9 +113,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \tilde{\mathbf{x}}_n = \sum_{i=1}^{M} z_{ni} \mathbf{u}_i + \sum_{i=M+1}^{D} b_i \mathbf{u}_i
-\end{align}\tag{1.6}
+\end{align*}\tag{1.6}
 $$
 {{</raw>}}
 
@@ -125,9 +125,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 J=\frac{1}{N}\sum_{n=1}^N\mid\mid x_n-\tilde{x}_n\mid\mid^2
-\end{align}\tag{1.7}
+\end{align*}\tag{1.7}
 $$
 {{</raw>}}
 
@@ -135,9 +135,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 z_{nj}=\mathbf{u}_j^T\mathbf{x}_n,\quad\text{where } j&=1,\dots,M
-\end{align}\tag{1.8}
+\end{align*}\tag{1.8}
 $$
 {{</raw>}}
 
@@ -147,9 +147,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 b_j=\bar{\mathbf{x}}^T\mathbf{u}_j,\quad \text{where }j=M+1,\dots,D
-\end{align}\tag{1.9}
+\end{align*}\tag{1.9}
 $$
 {{</raw>}}
 
@@ -159,9 +159,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \tilde{\mathbf{x}}_n=\sum_{i=1}^M(\mathbf{u}_i^T\mathbf{x}_n)\mathbf{x}_n+\sum_{i=M+1}^D(\bar{\mathbf{x}}_n^T\mathbf{u}_i)\mathbf{u}_i
-\end{align}\tag{1.10}
+\end{align*}\tag{1.10}
 $$
 {{</raw>}}
 
@@ -169,9 +169,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \mathbf{x}_n-\tilde{\mathbf{x}}_n=\sum_{i=M+1}^D\{(\mathbf{x}_n-\bar{\mathbf{x}})^T\mathbf{u}_i\}\mathbf{u}_i
-\end{align}\tag{1.11}
+\end{align*}\tag{1.11}
 $$
 {{</raw>}}
 
@@ -181,9 +181,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 J=\frac{1}{N}\sum_{n=1}^N\sum_{i=M+1}^D(\mathbf{x}_n^T\mathbf{u}_i-\bar{\mathbf{x}}^T\mathbf{u}_i)^2=\sum_{i=M+1}^D\mathbf{u}_i^T\mathbf{S}\mathbf{u}_i
-\end{align}\tag{1.12}
+\end{align*}\tag{1.12}
 $$
 {{</raw>}}
 
@@ -193,13 +193,13 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 J&=\mathbf{u}_2^T\mathbf{S}\mathbf{u}_2\\\\
 \tilde{J}&=\mathbf{u}_2^T\mathbf{S}\mathbf{u}_2+\lambda_2(1-\mathbf{u}_2^T\mathbf{u}_2)\\\\
 \frac{\partial J}{\partial \mathbf{u}_2}&=\frac{\partial \mathbf{u}_2^T\mathbf{S}\mathbf{u}_2}{\partial \mathbf{u}_2}+\frac{\partial\lambda_2}{\partial \mathbf{u}_2}-\frac{\partial \lambda_2\mathbf{u}_2^T\mathbf{u}_2}{\partial \mathbf{u}_2}\\\\
 &=2\mathbf{S}\mathbf{u}_2-2\lambda_2\mathbf{u}_2=0\\\\
 \mathbf{S}\mathbf{u}_2&=\lambda_2\mathbf{u}_2
-\end{align}
+\end{align*}
 $$
 {{</raw>}}
 
@@ -241,9 +241,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 p(\mathbf{z})=\mathcal{N}(\mathbf{z}\mid\mathbf{0},\mathbf{I})
-\end{align}\tag{2.1}
+\end{align*}\tag{2.1}
 $$
 {{</raw>}}
 
@@ -251,9 +251,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 p(\mathbf{x}\mid\mathbf{z})=\mathcal{N}(\mathbf{x}\mid\mathbf{Wz}+\boldsymbol{\mu},\sigma^2\mathbf{I})
-\end{align}\tag{2.2}
+\end{align*}\tag{2.2}
 $$
 
 
@@ -263,9 +263,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \mathbf{x}=\mathbf{Wz}+\boldsymbol{\mu}+\boldsymbol{\epsilon}
-\end{align}\tag{2.3}
+\end{align*}\tag{2.3}
 $$
 {{</raw>}}
 
@@ -277,9 +277,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 p(\mathbf{x})=\int p(\mathbf{x}\mid\mathbf{z})p(\mathbf{z})d\mathbf{z}
-\end{align}\tag{2.4}
+\end{align*}\tag{2.4}
 $$
 
 
@@ -289,10 +289,10 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 p(\mathbf{x})&=\mathcal{N}(\mathbf{x}\mid\boldsymbol{\mu},\mathbf{C})\tag{2.5}\\\\
 \mathbf{C}&=\mathbf{WW^T}+\sigma^2\mathbf{I}\tag{2.6}
-\end{align}
+\end{align*}
 $$
 
 
@@ -302,13 +302,13 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \mathbb{E}[\mathbf{x}]&=\mathbb{E}[\mathbf{Wz}+\boldsymbol{\mu}+\boldsymbol{\epsilon}]=\boldsymbol{\mu}\tag{2.7}\\\\
 \text{cov}[\mathbf{x}]&=\text{cov}[\mathbf{Wz}+\boldsymbol{\epsilon}]\\\\
 &=\mathbb{E}[(\mathbf{Wz}+\boldsymbol{\epsilon})^\mathbf{T}(\mathbf{Wz}+\boldsymbol{\epsilon})]\\\\
 &=\mathbb{E}[\mathbf{WzzW}^\text{T}]+\mathbb{E}(\boldsymbol{\epsilon\epsilon}^\text{T})\\\\
 &=\mathbf{WW}^\text{T}+\sigma^2\mathbf{I}\tag{2.8}
-\end{align}
+\end{align*}
 $$
 
 
@@ -322,9 +322,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \tilde{\mathbf{W}}\tilde{\mathbf{W}}^\text{T}=\mathbf{WRR^T W^T}=\mathbf{WW^T}
-\end{align}\tag{2.9}
+\end{align*}\tag{2.9}
 $$
 
 
@@ -336,9 +336,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 p(\mathbf{x})=\frac{1}{(2\pi)^{D/2}\mid \mathbf{C}\mid}\exp\left(-\frac{1}{2}(\mathbf{x}-\boldsymbol{\mu})^\text{T}\mathbf{C}^{-1}(\mathbf{x}-\boldsymbol{\mu})\right)
-\end{align}\tag{2.10}
+\end{align*}\tag{2.10}
 $$
 
 
@@ -348,10 +348,10 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 C^{-1} = \sigma^{-2}\mathbf{I} - \sigma^{-2}\mathbf{W}\mathbf{M}^{-1}\mathbf{W}^{T}\tag{2.11} \\\\
 \mathbf{M} = \mathbf{W}^\text{T}\mathbf{W} + \sigma^2 \mathbf{I}\tag{2.12}
-\end{align}
+\end{align*}
 $$
 
 
@@ -365,9 +365,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 p(\mathbf{z} \mid \mathbf{x}) = \mathcal{N} \left(\mathbf{z} \mid \mathbf{M}^{-1}\mathbf{W}^\text{T}(\mathbf{x} - \boldsymbol{\mu}), \sigma^2 \mathbf{M}^{-1} \right)
-\end{align}\tag{2.13}
+\end{align*}\tag{2.13}
 $$
 
 
@@ -383,9 +383,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \ln p(\mathbf{X} \mid \boldsymbol{\mu}, \mathbf{W}, \sigma^2) = \sum_{n=1}^{N} \ln p(\mathbf{x}_n \mid \mathbf{W}, \boldsymbol{\mu}, \sigma^2) = -\frac{ND}{2} \ln(2\pi) - \frac{N}{2} \ln |\mathbf{C}| - \frac{1}{2} \sum_{n=1}^{N} (\mathbf{x}_n - \boldsymbol{\mu})^T \mathbf{C}^{-1} (\mathbf{x}_n - \boldsymbol{\mu}).
-\end{align}\tag{2.14}
+\end{align*}\tag{2.14}
 $$
 {{</raw>}}
 
@@ -395,9 +395,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \mathbf{W}_{\text{ML}} = \mathbf{U}_M (\mathbf{L}_M - \sigma^2 \mathbf{I})^{1/2} \mathbf{R}
-\end{align}\tag{2.15}
+\end{align*}\tag{2.15}
 $$
 
 
@@ -409,9 +409,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \sigma^2_{\text{ML}} = \frac{1}{D-M} \sum_{i=M+1}^{D} \lambda_i
-\end{align}\tag{2.16}
+\end{align*}\tag{2.16}
 $$
 {{</raw>}}
 
@@ -421,10 +421,10 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \mathbf{C} &= \mathbf{U}_M (\mathbf{L}_M - \sigma^2 \mathbf{I})^{1/2} \mathbf{R} (\mathbf{R}^T (\mathbf{L}_M - \sigma^2 \mathbf{I})^{1/2} \mathbf{U}_M^T) + \sigma^2 \mathbf{I}\tag{2.17}\\\\
 &= \mathbf{U}_M (\mathbf{L}_M - \sigma^2 \mathbf{I}) \mathbf{U}_M^T + \sigma^2 \mathbf{I}\tag{2.18}
-\end{align}
+\end{align*}
 $$
 
 
@@ -445,10 +445,277 @@ $$
 和传统 PCA 将数据空间映射到潜在空间不同，Probabilisic PCA 通过公式 2.3 将潜在空间映射到数据空间。通过贝叶斯定理，我们可以使用后验分布 2.13 来构建将数据映射到潜在空间的过程，同时计算出其均值和方差。当我们令方差趋于零时，实际上就回到了传统 PCA，因为映射不再具有不确定性，而是精确的映射到某一个点。
 
 > 最后描述了一些关于参数量的计算，说实话我没看懂。
+>
+> 之后的小节是一些扩展内容，讲述了几种衍生方法。
 
 #### 16.2.4 Factor analysis
 
 因子分析和 Probabilisic PCA 的区别在于，其观测数据的条件分布具有对角协方差矩阵。
+
+回顾  Probabilisic PCA，其定义观测数据定义为 <span> $p(\mathbf{x}\mid\mathbf{z})=\mathcal{N}(\mathbf{x}\mid\mathbf{Wz}+\boldsymbol{\mu},\sigma^2\mathbf{I})$ </span>，其协方差矩阵表明了对于所有方向而言，方差都是一样的，这也叫各向同性高斯分布。但是因子分析将协方差定义为一个对角阵，即各个方向可以有自己的方差，这使得因子分析更加灵活，允许观测数据有自己独有的方差信息。
+
+#### 16.2.5 Independent Component Analysis
+
+前文提到的旋转不变性是由于潜变量遵循高斯分布导致的，为了解决这个问题就要允许潜变量可以是非高斯分布。这就是独立成分分析。
+
+#### 16.2.6 Kalman Filters
+
+前面提到的所有方法都假设了观测数据是独立同分布的，那如果观测数据不是独立同分布呢？这就是卡尔曼滤波或者叫线性动态系统。
+
+![Kalman filters](Figure2.png)
+
+
+
+对于这种数据而言，潜变量之间不再是相互独立，而是呈现出马尔科夫链的依赖关系。
+
+### 16.3 Evidence Lower Bound
+
+首先介绍一下 ELBO 推导过程。
+
+对于模型 $p(\mathbf{x},\mathbf{z}\mid\mathbf{w})$，我们已经定义观测数据 $\mathbf{x}$ 是由潜在变量 $\mathbf{z}$ 控制生成的，相关公式在 2.1~2.6 中定义，这里不再赘述，需要注意的是我们此时将 $\mathbf{w}$ 作为一个可学习参数列了出来。现在我们希望最大化对数似然  $p(\mathbf{x\mid\mathbf{w}})$ 从而达到生成观测数据 $\mathbf{x}$ 的目的。
+
+{{<raw>}}
+$$
+\begin{align*}
+\ln p(\mathbf{x}\mid\mathbf{w})&=\ln \int p(\mathbf{x},\mathbf{z}\mid\mathbf{w})d\mathbf{z}
+\end{align*}\tag{3.1}
+$$
+{{</raw>}}
+
+这个公式中涉及到对 $\mathbf{z}$ 的积分，但是通常对于高维潜在变量的积分很难求解，因此我们采用变分推断的思想，引入变分分布 $q(\mathbf{z})$ 。
+
+{{<raw>}}
+$$
+\begin{align*}
+\ln p(\mathbf{x}|\mathbf{w}) &= \ln \int q(\mathbf{z}) \frac{p(\mathbf{x}, \mathbf{z}|\mathbf{w})}{q(\mathbf{z})} \, d\mathbf{z}\\\\
+&\geq \int q(\mathbf{z}) \ln \left(\frac{p(\mathbf{x},\mathbf{z}|\mathbf{w})}{q(\mathbf{z})}\right) \, d\mathbf{z} = \mathbb{E}_{q(\mathbf{z})}\left[\ln p(\mathbf{x}, \mathbf{z}|\mathbf{w}) - \ln q(\mathbf{z})\right]
+\end{align*}\tag{3.2}
+$$
+{{</raw>}}
+
+这个 <span> $\mathbb{E}_{q(\mathbf{z})}\left[\ln p(\mathbf{x}, \mathbf{z}|\mathbf{w}) - \ln q(\mathbf{z})\right]$ </span> 就是证据下界 ELBO。接下来我们使用一个技巧来进一步变化 ELBO，将 $p(\mathbf{x},\mathbf{z}∣\mathbf{w})$ 分解为 $p(\mathbf{z}|\mathbf{x}, \mathbf{w})$ 和 $p(\mathbf{x}∣\mathbf{w})$。
+
+{{<raw>}}
+$$
+\begin{align*}
+\int q(\mathbf{z}) \ln \left(\frac{p(\mathbf{x},\mathbf{z}|\mathbf{w})}{q(\mathbf{z})}\right) \, d\mathbf{z}
+&=\int q(\mathbf{z}) \ln \left(\frac{p(\mathbf{x}|\mathbf{w})p(\mathbf{z}|\mathbf{x}, \mathbf{w})}{q(\mathbf{z})}\right) \, d\mathbf{z}\\\\
+
+&=\int q(\mathbf{x})\ln \frac{p(\mathbf{z}|\mathbf{x},\mathbf{w})}{q(\mathbf{z})}d\mathbf{z}+\int q(\mathbf{z})\ln p(\mathbf{x\mid\mathbf{w}})d\mathbf{z}\\\\
+
+&=\mathbb{E}_{q(\mathbf{z})}\left[\ln \frac{p(\mathbf{z}\mid\mathbf{x},\mathbf{w})}{q(\mathbf{z})}\right]+\mathbb{E}_{q(\mathbf{z})}\left[\ln p(\mathbf{x\mid\mathbf{w}})\right]\\\\
+
+\mathbb{E}_{q(\mathbf{z})}\left[\ln p(\mathbf{x}, \mathbf{z}|\mathbf{w}) - \ln q(\mathbf{z})\right]
+&=\mathbb{E}_{q(\mathbf{z})}\left[\ln \frac{p(\mathbf{z}\mid\mathbf{x},\mathbf{w})}{q(\mathbf{z})}\right]+\mathbb{E}_{q(\mathbf{z})}\left[\ln p(\mathbf{x\mid\mathbf{w}})\right]\\\\
+
+\ln p(\mathbf{x\mid\mathbf{w}})
+&=\mathbb{E}_{q(\mathbf{z})}\left[\ln p(\mathbf{x}, \mathbf{z}|\mathbf{w}) - \ln q(\mathbf{z})\right]-\mathbb{E}_{q(\mathbf{z})}\left[\ln \frac{p(\mathbf{z}\mid\mathbf{x},\mathbf{w})}{q(\mathbf{z})}\right]\\\\
+&=\mathcal{L}(q,\mathbf{w})+\text{KL}(q(\mathbf{z}\mid\mid p(\mathbf{z}\mid\ \mathbf{x},\mathbf{w})))\tag{3.3}
+\end{align*}
+$$
+{{</raw>}}
+
+其中
+
+{{<raw>}}
+$$
+\begin{align*}
+\mathcal L(q, \mathbf{w}) &= \int q(\mathbf{z}) \ln \left\{ \frac{p(\mathbf{x}, \mathbf{z}|\mathbf{w})}{q(\mathbf{z})} \right\} \, d\mathbf{z}=\mathbb{E}_{q(\mathbf{z})}\left[\ln \frac{p(\mathbf{z}\mid\mathbf{x},\mathbf{w})}{q(\mathbf{z})}\right]\tag{3.4}\\\\
+\text{KL}(q(\mathbf{z}) \| p(\mathbf{z}|\mathbf{x}, \mathbf{w})) &= - \int q(\mathbf{z}) \ln \left\{ \frac{p(\mathbf{z}|\mathbf{x}, \mathbf{w})}{q(\mathbf{z})} \right\} \, d\mathbf{z}=\mathbb{E}_{q(\mathbf{z})}\left[\ln p(\mathbf{x\mid\mathbf{w}})\right]\tag{3.5}
+\end{align*}
+$$
+{{</raw>}}
+
+由于可知，对数似然 $p(\mathbf{x\mid\mathbf{w}})$ 在使用变分推断后构建出的 ELBO 其实就是缺少了 $\text{KL}(\mathbf{q}(\mathbf{z}) \| p(\mathbf{z}|\mathbf{x}, \mathbf{w}))$ 这一部分，由于 KL 散度始终大于零，这个地方为了将对数似然变为两项之和，所以将负号移到了 KL 散度的内部。因此 3.4 式恒小于等于零，从而得到对数似然大于等于 ELBO 的结果。
+
+写出了对数似然接下来我们就要最大化对数似然，我们在这里使用一种叫做期望最大化（Expectation Maximum；EM）的方法。
+
+> 实际上 PPCA 我们前面已经写出了闭式解，通过特征分解就可以写出 $p(x)$ ，但是在实际使用时由于观测数据维度过高，对协方差矩阵进行特征分解往往很困z难，此时 EM 算法的迭代策略就可以通过多步迭代计算进行求解。
+
+EM 算法分为两步，在 E 步中我们改变 $q(\mathbf{z})$ 最大化 $\mathcal L(\mathbf{q}, \mathbf{w}) $，在 M 步我们改变 $\mathbf{w}$ 最大化 $\mathcal L(\mathbf{q}, \mathbf{w}) $ 。具体而言过程如下。
+
+首先我们随机初始化参数 <span> $\mathbf{w}^{old}$</span> ，然后进行 E 步，令参数 $\mathbf{w}$ 固定，通过更新 $q(\mathbf{z})$ 来最大化下界。根据公式 3.3 可知，此时由于我们固定了 $\mathbf{w}$ ，那么最大化下界就等同于最小化 KL 散度，也就是令变分分布 $q(\mathbf{z})$ 等于后验分布 $p(\mathbf{z}\|p(\mathbf{z}\mid\mathbf{x},\mathbf{w}^{old}))$ 。
+
+接下来在 M 步，我们首先代入 E 步结果 $q(\mathbf{z})=p(\mathbf{z}\|p(\mathbf{z}\mid\mathbf{x},\mathbf{w}^{old}))$ ，然后固定 $q(\mathbf{z})$ ，更新 $\mathbf{w}$ 来最大化下界，此时的下界公式如下：
+
+{{<raw>}}
+$$
+\begin{align*}
+\mathcal L(q, \mathbf{w}) = \int p( \mathbf{z} \mid  \mathbf{x},  \mathbf{w}^{(\text{old})}) \ln p( \mathbf{x},  \mathbf{z} \mid  \mathbf{w}) \, d \mathbf{z} - \int p( \mathbf{z} \mid  \mathbf{x},  \mathbf{w}^{(\text{old})}) \ln p( \mathbf{z} \mid  \mathbf{x},  \mathbf{w}^{(\text{old})}) \, d \mathbf{z}
+\end{align*}\tag{3.6}
+$$
+{{</raw>}}
+
+上面这个公式是将 E 步结果代入公式 3.4 得到，需要注意其中带有 $\mathbf{w}^{old}$ 的项都是 E 步得到的 $q(\mathbf{z})=p(\mathbf{z}\|p(\mathbf{z}\mid\mathbf{x},\mathbf{w}^{old}))$ 代换得到的，而在 M 步我们要固定 $q(\mathbf{z})$ 不变，因此这一步中实际更新的参数只有 $\mathbf{w}$ 这一个。
+
+从公式 3.6 不难看出，等号右边第二项在 M 步最大化时和参数 $\mathbf{w}$ 完全无关，而第一项则是完整数据对数似然的期望，该期望是相对于 $q(\mathbf{z})=p(\mathbf{z}\|p(\mathbf{z}\mid\mathbf{x},\mathbf{w}^{old}))$ 而言的。
+
+通过不断进行 E 步和 M 步迭代，我们会逐渐逼近模型的真实似然，通常会设定一个最大迭代步数或者两次迭代之间的变化最小值，然后停止迭代得到结果。
+
+当我们有观测数据 <span>$\mathbf{X}=\{ \mathbf{x}_1,\dots,\mathbf{x}_2\}$ </span>。我们定义 ELBO 为所有观测变量的和。
+
+{{<raw>}}
+$$
+\begin{align*}
+\mathcal L(q, \mathbf{w}) = \sum_{n=1}^{N} \int q(\mathbf{z}_n) \ln \left\{ \frac{p(\mathbf{x}_n, \mathbf{z}_n|\mathbf{w})}{q(\mathbf{z}_n)} \right\} \, d\mathbf{z}_n
+\end{align*}\tag{3.7}
+$$
+
+
+{{</raw>}}
+
+#### 16.3.1 Expectation Maximization
+
+上面我们使用 EM 算法最大化 ELBO，但是我们也可以遵循 EM 算法的一般形式，直接对完整数据的对数似然进行迭代。
+
+首先我们写出完整数据的对数似然：
+
+{{<raw>}}
+$$
+\begin{align*}
+\ln p(\mathbf{X}, \mathbf{Z} \mid \boldsymbol{\mu}, \mathbf{W}, \sigma^2) = \sum_{n=1}^{N} \left\{ \ln p(\mathbf{x}_n \mid \mathbf{z}_n) + \ln p(\mathbf{z}_n) \right\}
+\end{align*}\tag{3.8}
+$$
+
+
+{{</raw>}}
+
+其中 $\mathbf{Z}$ 的每一行表示一个潜在变量<span> $\mathbf{z}_n$ </span>。通过公式 2.14，A2.3 和 A2.4，我们已经知道 $\boldsymbol{\mu}$ 的闭式解 $\boldsymbol{\mu}=\bar{\mathbf{x}}$，因此这里可以直接代入。通过代入公式 2.1 和 2.2 后将分布展开为表达式，我们可以得到对数似然的期望。
+
+{{<raw>}}
+$$
+\begin{align*}
+\mathbb{E}\left[\ln p(\mathbf{X}, \mathbf{Z} \mid \boldsymbol{\mu}, \mathbf{W}, \sigma^2)\right] 
+&= \sum_{n=1}^{N} \left\{-\frac{D}{2} \ln(2\pi\sigma^2) - \frac{M}{2} \ln(2\pi) \right. \\\\
+&\phantom{=} \quad
+- \frac{1}{2\sigma^2} \|\mathbf{x}_n - \boldsymbol{\mu}\|^2 
++ \frac{1}{\sigma^2} \mathbb{E}[\mathbf{z}_n]^T \mathbf{W}^T (\mathbf{x_n} - \boldsymbol{\mu}) \\\\
+&\phantom{=} \quad
+- \frac{1}{2\sigma^2} \text{Tr}(\mathbf{W}^T \mathbf{W} \mathbb{E}[\mathbf{z}_n \mathbf{z}_n^T]) 
+- \frac{1}{2} \text{Tr}(\mathbb{E}[\mathbf{z}_n \mathbf{z}_n^T])
+\left.\right\}
+\end{align*}\tag{3.9}
+$$
+
+{{</raw>}}
+
+具体推导过程见 Appendix A3。
+
+在 E 步中，我们固定 $\boldsymbol{\mu}=\bar{\mathbf{x}},\mathbf{W},\sigma^2$ ，计算潜在变量的期望，通过公式 2.13 和 <span> $\mathbb{E}[\mathbf{z}_n \mathbf{z}_n^T] = \text{cov}[\mathbf{z}_n] + \mathbb{E}[\mathbf{z}_n] \mathbb{E}[\mathbf{z}_n]^T$</span> ，可以得到
+
+{{<raw>}}
+$$
+\begin{align*}
+\mathbb{E}[\mathbf{z}_n] = \mathbf{M}^{-1} \mathbf{W}^T (\mathbf{x}_n - \mathbf{x}) \tag{3.10}\\\\
+\mathbb{E}[\mathbf{z}_n \mathbf{z}_n^T] = \sigma^2 \mathbf{M}^{-1} + \mathbb{E}[\mathbf{z}_n] \mathbb{E}[\mathbf{z}_n]^T \tag{3.11}
+\end{align*}
+$$
+
+
+{{</raw>}}
+
+在 M 步，我们通过以下公式更新 $\mathbf{W},\boldsymbol{\sigma}^2$ 来最大化期望。
+
+{{<raw>}}
+$$
+\begin{align*}
+\mathbf{W}_{\text{new}} &= \left[ \sum_{n=1}^{N} (\mathbf{x}_n - \mathbf{x}) \mathbb{E}[\mathbf{z}_n]^T \right] \left[ \sum_{n=1}^{N} \mathbb{E}[\mathbf{z}_n \mathbf{z}_n^T] \right]^{-1} \tag{3.12}\\\\
+\sigma^2_{\text{new}} &= \frac{1}{ND} \sum_{n=1}^{N} \left\{ \|\mathbf{x}_n - \mathbf{x}\|^2 - 2 \mathbb{E}[\mathbf{z}_n]^T \mathbf{W}_{\text{new}}^T (\mathbf{x}_n - \mathbf{x}) + \text{Tr} \left( \mathbb{E}[\mathbf{z}_n \mathbf{z}_n^T] \mathbf{W}_{\text{new}}^T \mathbf{W}_{\text{new}} \right) \right\} \tag{3.13}
+\end{align*}
+$$
+
+
+{{</raw>}}
+
+> 具体推导过程就不写了，说真的写公式写的我头疼。
+
+之后还有两个小节分别介绍了 EM 算法在 PCA 和因子分析中的应用，我就跳过了。
+
+
+
+### 16.4 Nonlinear Latent Variable Models
+
+前面讨论的都是线性模型，即观测数据和潜在变量是线性变换的关系。之后我们会讨论从潜在空间到数据空间的非线性映射，这里先简单的了解一下。
+
+我们首先定义一个服从标准正态分布的潜在变量 $\mathbf{z}$
+
+{{<raw>}}
+$$
+\begin{align*}
+p_{\mathbf{z}}(\mathbf{z})=\mathcal{N}(z|\mathbf{0},\mathbf{I})
+\end{align*}\tag{4.1}
+$$
+
+
+{{</raw>}}
+
+然后我们定一个从潜在空间到数据空间的映射 $\mathbf{x}=g(\mathbf{z}, \mathbf{w})$ ，这个映射实际由一个神经网络实现。
+
+为了可以从数据中学习这个映射，我们定义似然函数
+
+{{<raw>}}
+$$
+\begin{align}
+p_{\mathbf{x}}(\mathbf{x})=p_{\mathbf{z}}(\mathbf{z}(\mathbf{x}))|\det \mathbf{J}(\mathbf{x})|
+\end{align}\tag{4.2}
+$$
+
+
+{{</raw>}}
+
+这个似然来自变量变化公式，描述见 Appendix A4。
+
+其中 
+
+{{<raw>}}
+$$
+\begin{align*}
+J_{ij}(x) = \frac{\partial z_i}{\partial x_j}
+\end{align*}\tag{4.3}
+$$
+
+
+{{</raw>}}
+
+为了求解雅各比行列式，我们需要 $\mathbf{z}=g^{-1}(\mathbf{x},\mathbf{w})$ 。但是这个由神经网络定义的映射往往是不可逆的。
+
+一种方法是对神经网络做出限制，要求潜在变量空间和数据空间维度一致，从而使映射可逆，这是归一化流（normalizing flows）的思路。但是这种要求对于潜在空间而言是一种很强的限制。正如前文曾提到的，潜在变量往往落在数据空间的一个低维流形上。
+
+#### 16.4.1 Nolinear Manifolds
+
+如果我们考虑潜在空间就是数据空间的一个低维流形，那么此时会面临另一个问题。当数据点没有落在这个低维流形上时，其概率密度将为零。但是实际中由于噪声等因素的存在，数据点往往不会精确的落在低维流形上，而是有一定的偏移。这个问题会导致模型难以学习，因此我们定义了一个条件分布。
+
+{{<raw>}}
+$$
+\begin{align*}
+\mathbf{p}(\mathbf{x}|\mathbf{z}, \mathbf{w}) = \mathcal{N}(\mathbf{x}|\mathbf{g}(\mathbf{z}, \mathbf{w}), \sigma^2 \mathbf{I})
+\end{align*}\tag{4.4}
+$$
+
+
+{{</raw>}}
+
+这个条件分布以潜在空间到数据空间的映射作为均值，允许数据点在一定范围内偏离低维流形。
+
+此时整个数据生成过程就已经被定义了，我们先从潜在空间中采样，将采样得到的潜在变量输入神经网络，使用神经网络的输出作为均值，以 $\sigma^2$ 作为方差采样生成数据。
+
+#### 16.2 Likelihood Function
+
+现在我们希望根据观测数据来最大化似然，从而得到这个模型。
+
+{{<raw>}}
+$$
+\begin{align*}
+p(\mathbf{x}|\mathbf{w}) = \int p(\mathbf{x}|\mathbf{z}, \mathbf{w})p(\mathbf{z}) \, dz = \int \mathcal{N}(\mathbf{x}|\mathbf{g}(\mathbf{z}, \mathbf{w}), \sigma^2 \mathbf{I}) \mathcal{N}(\mathbf{z}|\mathbf{0}, \mathbf{I}) \, dz
+\end{align*}\tag{4.5}
+$$
+
+
+{{</raw>}}
+
+但是由神经网络定义的映射 $g$ 往往是高度非线性的，这很难积分。一种方法是通过不断地从潜在空间中采样，并使用很多样本来近似上面这个似然，但是实际使用时需要采样的数量庞大到不可接受。
+
+> 讨论基本到这里就结束了，后文提到之后会介绍四种基于上述过程的生成式模型，他们各自采用了不同的方法来解决上面的问题。分别是生成对抗网络、归一化流、自编码器和扩散模型。
 
 ## Appandix
 
@@ -458,21 +725,21 @@ A1 是 CH16.1 中的公式推导过程。
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \frac{1}{N}\sum_{n=1}^{N}\mathbf{u}_t^T\mathbf{x}_n=\mathbf{u}_t^T\frac{1}{N}\sum_{n=1}^{N}\mathbf{x}_n=\mathbf{u}_t^T\bar{\mathbf{x}} 
-\end{align}\tag{A1.1}
+\end{align*}\tag{A1.1}
 $$
 {{</raw>}}
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \frac{1}{N}\sum_{n=1}^{N}\{\mathbf{u}_t^T\mathbf{x}_n-\mathbf{u}_t^T\bar{\mathbf{x}}\}^2
 &=\frac{1}{N}\sum_{n=1}^{N}\left[\mathbf{u}_t^T (\mathbf{x}_n - \bar{\mathbf{x}})\right]^2\\\\
 &=\frac{1}{N}\sum_{n=1}^N (\mathbf{x}_n-\bar{\mathbf{x}})^T \mathbf{u}_t \mathbf{u}_t^T (\mathbf{x}_n-\bar{\mathbf{x}})\\\\
 &=\mathbf{u}_t^T \left( \frac{1}{N}\sum_{n=1}^N (\mathbf{x}_n-\bar{\mathbf{x}})(\mathbf{x}_n-\bar{\mathbf{x}})^T \right) \mathbf{u}_t\\\\
 &= \mathbf{u}_t^T \mathbf{S} \mathbf{u}_t 
-\end{align}\tag{A1.2}
+\end{align*}\tag{A1.2}
 $$
 {{</raw>}}
 
@@ -480,13 +747,13 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \mathcal{L}(\mathbf{x},\lambda_1)&=\mathbf{u}_t^T\mathbf{S}\mathbf{u}_t + \lambda_1(1-\mathbf{u}_t^T\mathbf{u}_t) \\\\
 \frac{\partial \mathcal{L}}{\partial \mathbf{u}_t}&=\frac{\partial (\mathbf{u}_t^T\mathbf{S}\mathbf{u}_t)}{\partial \mathbf{u}_t}+
 \frac{\partial \lambda_1}{\partial \mathbf{u}_t} - \frac{\partial (\lambda_1\mathbf{u}_t^T\mathbf{u}_t)}{\partial \mathbf{u}_t}=
 2\mathbf{S}\mathbf{u_t}-2\lambda_1\mathbf{u_t}=0\\\\
 \mathbf{S}\mathbf{u}_t&=\lambda_1\mathbf{u}_t 
-\end{align}\tag{A1.3}
+\end{align*}\tag{A1.3}
 $$
 {{</raw>}}
 
@@ -494,11 +761,11 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 J&=\frac{1}{N}\sum_{n=1}^N\mid\mid \mathbf{x}_n-\tilde{\mathbf{x}}_n\mid\mid^2\\\\
 &=\frac{1}{N}\sum_{n=1}^N(\mathbf{x}_n-\tilde{\mathbf{x}}_n)^T(\mathbf{x}_n-\tilde{\mathbf{x}}_n)\\\\
 &=\frac{1}{N}\sum_{n=1}^N\left(\mathbf{x}_n-\sum_{i=1}^M z_{ni}\mathbf{u}_i-\sum_{i=M+1}^D b_i\mathbf{u}_i \right)^T\left(\mathbf{x}_n-\sum_{i=1}^M z_{ni}\mathbf{u}_i-\sum_{i=M+1}^D b_i\mathbf{u}_i \right)
-\end{align}\tag{A1.4}
+\end{align*}\tag{A1.4}
 $$
 {{</raw>}}
 
@@ -508,9 +775,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \frac{\partial}{\partial \alpha}(\mathbf{a}-\alpha\mathbf{u})^T(\mathbf{a}-\alpha\mathbf{u})=-2\mathbf{u}^T(\mathbf{a}-\alpha\mathbf{u})
-\end{align}\tag{A1.5}
+\end{align*}\tag{A1.5}
 $$
 {{</raw>}}
 
@@ -518,9 +785,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 J=\left(\mathbf{x}_n-\sum_{i=1}^M z_{ni}\mathbf{u}_i-\sum_{i=M+1}^D b_i\mathbf{u}_i \right)^T\left(\mathbf{x}_n-\sum_{i=1}^M z_{ni}\mathbf{u}_i-\sum_{i=M+1}^D b_i\mathbf{u}_i \right)
-\end{align}\tag{A1.6}
+\end{align*}\tag{A1.6}
 $$
 {{</raw>}}
 
@@ -528,10 +795,10 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \mathbf{a}&=\left(\mathbf{x}_n-\sum_{i=1,i\ne j}^M z_{ni}\mathbf{u}_i-\sum_{i=M+1}^D b_i\mathbf{u}_i \right)\\\\
 \alpha\mathbf{u}&=z_{nj}\mathbf{u}_j
-\end{align}\tag{A1.7}
+\end{align*}\tag{A1.7}
 $$
 {{</raw>}}
 
@@ -539,11 +806,11 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \frac{\partial}{\partial z_{nj}}&=-2\mathbf{u}_j^T\left(\mathbf{x}_n-\sum_{i=1,i\ne j}^M z_{ni}\mathbf{u}_i-\sum_{i=M+1}^D b_i\mathbf{u}_i-z_{nj}\mathbf{u}_j\right)\\\\
 &=-2\mathbf{u}_j^T\mathbf{x}_n+2\mathbf{u}_j^T\sum_{i=1,i\ne j}^M z_{ni}\mathbf{u}_i+2\mathbf{u}_j^T\sum_{i=M+1}^D b_i\mathbf{u}_i+2\mathbf{u}_j^Tz_{nj}\mathbf{u}_j\\\\
 &=-2\mathbf{u}_j^T\mathbf{x}_n+2\mathbf{u}_j^Tz_{nj}\mathbf{u}_j
-\end{align}\tag{A1.8}
+\end{align*}\tag{A1.8}
 $$
 {{</raw>}}
 
@@ -551,10 +818,10 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \frac{\partial}{\partial z_{nj}}&=-2\mathbf{u}_j^T\mathbf{x}_n+2\mathbf{u}_j^Tz_{nj}\mathbf{u}_j=0\\\\
 z_{nj}&=\mathbf{u}_j^T\mathbf{x}_n=\mathbf{x}_n^T\mathbf{u}_j
-\end{align}\tag{A1.9}
+\end{align*}\tag{A1.9}
 $$
 {{</raw>}}
 
@@ -566,10 +833,10 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \mathbf{a}&=\left(\mathbf{x}_n-\sum_{i=1}^M z_{ni}\mathbf{u}_i-\sum_{i=M+1,i\ne j}^D b_i\mathbf{u}_i \right)\\\\
 \alpha\mathbf{u}&=b_{j}\mathbf{u}_j
-\end{align}\tag{A1.10}
+\end{align*}\tag{A1.10}
 $$
 {{</raw>}}
 
@@ -577,12 +844,12 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \frac{\partial}{\partial b_j}&=-2\mathbf{u}_j^T\left(\mathbf{x}_n-\sum_{i=1}^M z_{ni}\mathbf{u}_i-\sum_{i=M+1,i\ne j}^D b_i\mathbf{u}_i-b_j\mathbf{u}_j\right)\\\\
 &=-2\mathbf{u}_j^T\mathbf{x}_n+2\mathbf{u}_j^T\sum_{i=1}^M z_{ni}\mathbf{u}_i+2\mathbf{u}_j^T\sum_{i=M+1,i\ne j}^D b_i\mathbf{u}_i+2\mathbf{u}_j^Tb_j\mathbf{u}_j\\\\
 &=-2\mathbf{u}_j^T\mathbf{x}_n+2\mathbf{u}_j^Tb_j\mathbf{u}_j=0\\\\
 b_j&=\mathbf{u}_j^T\mathbf{x}
-\end{align}\tag{A1.11}
+\end{align*}\tag{A1.11}
 $$
 {{</raw>}}
 
@@ -590,9 +857,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 b_j&=\frac{1}{N}\sum_{n=1}^N\mathbf{u}_j^T\mathbf{x}_n=\mathbf{u}_j^T\bar{\mathbf{x}}=\bar{\mathbf{x}}^T\mathbf{u}_j
-\end{align}\tag{A1.12}
+\end{align*}\tag{A1.12}
 $$
 {{</raw>}}
 
@@ -600,11 +867,11 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \mathbf{x}_n-\tilde{\mathbf{x}}_n&=\sum_{i=1}^D(\mathbf{x}_n^T\mathbf{u}_i)\mathbf{u}_i-\sum_{i=1}^M(\mathbf{x}_n^T\mathbf{u}_i)\mathbf{u}_i-\sum_{i=M+1}^D(\bar{\mathbf{x}}^T\mathbf{u}_i)\mathbf{u}_i\\\\
 &=\sum_{M+1}^D(\mathbf{x}_n^T\mathbf{u}_i)\mathbf{u}_i-\sum_{i=M+1}^D(\bar{\mathbf{x}}^T\mathbf{u}_i)\mathbf{u}_i\\\\
 &=\sum_{i=M+1}^D\{(\mathbf{x}_n-\bar{\mathbf{x}})^T\mathbf{u}_i\}\mathbf{u}_i
-\end{align}\tag{A1.13}
+\end{align*}\tag{A1.13}
 $$
 {{</raw>}}
 
@@ -612,7 +879,7 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 J &= \frac{1}{N} \sum_{n=1}^N \|\mathbf{x}_n - \tilde{\mathbf{x}}_n\|^2\\\\
 \mathbf{x}_n - \tilde{\mathbf{x}}_n &= \sum_{i=M+1}^D a_{ni} \mathbf{u}_i,
 \quad \text{where } a_{ni} = (\mathbf{x}_n - \bar{\mathbf{x}})^T\mathbf{u}_i\\\\
@@ -629,7 +896,7 @@ S &= \frac{1}{N} \sum_{n=1}^N (\mathbf{x}_n - \bar{\mathbf{x}})(\mathbf{x}_n - \
 = \mathbf{u}_i^T \left( \frac{1}{N} \sum_{n=1}^N (\mathbf{x}_n - \bar{\mathbf{x}})(\mathbf{x}_n - \bar{\mathbf{x}})^T \right) \mathbf{u}_i
 = \mathbf{u}_i^T S \mathbf{u}_i\\\\
 J &= \sum_{i=M+1}^D \mathbf{u}_i^T S \mathbf{u}_i
-\end{align}\tag{A1.14}
+\end{align*}\tag{A1.14}
 $$
 {{</raw>}}
 
@@ -639,9 +906,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 (A + UCV)^{-1} = A^{-1} - A^{-1}U(C^{-1} + VA^{-1}U)^{-1}VA^{-1}\tag{A2.1}
-\end{align}
+\end{align*}
 $$
 
 
@@ -653,13 +920,13 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \text{given}\quad p(\mathbf{x})&=\mathcal{N}(\mathbf{x}\mid\boldsymbol{\mu},\Lambda^{-1})\\\\
 p(\mathbf{y}\mid\mathbf{x})&=\mathcal{N}(\mathbf{y}\mid\mathbf{Ax}+\mathbf{b},\mathbf{L}^{-1})\\\\
 \text{have}\quad p(\mathbf{y})&=\mathcal{N}(\mathbf{y}|\mathbf{A}\boldsymbol{\mu}+\mathbf{b},\mathbf{L}^{-1}+\mathbf{A}\Lambda^{-1}\mathbf{A}^\text{T})\\\\
 p(\mathbf{x} \mid \mathbf{y}) &= \mathcal{N}(\mathbf{x} \mid \boldsymbol{\mu} + \Sigma \mathbf{A}^T \mathbf{L} (\mathbf{y} - \mathbf{A}\boldsymbol{\mu} - \mathbf{b}), \Sigma)\\\\
 \Sigma &= (\Lambda + \mathbf{A}^T \mathbf{L} \mathbf{A})^{-1}
-\end{align}\tag{A2.2}
+\end{align*}\tag{A2.2}
 $$
 
 
@@ -671,9 +938,9 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \frac{\partial}{\partial \boldsymbol{\mu}} [(\mathbf{x}_n - \boldsymbol{\mu})^T \mathbf{C}^{-1} (\mathbf{x}_n - \boldsymbol{\mu})] = -2\mathbf{C}^{-1}(\mathbf{x}_n - \boldsymbol{\mu})
-\end{align}\tag{A2.3}
+\end{align*}\tag{A2.3}
 $$
 
 
@@ -681,13 +948,141 @@ $$
 
 {{<raw>}}
 $$
-\begin{align}
+\begin{align*}
 \frac{\partial}{\partial \boldsymbol{\mu}} \ln p(\mathbf{X} \mid \boldsymbol{\mu}, \mathbf{W}, \sigma^2)&=
 \frac{\partial}{\partial \boldsymbol{\mu}} \left(-\frac{1}{2} \sum_{n=1}^{N} (\mathbf{x}_n - \boldsymbol{\mu})^T \mathbf{C}^{-1} (\mathbf{x}_n - \boldsymbol{\mu})\right) = \sum_{n=1}^{N} \mathbf{C}^{-1} (\mathbf{x}_n - \boldsymbol{\mu})=0\\\\
 \sum_{n=1}^{N} \mathbf{C}^{-1} (\mathbf{x}_n - \boldsymbol{\mu})&=\mathbf{C}^{-1}\sum_{n=1}^{N}(\mathbf{x}_n -\boldsymbol{\mu})=0\\\\
 \boldsymbol{\mu}&= \frac{1}{N}\sum_{n=1}^N\mathbf{x}_n=\bar{\mathbf{x}}
-\end{align}\tag{A2.4}
+\end{align*}\tag{A2.4}
 $$
 
-
 {{</raw>}}
+
+### Appendix A3
+
+#### 完整数据对数似然
+
+将联合概率<span> $p(\mathbf{x}_n, \mathbf{z}_n | \boldsymbol{\mu}, \mathbf{W}, \sigma^2)$ </span> 写成条件概率和先验的乘积：
+
+{{<raw>}}
+$$
+\ln p(\mathbf{x}_n, \mathbf{z}_n | \boldsymbol{\mu}, \mathbf{W}, \sigma^2) = \ln p(\mathbf{x}_n | \mathbf{z}_n, \boldsymbol{\mu}, \mathbf{W}, \sigma^2) + \ln p(\mathbf{z}_n)
+$$
+{{</raw>}}
+
+#### 条件概率
+
+1. **条件概率：**
+   {{<raw>}}
+   $$
+   p(\mathbf{x}_n | \mathbf{z}_n, \boldsymbol{\mu}, \mathbf{W}, \sigma^2) = \frac{1}{(2\pi\sigma^2)^{D/2}} \exp\left(-\frac{1}{2\sigma^2}\|\mathbf{x}_n - \boldsymbol{\mu} - \mathbf{Wz}_n\|^2\right)
+   $$
+   {{</raw>}}
+   
+2. **对数形式：**
+
+   {{<raw>}}
+   $$
+   \ln p(\mathbf{x}_n | \mathbf{z}_n, \boldsymbol{\mu}, \mathbf{W}, \sigma^2) = -\frac{D}{2} \ln(2\pi\sigma^2) - \frac{1}{2\sigma^2} (\mathbf{x}_n - \boldsymbol{\mu} - \mathbf{Wz}_n)^T (\mathbf{x}_n - \boldsymbol{\mu} - \mathbf{Wz}_n)
+   $$
+   {{</raw>}}
+
+   展开平方项：
+
+   {{<raw>}}
+   $$
+   \|\mathbf{x}_n - \boldsymbol{\mu} - \mathbf{Wz}_n\|^2 = (\mathbf{x}_n - \boldsymbol{\mu})^T(\mathbf{x}_n - \boldsymbol{\mu}) - 2(\mathbf{x}_n - \boldsymbol{\mu})^T \mathbf{Wz}_n + \mathbf{z}_n^T \mathbf{W}^T \mathbf{Wz}_n
+   $$
+   {{</raw>}}
+
+3. **放入对数形式：**
+
+   {{<raw>}}
+   $$
+   \ln p(\mathbf{x}_n | \mathbf{z}_n, \boldsymbol{\mu}, \mathbf{W}, \sigma^2) = -\frac{D}{2} \ln(2\pi\sigma^2) - \frac{1}{2\sigma^2} ((\mathbf{x}_n - \boldsymbol{\mu})^T(\mathbf{x}_n - \boldsymbol{\mu}) - 2(\mathbf{x}_n - \boldsymbol{\mu})^T \mathbf{Wz}_n + \mathbf{z}_n^T \mathbf{W}^T \mathbf{Wz}_n)
+   $$
+   {{</raw>}}
+
+#### 先验概率
+
+1. **潜在变量的先验概率：**
+
+   {{<raw>}}
+   $$
+   p(\mathbf{z}_n) = \frac{1}{(2\pi)^{M/2}} \exp\left(-\frac{1}{2} \mathbf{z}_n^T \mathbf{z}_n \right)
+   $$
+   {{</raw>}}
+
+2. **对数形式：**
+
+   {{<raw>}}
+   $$
+   \ln p(\mathbf{z}_n) = -\frac{M}{2} \ln(2\pi) - \frac{1}{2} \mathbf{z}_n^T \mathbf{z}_n
+   $$
+   {{</raw>}}
+
+#### 期望计算
+
+我们需要计算：
+
+{{<raw>}}
+$$
+E[\ln p(\mathbf{x}_n, \mathbf{z}_n | \boldsymbol{\mu}, \mathbf{W}, \sigma^2)] = E[\ln p(\mathbf{x}_n | \mathbf{z}_n, \boldsymbol{\mu}, \mathbf{W}, \sigma^2)] + E[\ln p(\mathbf{z}_n)]
+$$
+{{</raw>}}
+
+#### 计算每项的期望
+
+1. **条件概率对数的期望：**
+
+   {{<raw>}}
+   $$
+   E[\ln p(\mathbf{x}_n | \mathbf{z}_n, \boldsymbol{\mu}, \mathbf{W}, \sigma^2)] = -\frac{D}{2} \ln(2\pi\sigma^2) - \frac{1}{2\sigma^2} \left(\|\mathbf{x}_n - \boldsymbol{\mu}\|^2 - 2(\mathbf{x}_n - \boldsymbol{\mu})^T \mathbf{W}E[\mathbf{z}_n] + \text{Tr}(\mathbf{W}^T \mathbf{W} E[\mathbf{z}_n\mathbf{z}_n^T]) \right)
+   $$
+   {{</raw>}}
+
+2. **先验对数的期望：**
+
+   {{<raw>}}
+   $$
+   E[\ln p(\mathbf{z}_n)] = -\frac{M}{2} \ln(2\pi) - \frac{1}{2} \text{Tr}(E[\mathbf{z}_n\mathbf{z}_n^T])
+   $$
+   {{</raw>}}
+
+#### 总和公式
+
+最后，把它们结合起来得到：
+
+{{<raw>}}
+$$
+E[\ln p(\mathbf{x}_n, \mathbf{z}_n | \boldsymbol{\mu}, \mathbf{W}, \sigma^2)] = -\frac{D}{2} \ln(2\pi\sigma^2) - \frac{M}{2} \ln(2\pi) - \frac{1}{2\sigma^2}\|\mathbf{x}_n - \boldsymbol{\mu}\|^2 + \frac{1}{\sigma^2} E[\mathbf{z}_n]^T \mathbf{W}^T (\mathbf{x}_n - \boldsymbol{\mu}) - \frac{1}{2\sigma^2} \text{Tr}(\mathbf{W}^T \mathbf{W} E[\mathbf{z}_n \mathbf{z}_n^T]) - \frac{1}{2} \text{Tr}(E[\mathbf{z}_n \mathbf{z}_n^T])
+$$
+{{</raw>}}
+对所有数据点 \(n = 1\) 到 \(N\) 求和，我们得到完整的期望：
+
+{{<raw>}}
+$$
+E\left[\ln p(\mathbf{X}, \mathbf{Z} | \boldsymbol{\mu}, \mathbf{W}, \sigma^2)\right] = \sum_{n=1}^{N} \left\{-\frac{D}{2} \ln(2\pi\sigma^2) - \frac{M}{2} \ln(2\pi) - \frac{1}{2\sigma^2} \|\mathbf{x}_n - \boldsymbol{\mu}\|^2 + \frac{1}{\sigma^2} E[\mathbf{z}_n]^T \mathbf{W}^T (\mathbf{x}_n - \boldsymbol{\mu}) - \frac{1}{2\sigma^2} \text{Tr}(\mathbf{W}^T \mathbf{W} E[\mathbf{z}_n \mathbf{z}_n^T]) - \frac{1}{2} \text{Tr}(E[\mathbf{z}_n \mathbf{z}_n^T]) \right\}
+$$
+{{</raw>}}
+
+### Appendix A4
+
+在变量变换问题中，对于从随机变量 \( Z \) 到 \( X \) 的变换，假设 \( Z \) 的概率密度函数为 \( p_Z(z) \)，我们希望计算 \( X \) 的密度 \( p_X(x) \)，其中 \( x = g(z) \)。变量变换公式可以写作：
+{{<raw>}}
+$$
+p_X(x) = p_Z(z(x)) \cdot \left|\det \frac{\partial z}{\partial x}\right|
+$$
+{{</raw>}}
+其中：
+
+- <span> $ p_X(x) $ </span> 是 $ X $ 的概率密度。
+- <span> $ p_Z(z(x))$ </span> 是从 $ X $ 的反向变换得到的$ Z$ 的概率密度。
+- $\det \frac{\partial z}{\partial x}$ 是雅可比行列式，描述变化过程中体积元素的缩放。
+- $|\cdot|$表示取绝对值，保证密度函数的非负性。
+
+#### 解释
+
+- **反向变换 $ z(x) $**: 为了找到 $ p_Z(z) $，我们需要知道 $ x $ 在原始变量$ z $下的位置。
+- **雅可比行列式**: $\det \frac{\partial z}{\partial x}$ 度量了从 $ z $ 空间到 $ x $) 空间的缩放效应，是多变量微积分中度量非线性变换时的一种工具。
+- **绝对值的意义**: 确保任何转换后得到的概率密度函数都是非负的，符合概率密度的定义。
