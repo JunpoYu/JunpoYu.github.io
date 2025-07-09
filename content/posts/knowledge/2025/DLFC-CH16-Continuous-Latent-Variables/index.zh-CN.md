@@ -4,7 +4,11 @@
 title = '[Deep Learning: Foudations and Concepts] CH16-Continuous Latent Variables'
 date = 2025-06-30T16:08:03+08:00
 draft = false
+collections = ["Deep Learning: Foundations and Concepts"]
+tags = ["Book", "Deep Leaning"]
+categories = ["Deep Learning"]
 summary = "本文讲述连续潜变量模型的基础概念，以 PCA 为例讲解了模型的原理和建立模型的过程，并在最后引出了四种最流行的生成式模型结构。"
+
 
 +++
 

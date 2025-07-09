@@ -81,11 +81,47 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
         title = ""
       [[languages.zh-CN.menu.main]]
         weight = 6
+        identifier = "index"
+        pre = ""
+        post = ""
+        name = "索引"
+        url = ""
+        title = ""
+      [[languages.zh-CN.menu.main]]
+        parent = "index"
+        weight = 7
         identifier = "archives"
         pre = ""
         post = ""
         name = "归档"
         url = "/archives/"
+        title = ""
+      [[languages.zh-CN.menu.main]]
+        parent = "index"
+        weight = 8
+        identifier = "tags"
+        pre = ""
+        post = ""
+        name = "标签"
+        url = "/tags/"
+        title = ""
+      [[languages.zh-CN.menu.main]]
+        parent = "index"
+        weight = 9
+        identifier = "categories"
+        pre = ""
+        post = ""
+        name = "分类"
+        url = "/categories/"
+        title = ""
+      [[languages.zh-CN.menu.main]]
+        parent = "index"
+        weight = 10
+        identifier = "collections"
+        pre = ""
+        post = ""
+        name = "合集"
+        url = "/collections/"
         title = ""
     
     # 中文参数
@@ -97,6 +133,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
         name = "Junpo Yu"
         email = "junpo_yu@163.com"
         link = "https://junpoyu.github.io/"
+        avatar = "/rubysiu.jpg"
       
       # 页面头部导航栏标题配置
       [languages.zh-CN.params.header.title]
@@ -166,6 +203,58 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
         name = "Research"
         url = "/posts/research/"
         title = ""
+      [[languages.en.menu.main]]
+        weight = 5
+        identifier = "life"
+        pre = ""
+        post = ""
+        name = "Life"
+        url = "/posts/life/"
+        title = ""
+      [[languages.en.menu.main]]
+        weight = 6
+        identifier = "index"
+        pre = ""
+        post = ""
+        name = "Index"
+        url = ""
+        title = ""
+      [[languages.en.menu.main]]
+        parent = "index"
+        weight = 7
+        identifier = "archives"
+        pre = ""
+        post = ""
+        name = "Archives"
+        url = "/archives/"
+        title = ""
+      [[languages.en.menu.main]]
+        parent = "index"
+        weight = 8
+        identifier = "tags"
+        pre = ""
+        post = ""
+        name = "Tags"
+        url = "/tags/"
+        title = ""
+      [[languages.en.menu.main]]
+        parent = "index"
+        weight = 9
+        identifier = "categories"
+        pre = ""
+        post = ""
+        name = "Categories"
+        url = "/categories/"
+        title = ""
+      [[languages.en.menu.main]]
+        parent = "index"
+        weight = 10
+        identifier = "collections"
+        pre = ""
+        post = ""
+        name = "Collections"
+        url = "/collections/"
+        title = ""
     
     # 英文参数
     [languages.en.params]
@@ -176,6 +265,7 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
         name = "Junpo Yu"
         email = "junpo_yu@163.com"
         link = "https://junpoyu.github.io/"
+        avatar = "/rubysiu.jpg"
       
       # 页面头部导航栏标题配置
       [languages.en.params.header.title]
@@ -230,39 +320,55 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
   # 页面底部信息配置
   [params.footer]
     enable = true
-    #  自定义内容 (支持 HTML 格式)
-    custom = ''
-    #  是否显示 Hugo 和主题信息
-    hugo = true
-    #  是否显示版权信息
     copyright = true
-    #  是否显示作者
     author = true
-    # 网站创立年份
-    since = 2024
-    # ICP 备案信息，仅在中国使用 (支持 HTML 格式)
+    since = "2024"
+    gov = ""
     icp = ""
-    # 许可协议信息 (支持 HTML 格式)
     license = '<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
+    [params.footer.powered]
+      enable = true
+      hugoLogo = true
+      themeLogo = true
+    [params.footer.siteTime]
+      enable = true
+      animate = true
+      icon = "fa-solid fa-heartbeat"
+      pre = ""
+      value = "2024-09-12T00:00:00+08:00"
+    [params.footer.order]
+      powered = 0
+      copyright = 0
+      statistics = 0
+      visitor = 0
+      beian = 0
 
   #  Section (所有文章) 页面配置
   [params.section]
-    # section 页面每页显示文章数量
     paginate = 20
-    # 日期格式 (月和日)
     dateFormat = "01-02"
-    # RSS 文章数目
-    rss = 10
+    [params.section.feed]
+      limit = -1
+      fullText = false
 
   #  List (目录或标签) 页面配置
   [params.list]
-    # list 页面每页显示文章数量
     paginate = 20
-    # 日期格式 (月和日)
     dateFormat = "01-02"
-    # RSS 文章数目
-    rss = 10
+    [params.list.feed]
+      limit = -1
+      fullText = false
 
+  [params.tagcloud]
+    enable = true
+    min = 14
+    max = 32
+    peakCount = 10
+    orderby = "count"
+
+  [params.backToTop]
+    enable = true
+    scrollpercent = true
   #  应用图标配置
   [params.app]
     # 当添加到 iOS 主屏幕或者 Android 启动器时的标题, 覆盖默认标题
@@ -281,24 +387,27 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
   #  搜索配置
   [params.search]
     enable = true
-    # 搜索引擎的类型 ["lunr", "algolia"]
-    type = "lunr"
-    # 文章内容最长索引长度
+    type = "fuse"
     contentLength = 4000
-    # 搜索框的占位提示语
     placeholder = ""
-    #  最大结果数目
     maxResultLength = 10
-    #  结果内容片段长度
-    snippetLength = 50
-    #  搜索结果中高亮部分的 HTML 标签
+    snippetLength = 30
     highlightTag = "em"
-    #  是否在搜索索引中使用基于 baseURL 的绝对路径
     absoluteURL = false
     [params.search.algolia]
       index = ""
       appID = ""
       searchKey = ""
+    [params.search.fuse]
+      isCaseSensitive = false
+      minMatchCharLength = 2
+      findAllMatches = false
+      location = 0
+      threshold = 0.3
+      distance = 100
+      ignoreLocation = false
+      useExtendedSearch = false
+      ignoreFieldNorm = false
 
   # 主页配置
   [params.home]
@@ -329,85 +438,6 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
   # 作者的社交信息设置
   [params.social]
     GitHub = "JunpoYu"
-    Linkedin = ""
-    X = "" # 
-    Twitter = "" # 
-    Instagram = ""
-    Facebook = ""
-    Telegram = ""
-    Medium = ""
-    Gitlab = ""
-    Youtubelegacy = ""
-    Youtubecustom = ""
-    Youtubechannel = ""
-    Tumblr = ""
-    Quora = ""
-    Keybase = ""
-    Pinterest = ""
-    Reddit = ""
-    Codepen = ""
-    FreeCodeCamp = ""
-    Bitbucket = ""
-    Stackoverflow = ""
-    Weibo = ""
-    Odnoklassniki = ""
-    VK = ""
-    Flickr = ""
-    Xing = ""
-    Snapchat = ""
-    Soundcloud = ""
-    Spotify = ""
-    Bandcamp = ""
-    Paypal = ""
-    Fivehundredpx = ""
-    Mix = ""
-    Goodreads = ""
-    Lastfm = ""
-    Foursquare = ""
-    Hackernews = ""
-    Kickstarter = ""
-    Patreon = ""
-    Steam = ""
-    Twitch = ""
-    Strava = ""
-    Skype = ""
-    Whatsapp = ""
-    Zhihu = ""
-    Douban = ""
-    Angellist = ""
-    Slidershare = ""
-    Jsfiddle = ""
-    Deviantart = ""
-    Behance = ""
-    Dribbble = ""
-    Wordpress = ""
-    Vine = ""
-    Googlescholar = ""
-    Researchgate = ""
-    Mastodon = ""
-    Thingiverse = ""
-    Devto = ""
-    Gitea = ""
-    XMPP = ""
-    Matrix = ""
-    Bilibili = ""
-    Discord = ""
-    DiscordInvite = ""
-    Lichess = ""
-    ORCID = ""
-    Pleroma = ""
-    Kaggle = ""
-    MediaWiki = ""
-    Plume = ""
-    HackTheBox = ""
-    RootMe = ""
-    Malt = "" # 
-    TikTok = "" # 
-    TryHackMe = "" # 
-    Codeberg = "" # 
-    HuggingFace = "" # 
-    Threads = "" # 
-    Phone = ""
     Email = "junpo_yu@163.com"
     RSS = true # 
 
