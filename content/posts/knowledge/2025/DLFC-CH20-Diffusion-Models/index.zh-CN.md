@@ -1,12 +1,12 @@
 +++
 title = '[Deep Learning: Foudations and Concepts] CH20-Diffusion Models'
 date = 2025-07-06T09:36:30+08:00
-draft = true
+draft = false
 outdatedInfoWarning = false
 collections = ["Deep Learning: Foundations and Concepts"]
 tags = ["Book", "Deep Leaning"]
 categories = ["Deep Learning"]
-summary = ""
+summary = "本文主要讲了扩散模型的基本原理，以及其和分数匹配之间的关系，并且扩展了如何进行条件控制的扩散生成。"
 
 +++
 
@@ -452,9 +452,201 @@ $$
 
 ### 20.3 Score Matching
 
+还有一个叫做分数匹配（Score Matching）的技术一直和扩散模型同步发展，但是两者在本质上几乎就是同一个东西，而且 Score Matching 中的很多思想可以帮助我们更好的理解和改进扩散模型。
+
+分数匹配是利用一种叫做得分函数（Score Function）建立起来的，得分函数被定义为相对于观测数据 $\mathbf{x}$ 的对数似然的梯度。
+
+<div>
+
+$$
+\begin{align*}
+s(\mathbf{x})=\nabla_{\mathbf{x}}\ln p(\mathbf{x})\tag{3.1}
+\end{align*}
+$$
+
+</div>
+
+这个函数有什么用呢？我们考虑两个函数 $q(\mathbf{x})$ 和 $p(\mathbf{x})$，并且 <span> $\nabla_{\mathbf{x}}\ln q(\mathbf{x})=\nabla_{\mathbf{x}}\ln p(\mathbf{x})$ </span>，然后我们在等式两边对 $\mathbf{x}$ 进行积分，就可以得到 $q(\mathbf{x})=Kp(\mathbf{x})$ 其中 K 是独立于 $\mathbf{x}$ 的常数。因此如果我们建立一个模型 $s(\mathbf{x}, \mathbf{w})$ 能够代表这个得分函数，那么我们就相当于建模了原始数据的密度。
+
+#### 20.3.1 Score loss function
+
+接下来我们定义一个损失函数，来确定如何训练一个模型 $s(\mathbf{x}, \mathbf{w})$。首先我们有观测数据 $\mathbf{x}$ 遵循分布 $p(\mathbf{x})$，那么我们可以定义平方误差函数来衡量模型和真实得分函数之间的误差：
+
+<div>
+
+$$
+\begin{align*}
+J(\mathbf{w})=\frac{1}{2}\int \|s(\mathbf{x},\mathbf{w})-\nabla\ln p(\mathbf{x})\|^{2}p(\mathbf{x})\mathrm{d}\mathbf{x}\tag{3.2}
+\end{align*}
+$$
+
+</div>
+
+这个误差函数非常的直观，就是衡量了模型和真实的得分函数之间的平方误差。
+
+> 模型结构有两种选择，一种是采样输入和输出形状一致的模型，这符合得分函数输入和输出形状一致的特点，第二种是采用单一输出的模型，但是需要经过两次反向传播。通常而言都会采用第一种方式，训练过程比较快。
 
 
 
+#### 20.3.2 Modified score loss
+
+公式 3.2 存在一个问题，就是我们并不知道原始数据的分布 $p(\mathbf{x})$ 是什么，我们只能获得有限的观测数据 <span> $\mathcal{D}=(\mathbf{x}_1,\dots,\mathbf{x}_N)$ </span>，虽然我们可以构建出经验分布
+
+<div>
+
+$$
+\begin{align*}
+p_{\mathcal{D}}(\mathbf{x})=\frac{1}{N}\sum_{n=1}^N\delta(\mathbf{x}-\mathbf{x}_n)\tag{3.3}
+\end{align*}
+$$
+
+</div>
+
+其中 $\delta$ 表示 Dirac delta 函数。但是公式 3.3 对于 $\mathbf{x}$ 而言是不可微的，为了解决这个问题，我们使用核密度估计来抹平 $\delta$ 函数。
+
+<div>
+
+$$
+\begin{align*}
+q_{\sigma}(\mathbf{z})=\int q(\mathbf{z}|\mathbf{x},\sigma)p(\mathbf{x})\mathrm{d}\mathbf{x}\tag{3.4}
+\end{align*}
+$$
+
+</div>
+
+其中 $q(\mathbf{z}|\mathbf{x},\sigma)$ 就是噪声核，通常采样高斯分布，$p(\mathbf{x})$ 则是原始数据分布，我们可以使用公式 3.3 的经验分布来代替。此时我们最小化的目标变成了如下形式
+
+<div>
+
+$$
+J(\mathbf{w})=\frac{1}{2}\int \|s(\mathbf{z},\mathbf{w})-\nabla_{\mathbf{z}}q_{\sigma}(\mathbf{z})\|^2q_{\sigma}(\mathbf{z})\mathrm{d}\mathbf{z}\tag{3.5}
+$$
+
+</div>
+
+我们将公式 3.4 和公式 3.3 代入，就可以得到如下形式
+
+<div>
+
+$$
+J(\mathbf{w}) = \frac{1}{2N} \sum_{n=1}^{N} \int \left\| \mathbf{s}(\mathbf{z}, \mathbf{w}) - \nabla_{\mathbf{z}} \ln q(\mathbf{z} \mid \mathbf{x}_n, \sigma) \right\|^2 q(\mathbf{z} \mid \mathbf{x}_n, \sigma) \, \mathrm{d}\mathbf{z} + \text{const}\tag{3.6}
+$$
+
+</div>
+
+如果我们使用高斯噪声核 $q(\mathbf{z} \mid \mathbf{x}, \sigma) = \mathcal{N}(\mathbf{z} \mid \mathbf{x}, \sigma^2 \mathbf{I})$，我们可以直接写出得分函数的表达式
+
+<div>
+
+$$
+\begin{align*}
+\nabla_{\mathbf{z}} \ln q(\mathbf{z} \mid \mathbf{x}, \sigma) = -\frac{1}{\sigma}\boldsymbol{\epsilon}\tag{3.7}
+\end{align*}
+$$
+
+</div>
+
+其中噪声 $\boldsymbol{\epsilon}=\mathbf{z}-\mathbf{x}$ 属于标准高斯分布。将公式 3.7 代回公式 3.5 或者 3.6 就会发现，损失函数实际上描述了模型输出和噪声之间的关系，这和扩散模型公式 2.17 如出一辙。
+
+> 从 Score Matching 模型中采样可以使用 Langevin 动态采样。
+
+
+
+#### 20.3.3 Noise Variance
+
+上面虽然解决了模型训练的问题，但是仍然存在一些潜在的隐患。首先，如果数据分布落在一个低维流形上，我们又要面对数据点偏离流形的问题。其次损失函数中使用概率密度作为权重，这会导致在低概率密度区域的估计不准确。最后如果数据分布是由不相交的分布混合而成，那么 Langevin 采样会得到不准确的结果。
+
+以上问题都可以通过选择一个方差足够大的噪声核来解决。但是过大的方差会扭曲原始的分布，一个平衡的方法是我们从小到大选择一系列方差取值，将方差也作为输入，并通过损失函数来进行训练。此时损失函数变成如下形式
+
+<div>
+
+$$
+\begin{align*}
+\frac{1}{2} \sum_{i=1}^{L} \lambda(i) \int \bigg\| s(\mathbf{z}, \mathbf{w}, \sigma_i^2) - \nabla_{\mathbf{z}} \ln q(\mathbf{z} \mid \mathbf{x}_n, \sigma_i) \bigg\|^2 q(\mathbf{z} \mid \mathbf{x}_n, \sigma_i) \, d\mathbf{z}\tag{3.8}
+\end{align*}
+$$
+
+</div>
+
+其中 $\lambda$ 决定了每个不同大小的方差在损失函数中所占的比重。这个方法类似于扩散模型中训练不同的扩散步。训练完成后可以使用 langevin 采样依次从方差由大到小的模型中进行采样。
+
+#### 20.3.4 Stochastic differential equations
+
+前面我们看到扩散模型往往需要进行上千步的计算，那么如果我们进行无限步的计算呢？那考虑这样的极限我们必须保证噪声方差 <span> $\beta_t$ </span>随着步数增加而减小。这会引出随机微分方程，实际上扩散模型和分数匹配都是离散化的随机微分方程。我们可以将随机微分方程写成对向量的无穷小更新。
+
+<div>
+
+$$
+\mathrm{d}\mathbf{z}=f(\mathbf{z},t)\mathrm{d}t+g(t)\mathrm{d}\mathbf{v}\tag{3.9}
+$$
+
+</div>
+
+右边第一项称为漂移项，是确定性的。而第二项扩散项则是随机的。扩撒模型中的前向传播过程就可以写成上式的形式。
+
+上述随机微分方程还有反向形式
+
+<div>
+
+$$
+\begin{align*}
+d\mathbf{z} = \{ f(\mathbf{z}, t) - g^2(t) \nabla_{\mathbf{z}} \ln p(\mathbf{z}) \} \, dt + g(t) \, d\mathbf{v}\tag{3.10}
+\end{align*}
+$$
+
+</div>
+
+不难发现其形式类似于分数匹配模型。
+
+### 20.4 Guided diffusion
+
+在前面我们讨论的都是无条件的扩散模型，即没有任何输入来控制建模过程，但是在实际使用中我们往往希望通过某些信息来控制生成过程，例如我希望只生成某一类别的图像。最简单的方法就是将条件作为模型的输入，构建 <span> $g(\mathbf{z},\mathbf{w},t,\mathbf{c})$ </span>，使用数据对 <span> $\{\mathbf{x}_n,\mathbf{c}_n\}$ </span>进行训练。但是这种方法的缺点是模型往往会忽略类别变量，因此我们需要一种方法来控制类别在训练过程中的比重。根据是否需要训练额外的分类模型我们可以将控制方法分为分类引导和无分类引导。
+
+
+
+#### 20.4.1 Classifier guidance
+
+假设我们已经有了一个训练好的分类模型 $p(\mathbf{c}|\mathbf{x})$ ，我们可以使用贝叶斯定理写出 $p(\mathbf{x}|\mathbf{c})$ 并求它的得分函数
+
+<div>
+
+$$
+\begin{align*}
+\nabla_{\mathbf{x}} \ln p(\mathbf{x} \mid \mathbf{c}) = \nabla_{\mathbf{x}} \ln \left\{ \frac{p(\mathbf{c} \mid \mathbf{x}) p(\mathbf{x})}{p(\mathbf{c})} \right\} = \nabla_{\mathbf{x}} \ln p(\mathbf{x}) + \nabla_{\mathbf{x}} \ln p(\mathbf{c} \mid \mathbf{x})\tag{4.1}
+\end{align*}
+$$
+
+</div>
+
+其中右侧第二项可以将去噪过程推向最大化类别概率 $\mathbf{c}$ 的方向。如果我们引入一个权重系数来控制分类损失的占比
+
+<div>
+
+$$
+\begin{align*}
+\text{score}(\mathbf{x}, \mathbf{c}, \lambda) = \nabla_{\mathbf{x}} \ln p(\mathbf{x}) + \lambda \nabla_{\mathbf{x}} \ln p(\mathbf{c} \mid \mathbf{x})\tag{4.2}
+\end{align*}
+$$
+
+</div>
+
+系数 $\lambda$ 越大表示模型越注重分类概率，但是这也容易导致模型倾向于生成使得分类概率最大化的“简单”结果，而丧失一定的多样性。此外这种方法还要求我们有一个已经训练好的分类模型。
+
+#### 20.4.2 Classifier-free guidance
+
+我们重写公式 4.2，将公式 4.1 中的分类概率代入 4.2 中。
+
+<div>
+
+$$
+\begin{align*}
+\text{score}(\mathbf{x}, \mathbf{c}, \lambda) = \lambda \nabla_{\mathbf{x}} \ln p(\mathbf{x} \mid \mathbf{c}) + (1 - \lambda) \nabla_{\mathbf{x}} \ln p(\mathbf{x})\tag{4.3}
+\end{align*}
+$$
+
+</div>
+
+当权重系数 $\lambda$ 在 0-1 之间时，表示条件对数密度和无条件对数密度的凸组合。当权重系数超过一时，无条件对数密度将会变为负值，此时模型会倾向于尽可能不生成无条件控制的数据，从而提高生成符合条件的数据的概率。此外，我们通过在训练过程中按照一定的概率将条件变量设为空值（即无条件），对一部分样本的条件置零，就可以只需要一个模型来同时建立条件密度和无条件密度。
 
 
 ## Appendix
