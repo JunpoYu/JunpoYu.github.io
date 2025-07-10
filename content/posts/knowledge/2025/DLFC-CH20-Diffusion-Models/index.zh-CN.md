@@ -4,8 +4,8 @@ date = 2025-07-06T09:36:30+08:00
 draft = false
 outdatedInfoWarning = false
 collections = ["Deep Learning: Foundations and Concepts"]
-tags = ["Book", "Deep Leaning"]
-categories = ["Deep Learning"]
+tags = ["Book", "Deep Leaning", "Diffusion Models"]
+categories = ["Deep Learning", "Diffusion Models"]
 summary = "本文主要讲了扩散模型的基本原理，以及其和分数匹配之间的关系，并且扩展了如何进行条件控制的扩散生成。"
 
 +++
