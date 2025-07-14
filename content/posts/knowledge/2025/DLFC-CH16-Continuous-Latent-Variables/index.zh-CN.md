@@ -498,25 +498,23 @@ $$
 
 这个 <span> $\mathbb{E}_{q(\mathbf{z})}\left[\ln p(\mathbf{x}, \mathbf{z}|\mathbf{w}) - \ln q(\mathbf{z})\right]$ </span> 就是证据下界 ELBO。接下来我们使用一个技巧来进一步变化 ELBO，将 $p(\mathbf{x},\mathbf{z}∣\mathbf{w})$ 分解为 $p(\mathbf{z}|\mathbf{x}, \mathbf{w})$ 和 $p(\mathbf{x}∣\mathbf{w})$。
 
-<span>
+<div>
+
 $$
 \begin{align*}
 \int q(\mathbf{z}) \ln \left(\frac{p(\mathbf{x},\mathbf{z}|\mathbf{w})}{q(\mathbf{z})}\right) \, d\mathbf{z}
 &=\int q(\mathbf{z}) \ln \left(\frac{p(\mathbf{x}|\mathbf{w})p(\mathbf{z}|\mathbf{x}, \mathbf{w})}{q(\mathbf{z})}\right) \, d\mathbf{z}\\\\
-
-&=\int q(\mathbf{x})\ln \frac{p(\mathbf{z}|\mathbf{x},\mathbf{w})}{q(\mathbf{z})}d\mathbf{z}+\int q(\mathbf{z})\ln p(\mathbf{x\mid\mathbf{w}})d\mathbf{z}\\\\
-
+&=\int q(\mathbf{z})\ln \frac{p(\mathbf{z}|\mathbf{x},\mathbf{w})}{q(\mathbf{z})}d\mathbf{z}+\int q(\mathbf{z})\ln p(\mathbf{x\mid\mathbf{w}})d\mathbf{z}\\\\
 &=\mathbb{E}_{q(\mathbf{z})}\left[\ln \frac{p(\mathbf{z}\mid\mathbf{x},\mathbf{w})}{q(\mathbf{z})}\right]+\mathbb{E}_{q(\mathbf{z})}\left[\ln p(\mathbf{x\mid\mathbf{w}})\right]\\\\
-
 \mathbb{E}_{q(\mathbf{z})}\left[\ln p(\mathbf{x}, \mathbf{z}|\mathbf{w}) - \ln q(\mathbf{z})\right]
 &=\mathbb{E}_{q(\mathbf{z})}\left[\ln \frac{p(\mathbf{z}\mid\mathbf{x},\mathbf{w})}{q(\mathbf{z})}\right]+\mathbb{E}_{q(\mathbf{z})}\left[\ln p(\mathbf{x\mid\mathbf{w}})\right]\\\\
-
 \ln p(\mathbf{x\mid\mathbf{w}})
 &=\mathbb{E}_{q(\mathbf{z})}\left[\ln p(\mathbf{x}, \mathbf{z}|\mathbf{w}) - \ln q(\mathbf{z})\right]-\mathbb{E}_{q(\mathbf{z})}\left[\ln \frac{p(\mathbf{z}\mid\mathbf{x},\mathbf{w})}{q(\mathbf{z})}\right]\\\\
-&=\mathcal{L}(q,\mathbf{w})+\text{KL}(q(\mathbf{z}\mid\mid p(\mathbf{z}\mid\ \mathbf{x},\mathbf{w})))\tag{3.3}
+&=\mathcal{L}(q,\mathbf{w})+\text{KL}(q(\mathbf{z})\mid\mid p(\mathbf{z}\mid\mathbf{x},\mathbf{w}))\tag{3.3}
 \end{align*}
 $$
-</span>
+
+</div>
 
 其中
 
