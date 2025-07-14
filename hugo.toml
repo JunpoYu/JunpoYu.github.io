@@ -1,4 +1,4 @@
-baseURL = "https://junpoyu.github.io/"
+baseURL = "https://junpoyu.github.io"
 theme = "FixIt"
 title = "Junpo Yu's Blog"
 languageCode = "zh-CN"
@@ -36,6 +36,9 @@ ignoreErrors = ["error-remote-getjson", "error-missing-instagram-accesstoken"]
     title = "Junpo Yu's Blog"
     # 版权描述，仅仅用于 SEO
     copyright = ""
+
+    contentDir = "content/posts"
+    disablePathToLower = true
     
     # 菜单配置
     [languages.zh-CN.menu]
