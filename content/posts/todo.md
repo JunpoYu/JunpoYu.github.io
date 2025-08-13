@@ -19,3 +19,9 @@ weight: 1
 6. DLFC-CH16
    1. 矩阵求导
    2. 线代本质
+7. 加性注意力与点积注意力
+8. SDE ODE
+9. DreamBooth
+10. ControlNet
+11. FLUX
+12. FLOW Matching
