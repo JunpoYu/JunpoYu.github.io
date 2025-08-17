@@ -33,26 +33,27 @@ p(\mathbf{x}_{0:T})&=p(\mathbf{x}_T)\prod_{t=1}^{T}p_\theta(\mathbf{x}_{t-1}|\ma
 p_\theta(\mathbf{x}_t|\mathbf{x}_{t-1})&=\mathcal{N}(\mathbf{x}_{t-1},\boldsymbol{\mu}_\theta(\mathbf{x}_t,t),\Sigma_\theta(\mathbf{x}_t,t))\tag{4}
 \end{align*}
 $$
+
 我们的最终目标是建模 $p(\mathbf{x})$，根据马尔可夫链的性质，我们可以写出如下形式的对数似然函数：
+
+
 $$
 \begin{align*}
 \log p(\mathbf{x})&=\log \int p(\mathbf{x}_{0:T})d\mathbf{x}_{1:T}\\\\
-
 &=\dots\\\\
-
 &=\underbrace{\mathbb{E}_{q(\mathbf{x}_1|\mathbf{x}_0)}[\log p_\theta(\mathbf{x}_0|\mathbf{x}_1)]}_{\text{reconstruction}}
-
 +\underbrace{\mathbb{E}_{q(\mathbf{x}_{T-1}|\mathbf{x}_-)}[D_{KL}(q(\mathbf{x}_T|\mathbf{x}_0)||p(\mathbf{x}_T))]}_{\text{prior mathching}}\\\\
-
 &-\underbrace{\sum_{t=1}^{T-1}\mathbb{E}_{q(\mathbf{x}_T|\mathbf{x}_0)}[D_{KL}(q(\mathbf{x}_{t-1}|\mathbf{x}_t,\mathbf{x}_0)||p_\theta(\mathbf{x}_{t-1}|\mathbf{x}_t))]}_{\text{consistency}}\tag{5}
 \end{align*}
 $$
+
 
 >  这里省略了其中的详细推导过程， 如果有兴趣可以查看 DDPM 原论文或者阅读 *Understanding diffusion models: a unified perspective* 这篇论文。
 
 在上述对数似然中，第一项表示了去噪过程的最后一步，也就是生成数据的这一步，因此被称为重构项，在高斯分布的先验下，其表达式可以化简为 MSE Loss。第二项是先验匹配项，通过 KL 散度约束了加噪之后的数据应该是一个标准高斯噪声。第三项则是一致项，让去噪模型接近加噪的逆向过程。
 
-我们的重点在于第三项，这里 $p_\theta(\mathbf{x}_{t-1}|\mathbf{x}_t)$ 拟合的是 $q(\mathbf{x}_{t-1}|\mathbf{x}_t,\mathbf{x}_0)$，而不是 $q(\mathbf{x}_{t-1}|\mathbf{x}_t)$，这是因为后者实际上就是我们希望真正得到的去噪过程，但是它是未知的。所以这里我们退一步，引入 $\mathbf{x}_0$ 之后， $q(\mathbf{x}_{t-1}|\mathbf{x}_t,\mathbf{x}_0)$ 是一个已知的过程，其表达式如下：
+我们的重点在于第三项，这里<span> $p_\theta(\mathbf{x}_{t-1}|\mathbf{x}_t)$</span> 拟合的是 <span>$q(\mathbf{x}_{t-1}|\mathbf{x}_t,\mathbf{x}_0)$</span>，而不是 <span>$q(\mathbf{x}_{t-1}|\mathbf{x}_t)$</span>，这是因为后者实际上就是我们希望真正得到的去噪过程，但是它是未知的。所以这里我们退一步，引入 <span>$\mathbf{x}_0$ </span>之后，<span> $q(\mathbf{x}_{t-1}|\mathbf{x}_t,\mathbf{x}_0)$</span> 是一个已知的过程，其表达式如下：
+
 $$
 \begin{align*}
 q(\mathbf{x}_{t-1}|\mathbf{x}_t,\mathbf{x}_0)=\frac{q(\mathbf{x}_t|\mathbf{x}_{t-1})q(\mathbf{x}_{t-1}|\mathbf{x}_0)}{q(\mathbf{x}_t|\mathbf{x}_0)}\tag{6}
@@ -62,7 +63,6 @@ $$
 $$
 \begin{align*}
 \mathbf{x}_{t-1}:\text{mean}&=\frac{\sqrt{\bar{\alpha}_{t-1}}\beta_t\mathbf{x}_0+\sqrt{\alpha_t}(1-\bar{\alpha}_{t-1}\mathbf{x}_t)}{1-\bar\alpha_t}\tag{7}\\\\
-
 \mathbf{x}_{t-1}:\text{var}&=\frac{1-\bar{\alpha}_{t-1}}{1-\bar{\alpha}_t}\beta_t \mathbf{I}\tag{8}
 \end{align*}
 $$
