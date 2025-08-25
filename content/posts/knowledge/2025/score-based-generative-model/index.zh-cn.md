@@ -142,7 +142,7 @@ $$
 
 同时，我们写出 $\nabla_{\mathbf{x}_t}\log q(\mathbf{x}_t|\mathbf{x}_0)=-\frac{\mathbf{x}_t-\sqrt{\bar{\alpha}_t}\mathbf{x}_0}{1-\bar{\alpha}_t}$，和上面的噪声项对比，不难发现两者只相差了一个系数的关系。因此 DDPM 的预测目标 $||\epsilon-\epsilon_\theta||$ 实际上就是在预测前向加噪的噪声分布的分数函数，只是经过了一个系数的缩放而已。
 
-所以 DDPM 的预测目标和 Score based model 实际上是等价的，都是在估计一个分数函数。同时他们有都可以解释为一个随机微分过程，这个概念我们之后再做讨论。
+所以 DDPM 的预测目标和 Score based model 实际上是等价的，都是在估计一个分数函数。同时他们又都可以解释为一个随机微分过程，这个概念我们之后再做讨论。
 
 ## Reference
 

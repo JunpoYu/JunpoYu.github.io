@@ -11,13 +11,10 @@ weight: 1
 
 
 
-1. 什么是 variational inference
-2. 什么是 Langevin dynamics during sampling
-4. 什么是二次型
-6. DLFC-CH16
+1. 什么是二次型
+2. DLFC-CH16
    1. 矩阵求导
    2. 线代本质
-8. SDE ODE
-9. DreamBooth
-10. ControlNet
-12. FLOW Matching
+3. SDE ODE
+4. FLOW Matching
+5. 最优传输
